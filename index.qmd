@@ -1,0 +1,48 @@
+---
+title: "Intro to R for Business Analytics"
+subtitle: "A practical textbook for R, data, and AI-assisted analysis"
+about:
+  template: jolla
+---
+
+## Welcome
+
+Business analysts increasingly work in partnership with AI. An assistant can draft a data import, suggest a transformation, or explain an error in seconds. The analyst still has to decide what the business question means, whether the data support the question, and whether the result is safe to share.
+
+This course teaches the R foundation needed to direct that partnership. You will learn enough syntax and data reasoning to ask for useful code, inspect what an AI tool produced, and explain the analysis in language a stakeholder can act on.
+
+## The course philosophy
+
+AI is a powerful collaborator, not a substitute for analytical judgment. A prompt that says “analyze my sales data” leaves too many decisions unstated: Which period? Which measure of sales? Which level of aggregation? What counts as a customer? What should the final output look like?
+
+The better workflow is:
+
+1. understand the structure of the data and the decision to be made;
+2. describe the task precisely to an AI coding tool;
+3. run the proposed code in a controlled environment;
+4. inspect the output, warnings, and errors;
+5. revise the code and test the revision; and
+6. communicate assumptions and limitations alongside the result.
+
+Foundational R knowledge makes every step more reliable. You do not need to memorize every function, but you do need to recognize what objects, filters, joins, summaries, and plots are doing.
+
+## What you will learn
+
+### The R foundation
+
+Build a mental model of objects, types, vectors, data frames, functions, pipes, and packages. Then use dplyr and ggplot2 to perform common business transformations and visualizations.
+
+### The AI coding workflow
+
+Learn how to write context-rich prompts, move generated code into RStudio or Quarto, interpret console feedback, and debug in short, testable iterations.
+
+### Practice and transfer
+
+Apply the workflow to business word problems, then use the blank [Sandbox](sandbox.qmd) to test your own AI-generated solutions.
+
+## Suggested path
+
+Start with [R Basics](r-basics.qmd), continue through [Data Wrangling](data-wrangling.qmd) and [Visualization](visualization.qmd), and then complete the [AI Coding Workflow](ai-getting-started.qmd). Return to the exercises and playground whenever you want to practice.
+
+The [Sources & Links](resources.qmd) page collects references for continuing beyond this course.
+
