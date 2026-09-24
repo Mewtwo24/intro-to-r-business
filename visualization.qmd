@@ -1,0 +1,118 @@
+---
+title: "Visualization with ggplot2"
+---
+
+A good visualization makes a comparison easier to see. It does not replace a definition, a data check, or a well-formed question. Before you choose a chart, identify the variables, the comparison, and the audience.
+
+The ggplot2 package builds plots by combining layers. A typical plot specifies:
+
+- the dataset;
+- an aesthetic mapping, such as x, y, color, or fill;
+- one or more geometric layers, such as points or bars; and
+- labels or a theme that make the result interpretable.
+
+## A scatter plot
+
+A scatter plot is useful when you want to examine the relationship between two numeric variables. In the mtcars data, we can compare vehicle weight with miles per gallon.
+
+```{r}
+#| eval: false
+library(ggplot2)
+
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(
+    x = "Weight, in thousands of pounds",
+    y = "Miles per gallon"
+  )
+```
+
+Each row becomes one point. The mapping in aes() connects columns to visual properties. A trend that appears in a plot is a pattern to investigate, not automatically evidence of causation.
+
+## A bar chart
+
+A bar chart is useful for comparing values across discrete categories. First calculate a summary at the level you want to display; then map the category and measure to the chart.
+
+```{r}
+#| eval: false
+average_mpg_by_cyl <- aggregate(
+  mpg ~ cyl,
+  data = mtcars,
+  FUN = mean
+)
+
+ggplot(average_mpg_by_cyl, aes(x = factor(cyl), y = mpg)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    x = "Number of cylinders",
+    y = "Average miles per gallon"
+  )
+```
+
+A common mistake is to use a bar chart when the x-axis is continuous or to compare totals that have different exposure levels. Always ask whether the denominator and aggregation level make the comparison fair.
+
+## Build both charts interactively
+
+The live application below creates the scatter plot and bar chart. Try changing the x-axis, adding a color mapping, or changing the summary statistic. Notice how a small code change changes the business story the chart can tell.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+
+car_data <- mtcars
+car_data$model <- rownames(mtcars)
+car_data$transmission <- ifelse(car_data$am == 1, "Manual", "Automatic")
+
+average_mpg_by_cyl <- aggregate(
+  mpg ~ cyl,
+  data = car_data,
+  FUN = mean
+)
+
+scatter_plot <- ggplot(car_data, aes(x = wt, y = mpg, color = transmission)) +
+  geom_point(size = 3) +
+  labs(
+    title = "Vehicle weight and fuel efficiency",
+    x = "Weight, in thousands of pounds",
+    y = "Miles per gallon",
+    color = "Transmission"
+  ) +
+  theme_minimal()
+
+bar_plot <- ggplot(average_mpg_by_cyl, aes(x = factor(cyl), y = mpg)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Average fuel efficiency by cylinder count",
+    x = "Cylinders",
+    y = "Average miles per gallon"
+  ) +
+  theme_minimal()
+
+ui <- fluidPage(
+  h3("Two views of the mtcars data"),
+  plotOutput("scatter"),
+  plotOutput("bars")
+)
+
+server <- function(input, output, session) {
+  output$scatter <- renderPlot(scatter_plot)
+  output$bars <- renderPlot(bar_plot)
+}
+
+shinyApp(ui, server)
+```
+
+## A visualization review checklist
+
+Before sharing a chart, verify:
+
+1. Does the chart match the type of variable and comparison?
+2. Are the title, axes, units, and legend understandable without narration?
+3. Does the chart use an appropriate denominator?
+4. Are unusual values visible and explainable?
+5. Could a different scale or aggregation change the conclusion?
+
+An AI tool can generate attractive plotting code quickly. Your job is to check whether the chart represents the data and the decision honestly.

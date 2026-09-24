@@ -1,0 +1,34 @@
+---
+title: "AI Coding Workflow: Project Map"
+---
+
+These projects practice the full workflow: define a business question, specify a data contract, ask an AI tool for a reproducible R solution, and review the result against the request.
+
+Each project is a standalone mini-case. Open the project page, copy its exact prompt into ChatGPT, Codex, Claude, or another approved assistant, and then evaluate the returned code in your own environment.
+
+## A progression in analytical complexity
+
+### [Project 1: Regional Growth](ai-project-regional-growth.qmd)
+
+Begin with grouped summaries and a year-over-year metric. This project emphasizes observation units, time periods, denominators, and edge cases such as zero prior-year revenue.
+
+### [Project 2: Customer Value](ai-project-customer-value.qmd)
+
+Move from order-level data to customer-level features and business-defined segments. This project emphasizes unique identifiers, reproducible date windows, thresholds, and missing data.
+
+### [Project 3: Store Operations](ai-project-store-operations.qmd)
+
+Combine financial, operational, and quality measures in a stakeholder-facing application. This project emphasizes validation checks, descriptive versus causal claims, and the limits of a single ranking.
+
+## The project review protocol
+
+For every project:
+
+1. read the business request and identify the decision-maker;
+2. copy the exact prompt and inspect the AI’s plan;
+3. paste the generated code into an R script, Quarto document, or the [Sandbox](sandbox.qmd);
+4. test row counts, keys, filters, calculations, and output order;
+5. ask the AI to explain any error before applying a fix; and
+6. write a stakeholder note that states the result, definition, and limitation.
+
+The objective is not to obtain the longest script. It is to produce an analysis whose inputs, transformations, and claims can be inspected.

@@ -1,0 +1,54 @@
+project:
+  type: website
+
+website:
+  title: "Intro to R for Business Analytics"
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Introduction"
+        contents:
+          - text: "Home"
+            href: index.qmd
+          - text: "Sources & Links"
+            href: resources.qmd
+      - section: "The R Foundation"
+        contents:
+          - text: "R Basics"
+            href: r-basics.qmd
+          - text: "Data Wrangling"
+            href: data-wrangling.qmd
+          - text: "Visualization"
+            href: visualization.qmd
+      - section: "The AI Coding Workflow"
+        contents:
+          - text: "Getting Started"
+            href: ai-getting-started.qmd
+          - text: "Prompting"
+            href: ai-prompting.qmd
+          - text: "Debugging"
+            href: ai-debugging.qmd
+          - text: "Practice Exercises"
+            href: ai-exercises.qmd
+          - text: "Project 1: Regional Growth"
+            href: ai-project-regional-growth.qmd
+          - text: "Project 2: Customer Value"
+            href: ai-project-customer-value.qmd
+          - text: "Project 3: Store Operations"
+            href: ai-project-store-operations.qmd
+      - section: "Playground"
+        contents:
+          - text: "Sandbox"
+            href: sandbox.qmd
+  page-footer:
+    center: "Intro to R for Business Analytics"
+
+filters:
+  - shinylive
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true

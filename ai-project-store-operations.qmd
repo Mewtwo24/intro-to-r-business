@@ -1,0 +1,89 @@
+---
+title: "Project 3: Store Operations"
+---
+
+## Project brief
+
+You are supporting a retail operations director who wants to identify stores that combine strong sales with manageable checkout times. The request sounds like a ranking problem, but it actually combines data quality, financial measures, operational measures, and communication risk.
+
+This project is intentionally multi-faceted. A polished table is not enough; the analysis must show what was included, how the metrics were defined, and what the evidence cannot prove.
+
+## Business question
+
+> Which stores are performing strongly, which stores may need an operational review, and what evidence supports those observations?
+
+## Data contract
+
+Ask the AI assistant to create a reproducible hypothetical data frame called transactions with:
+
+- store_id: character store identifier;
+- transaction_id: character transaction identifier;
+- transaction_date: Date;
+- sales: numeric dollars;
+- units: integer units sold; and
+- checkout_minutes: numeric time from checkout start to completion.
+
+Each row represents one transaction.
+
+The analysis should:
+
+- exclude rows missing store_id or transaction_id and report how many were excluded;
+- check for duplicate transaction IDs;
+- flag negative sales;
+- calculate unique transaction count, total sales, total units, average basket value, average units per transaction, and median checkout time by store;
+- flag stores with median checkout time above 8 minutes; and
+- distinguish descriptive evidence from causal claims.
+
+## Exact prompt to use
+
+> Build a self-contained R/Shiny example using shiny and dplyr for a hypothetical data frame named transactions. Each row represents one transaction. Columns are store_id as character, transaction_id as character, transaction_date as Date, sales as numeric dollars, units as integer, and checkout_minutes as numeric. Create a reproducible example with a fixed seed. Before summarising, report rows missing store_id or transaction_id, duplicate transaction IDs, negative sales, and missing operational measures. Exclude rows missing store_id or transaction_id, but do not silently discard them. Calculate one row per store with unique transaction count, total sales, total units, average basket value, average units per transaction, and median checkout time. Add an operational_watch flag when median checkout time is above 8 minutes. Sort the summary by total sales descending. Display the quality checks, the store summary, and a cautious plain-English interpretation. Explain that the results are descriptive and do not prove that checkout time causes sales performance. Use only shiny and dplyr.
+
+## What to inspect in the response
+
+This project has several opportunities for an AI-generated script to look reasonable while being wrong:
+
+- Does the code count unique transactions or raw rows?
+- Are invalid rows reported before they are removed?
+- Does a negative sale get hidden in a total?
+- Is average basket value total sales divided by transaction count?
+- Is average units per transaction calculated at the store level?
+- Is median used intentionally for checkout time?
+- Does the operational flag apply to the same store-level summary?
+- Does the narrative overstate correlation as causation?
+
+The phrase “best store” is deliberately avoided. A store can lead in sales while having slow checkout, or have fast checkout while serving a smaller customer base.
+
+## Testing protocol
+
+Use a small manual test with a store that has two transactions: 100 dollars and 50 dollars, with one unit and two units. Its total sales should be 150, transaction count should be 2, average basket value should be 75, and average units per transaction should be 1.5.
+
+Then test the quality checks by adding:
+
+- a missing store identifier;
+- a duplicate transaction ID;
+- a negative sales value; and
+- a missing checkout time.
+
+Confirm that the code reports each issue and that the summary’s inclusion rules are visible.
+
+## Deliverable
+
+Prepare an operations dashboard note with:
+
+- the store-level summary;
+- the stores flagged for operational review;
+- the quality issues found;
+- two descriptive observations; and
+- one statement explaining why the analysis does not establish causation.
+
+## Extension: build a decision matrix
+
+Ask the AI assistant to add a four-quadrant classification using sales rank and checkout-time rank:
+
+- strong sales and manageable checkout;
+- strong sales and operational watch;
+- lower sales and manageable checkout; and
+- lower sales and operational watch.
+
+Require the assistant to explain the cutoffs, identify their arbitrariness, and preserve the original measures beside the classification. This is a more decision-oriented output, but it also introduces more assumptions for you to audit.
+
