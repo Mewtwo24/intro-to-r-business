@@ -1,0 +1,1 @@
+Sitemap: https://Mewtwo24.github.io/intro-to-r-business/sitemap.xml

@@ -1,0 +1,926 @@
+[
+  {
+    "objectID": "visualization.html",
+    "href": "visualization.html",
+    "title": "Visualization with ggplot2",
+    "section": "",
+    "text": "A good visualization makes a comparison easier to see. It does not replace a definition, a data check, or a well-formed question. Before you choose a chart, identify the variables, the comparison, and the audience.\nThe ggplot2 package builds plots by combining layers. A typical plot specifies:",
+    "crumbs": [
+      "The R Foundation",
+      "Visualization"
+    ]
+  },
+  {
+    "objectID": "visualization.html#a-scatter-plot",
+    "href": "visualization.html#a-scatter-plot",
+    "title": "Visualization with ggplot2",
+    "section": "A scatter plot",
+    "text": "A scatter plot\nA scatter plot is useful when you want to examine the relationship between two numeric variables. In the mtcars data, we can compare vehicle weight with miles per gallon.\n\nlibrary(ggplot2)\n\nggplot(mtcars, aes(x = wt, y = mpg)) +\n  geom_point() +\n  labs(\n    x = \"Weight, in thousands of pounds\",\n    y = \"Miles per gallon\"\n  )\n\nEach row becomes one point. The mapping in aes() connects columns to visual properties. A trend that appears in a plot is a pattern to investigate, not automatically evidence of causation.",
+    "crumbs": [
+      "The R Foundation",
+      "Visualization"
+    ]
+  },
+  {
+    "objectID": "visualization.html#a-bar-chart",
+    "href": "visualization.html#a-bar-chart",
+    "title": "Visualization with ggplot2",
+    "section": "A bar chart",
+    "text": "A bar chart\nA bar chart is useful for comparing values across discrete categories. First calculate a summary at the level you want to display; then map the category and measure to the chart.\n\naverage_mpg_by_cyl &lt;- aggregate(\n  mpg ~ cyl,\n  data = mtcars,\n  FUN = mean\n)\n\nggplot(average_mpg_by_cyl, aes(x = factor(cyl), y = mpg)) +\n  geom_col(fill = \"steelblue\") +\n  labs(\n    x = \"Number of cylinders\",\n    y = \"Average miles per gallon\"\n  )\n\nA common mistake is to use a bar chart when the x-axis is continuous or to compare totals that have different exposure levels. Always ask whether the denominator and aggregation level make the comparison fair.",
+    "crumbs": [
+      "The R Foundation",
+      "Visualization"
+    ]
+  },
+  {
+    "objectID": "visualization.html#build-both-charts-interactively",
+    "href": "visualization.html#build-both-charts-interactively",
+    "title": "Visualization with ggplot2",
+    "section": "Build both charts interactively",
+    "text": "Build both charts interactively\nThe live application below creates the scatter plot and bar chart. Try changing the x-axis, adding a color mapping, or changing the summary statistic. Notice how a small code change changes the business story the chart can tell.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\nlibrary(ggplot2)\n\ncar_data &lt;- mtcars\ncar_data$model &lt;- rownames(mtcars)\ncar_data$transmission &lt;- ifelse(car_data$am == 1, \"Manual\", \"Automatic\")\n\naverage_mpg_by_cyl &lt;- aggregate(\n  mpg ~ cyl,\n  data = car_data,\n  FUN = mean\n)\n\nscatter_plot &lt;- ggplot(car_data, aes(x = wt, y = mpg, color = transmission)) +\n  geom_point(size = 3) +\n  labs(\n    title = \"Vehicle weight and fuel efficiency\",\n    x = \"Weight, in thousands of pounds\",\n    y = \"Miles per gallon\",\n    color = \"Transmission\"\n  ) +\n  theme_minimal()\n\nbar_plot &lt;- ggplot(average_mpg_by_cyl, aes(x = factor(cyl), y = mpg)) +\n  geom_col(fill = \"steelblue\") +\n  labs(\n    title = \"Average fuel efficiency by cylinder count\",\n    x = \"Cylinders\",\n    y = \"Average miles per gallon\"\n  ) +\n  theme_minimal()\n\nui &lt;- fluidPage(\n  h3(\"Two views of the mtcars data\"),\n  plotOutput(\"scatter\"),\n  plotOutput(\"bars\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$scatter &lt;- renderPlot(scatter_plot)\n  output$bars &lt;- renderPlot(bar_plot)\n}\n\nshinyApp(ui, server)",
+    "crumbs": [
+      "The R Foundation",
+      "Visualization"
+    ]
+  },
+  {
+    "objectID": "visualization.html#a-visualization-review-checklist",
+    "href": "visualization.html#a-visualization-review-checklist",
+    "title": "Visualization with ggplot2",
+    "section": "A visualization review checklist",
+    "text": "A visualization review checklist\nBefore sharing a chart, verify:\n\nDoes the chart match the type of variable and comparison?\nAre the title, axes, units, and legend understandable without narration?\nDoes the chart use an appropriate denominator?\nAre unusual values visible and explainable?\nCould a different scale or aggregation change the conclusion?\n\nAn AI tool can generate attractive plotting code quickly. Your job is to check whether the chart represents the data and the decision honestly.",
+    "crumbs": [
+      "The R Foundation",
+      "Visualization"
+    ]
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Sources Used in This Course",
+    "section": "",
+    "text": "This page is a working bibliography for the course. These are the sources we used to shape the examples, explanations, technical setup, and human-in-the-loop AI workflow. The business projects are original teaching scenarios designed for this site; they are not copied case studies.",
+    "crumbs": [
+      "Introduction",
+      "Sources & Links"
+    ]
+  },
+  {
+    "objectID": "resources.html#r-and-data-science-foundations",
+    "href": "resources.html#r-and-data-science-foundations",
+    "title": "Sources Used in This Course",
+    "section": "R and data science foundations",
+    "text": "R and data science foundations\n\nR for Data Science, 2nd edition\nHadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund’s open textbook informed the progression from data import and transformation to visualization and communication. Its emphasis on a repeatable data-science workflow shaped the organization of the R Foundation section.\n\n\nThe R Project for Statistical Computing\nThe official R project site was used for language-level context, installation references, and the distinction between the R language and contributed packages.\n\n\nR Language Definition\nThis official manual informed the explanations of objects, evaluation, vectors, indexing, functions, and control flow. It is a technical reference rather than a beginner tutorial.\n\n\ndplyr documentation\nThe dplyr reference informed the descriptions of filter, select, mutate, summarise, group_by, arrange, and the behavior of grouped data.\n\n\nggplot2 documentation\nThe ggplot2 reference informed the visualization chapter’s explanation of data, aesthetic mappings, geometric layers, scales, and labels.",
+    "crumbs": [
+      "Introduction",
+      "Sources & Links"
+    ]
+  },
+  {
+    "objectID": "resources.html#quarto-and-browser-based-r",
+    "href": "resources.html#quarto-and-browser-based-r",
+    "title": "Sources Used in This Course",
+    "section": "Quarto and browser-based R",
+    "text": "Quarto and browser-based R\n\nQuarto documentation\nQuarto’s project, website, executable-document, and sidebar documentation informed the site architecture and rendering workflow.\n\n\nQuarto website documentation\nThe website guide informed the project configuration, sidebar organization, page navigation, and static-site workflow.\n\n\nShinylive for R\nThe R Shinylive package documentation informed the client-side execution model and the package requirements for browser-based Shiny applications.\n\n\nShinylive Quarto extension\nThe extension documentation informed the live code-block syntax used throughout the course:\nThe live blocks use the shinylive-r code label with standalone set to true and editor/viewer components. They are complete Shiny applications so students can connect R code, data preparation, and output.",
+    "crumbs": [
+      "Introduction",
+      "Sources & Links"
+    ]
+  },
+  {
+    "objectID": "resources.html#ai-assisted-analysis-and-responsible-use",
+    "href": "resources.html#ai-assisted-analysis-and-responsible-use",
+    "title": "Sources Used in This Course",
+    "section": "AI-assisted analysis and responsible use",
+    "text": "AI-assisted analysis and responsible use\n\nOpenAI Codex documentation\nThe Codex setup chapter uses the official OpenAI documentation for current product orientation and project-based coding workflows. Product labels, access, and permissions can change, so the official page is the source of truth for current setup details.\n\n\nNIST AI Risk Management Framework\nThe NIST framework informed the course’s emphasis on context, evaluation, verification, validation, documentation, and human accountability when AI is used in an organizational workflow. The framework is voluntary and is not a substitute for an organization’s own policies.\n\n\nNIST AI Resource Center\nThe AI Resource Center informed the distinction between generating an AI-assisted draft and evaluating whether an AI-enabled workflow is trustworthy for its intended use.",
+    "crumbs": [
+      "Introduction",
+      "Sources & Links"
+    ]
+  },
+  {
+    "objectID": "resources.html#business-analytics-inspiration",
+    "href": "resources.html#business-analytics-inspiration",
+    "title": "Sources Used in This Course",
+    "section": "Business-analytics inspiration",
+    "text": "Business-analytics inspiration\nThe project scenarios use familiar business-analytics patterns: regional growth reporting, customer value segmentation, store performance, operational monitoring, and stakeholder communication. These patterns were informed by the kinds of transformations emphasized in R for Data Science and by the NIST focus on defining the business context before evaluating an AI system.\nThe datasets in the projects are hypothetical. They are intentionally small enough for a student to inspect row by row and are not claims about any particular company, market, or benchmark.",
+    "crumbs": [
+      "Introduction",
+      "Sources & Links"
+    ]
+  },
+  {
+    "objectID": "resources.html#how-this-bibliography-should-be-read",
+    "href": "resources.html#how-this-bibliography-should-be-read",
+    "title": "Sources Used in This Course",
+    "section": "How this bibliography should be read",
+    "text": "How this bibliography should be read\nThese sources were used during design and implementation. They are not a list of fallback tutorials or a ranking of “best” resources. When a page in this course explains a package or workflow, follow the linked primary documentation for the authoritative and current version.",
+    "crumbs": [
+      "Introduction",
+      "Sources & Links"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Intro to R for Business Analytics",
+    "section": "",
+    "text": "Business analysts increasingly work in partnership with AI. An assistant can draft a data import, suggest a transformation, or explain an error in seconds. The analyst still has to decide what the business question means, whether the data support the question, and whether the result is safe to share.\nThis course teaches the R foundation needed to direct that partnership. You will learn enough syntax and data reasoning to ask for useful code, inspect what an AI tool produced, and explain the analysis in language a stakeholder can act on.",
+    "crumbs": [
+      "Introduction",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "Intro to R for Business Analytics",
+    "section": "",
+    "text": "Business analysts increasingly work in partnership with AI. An assistant can draft a data import, suggest a transformation, or explain an error in seconds. The analyst still has to decide what the business question means, whether the data support the question, and whether the result is safe to share.\nThis course teaches the R foundation needed to direct that partnership. You will learn enough syntax and data reasoning to ask for useful code, inspect what an AI tool produced, and explain the analysis in language a stakeholder can act on.",
+    "crumbs": [
+      "Introduction",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#the-course-philosophy",
+    "href": "index.html#the-course-philosophy",
+    "title": "Intro to R for Business Analytics",
+    "section": "The course philosophy",
+    "text": "The course philosophy\nAI is a powerful collaborator, not a substitute for analytical judgment. A prompt that says “analyze my sales data” leaves too many decisions unstated: Which period? Which measure of sales? Which level of aggregation? What counts as a customer? What should the final output look like?\nThe better workflow is:\n\nunderstand the structure of the data and the decision to be made;\ndescribe the task precisely to an AI coding tool;\nrun the proposed code in a controlled environment;\ninspect the output, warnings, and errors;\nrevise the code and test the revision; and\ncommunicate assumptions and limitations alongside the result.\n\nFoundational R knowledge makes every step more reliable. You do not need to memorize every function, but you do need to recognize what objects, filters, joins, summaries, and plots are doing.",
+    "crumbs": [
+      "Introduction",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#what-you-will-learn",
+    "href": "index.html#what-you-will-learn",
+    "title": "Intro to R for Business Analytics",
+    "section": "What you will learn",
+    "text": "What you will learn\n\nThe R foundation\nBuild a mental model of objects, types, vectors, data frames, functions, pipes, and packages. Then use dplyr and ggplot2 to perform common business transformations and visualizations.\n\n\nThe AI coding workflow\nLearn how to write context-rich prompts, move generated code into RStudio or Quarto, interpret console feedback, and debug in short, testable iterations.\n\n\nPractice and transfer\nApply the workflow to business word problems, then use the blank Sandbox to test your own AI-generated solutions.",
+    "crumbs": [
+      "Introduction",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#suggested-path",
+    "href": "index.html#suggested-path",
+    "title": "Intro to R for Business Analytics",
+    "section": "Suggested path",
+    "text": "Suggested path\nStart with R Basics, continue through Data Wrangling and Visualization, and then complete the AI Coding Workflow. Return to the exercises and playground whenever you want to practice.\nThe Sources & Links page collects references for continuing beyond this course.",
+    "crumbs": [
+      "Introduction",
+      "Home"
+    ]
+  },
+  {
+    "objectID": "ai-prompting.html",
+    "href": "ai-prompting.html",
+    "title": "AI Coding Workflow: Prompting",
+    "section": "",
+    "text": "An AI coding tool can only make decisions from the context you provide. A strong prompt is a compact project brief: it identifies the data, the decision, the expected output, the tools, and the constraints.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Prompting"
+    ]
+  },
+  {
+    "objectID": "ai-prompting.html#the-anatomy-of-a-strong-r-prompt",
+    "href": "ai-prompting.html#the-anatomy-of-a-strong-r-prompt",
+    "title": "AI Coding Workflow: Prompting",
+    "section": "The anatomy of a strong R prompt",
+    "text": "The anatomy of a strong R prompt\n\n1. State the business goal\nStart with the decision or question, not with a function name.\nWeak: “Group this data.”\nStrong: “The sales director wants to compare quarterly revenue and order count across regions to decide where to focus coaching.”\nThe business goal gives the assistant a reason to choose an aggregation level and output format.\n\n\n2. Describe the data contract\nList the data frame name, column names, types, units, and a few example values. State whether each row is a transaction, customer, store-month, or another unit.\nFor example:\n\nData frame: transactions\nOne row: one completed order\nColumns: order_id, order_date, region, customer_id, units, revenue, returned\norder_date: Date\nunits: nonnegative integer\nrevenue: dollars before returns\nreturned: logical flag\n\nThis prevents the assistant from inventing column names or treating a transaction total as a customer-level measure.\n\n\n3. Define the business terms\nWords such as revenue, customer, growth, active, and best can have multiple meanings. Define them before asking for code.\nSpecify:\n\nthe reporting period;\nwhether returns, discounts, taxes, and shipping are included;\nwhether counts mean rows or unique identifiers;\nthe denominator for rates and percentages; and\nhow missing values should be handled.\n\n\n\n4. Name the desired packages\nIf the assignment uses the tidyverse, say so. If the deliverable must use dplyr and ggplot2, say so. If the code should use only installed packages, say so.\nFor a Quarto or Shinylive lesson, include constraints such as:\n\nuse R;\nuse dplyr for wrangling and ggplot2 for plots;\nwrite a complete self-contained example;\ninclude comments and a plain-English explanation; and\ndo not use packages beyond shiny, dplyr, and ggplot2.\n\n\n\n5. Specify the output\nDescribe the final artifact precisely:\n\none row per region;\ncolumns for revenue, order count, and year-over-year growth;\nsorted from largest to smallest growth;\na table and one chart; and\na three-sentence stakeholder interpretation.\n\n\n\n6. Ask for assumptions and checks\nAsk the assistant to list assumptions, identify possible edge cases, and suggest validation checks. This turns a one-shot answer into a reviewable draft.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Prompting"
+    ]
+  },
+  {
+    "objectID": "ai-prompting.html#bad-prompt-versus-good-prompt",
+    "href": "ai-prompting.html#bad-prompt-versus-good-prompt",
+    "title": "AI Coding Workflow: Prompting",
+    "section": "Bad prompt versus good prompt",
+    "text": "Bad prompt versus good prompt\n\nBad prompt\n\nAnalyze my sales data in R and make a chart.\n\nThis prompt does not define the data, the period, the comparison, the package constraints, or the intended decision. A plausible response could still answer the wrong question.\n\n\nGood prompt\n\nI am preparing a regional sales review in R. The data frame is called transactions, with one row per completed order. It contains order_id, order_date, region, customer_id, units, revenue, returned, and order_year. order_date is a Date; revenue is in US dollars before returns; returned is TRUE for a fully returned order. Use dplyr and ggplot2. Keep orders from 2025 and 2026, exclude fully returned orders, calculate total net revenue and unique customer count by region and year, and calculate 2026 year-over-year revenue growth. Return a table with one row per region, sorted by growth, and a bar chart. Explain the pipeline, state assumptions, and include checks for missing regions, duplicate order IDs, and zero 2025 revenue.\n\nThe good prompt supplies a data contract, business definitions, packages, filters, metrics, output, and quality checks. Those details make the generated code easier to review.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Prompting"
+    ]
+  },
+  {
+    "objectID": "ai-prompting.html#prompt-patterns-worth-reusing",
+    "href": "ai-prompting.html#prompt-patterns-worth-reusing",
+    "title": "AI Coding Workflow: Prompting",
+    "section": "Prompt patterns worth reusing",
+    "text": "Prompt patterns worth reusing\n\nAsk for a plan before code\n\nFirst restate the business question and propose the data transformations. Do not write code until you identify the observation unit, grouping level, measures, and assumptions.\n\n\n\nAsk for a minimal reproducible example\n\nIf the real data are unavailable, create a small simulated data frame with the same column names and types. Make the example reproducible with a fixed random seed.\n\n\n\nAsk for two explanations\n\nAfter the code, explain each transformation twice: first in R terms and then in plain language for a nontechnical stakeholder.\n\n\n\nAsk for a validation section\n\nAdd checks for row counts, missing values, duplicate keys, and the expected range of each calculated measure. Explain what a suspicious result would mean.\n\n\n\nAsk for a constrained revision\n\nKeep the existing output and variable names. Change only the calculation of net revenue and explain the change.\n\nNarrow revision prompts reduce accidental changes elsewhere in the analysis.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Prompting"
+    ]
+  },
+  {
+    "objectID": "ai-prompting.html#a-prompt-is-a-specification-not-a-command-to-trust",
+    "href": "ai-prompting.html#a-prompt-is-a-specification-not-a-command-to-trust",
+    "title": "AI Coding Workflow: Prompting",
+    "section": "A prompt is a specification, not a command to trust",
+    "text": "A prompt is a specification, not a command to trust\nA detailed prompt improves the first draft, but it does not guarantee correctness. Read the response as a proposed implementation of your specification. Compare every filter, join, calculation, and chart with the business definitions you supplied.\nA useful habit is to keep three columns in your notes:\n\n\n\n\n\n\n\n\nPrompt requirement\nCode evidence\nTest\n\n\n\n\nExclude returned orders\nA filter on returned\nCompare before and after row counts\n\n\nCount unique customers\ndistinct customer_id\nCompare with raw row count\n\n\nRank by growth\ndescending growth column\nInspect the first and last rows\n\n\n\nThis turns prompt quality into a practical review process.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Prompting"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html",
+    "href": "ai-project-regional-growth.html",
+    "title": "Project 1: Regional Growth",
+    "section": "",
+    "text": "You are a junior analyst on a finance team. The finance manager wants a concise explanation of how regional performance changed from 2025 to 2026.\nThis is the first project because the core calculation is familiar but full of choices: what one row represents, how returns affect revenue, how to compare years, and what to do when the prior-year denominator is zero.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#project-brief",
+    "href": "ai-project-regional-growth.html#project-brief",
+    "title": "Project 1: Regional Growth",
+    "section": "",
+    "text": "You are a junior analyst on a finance team. The finance manager wants a concise explanation of how regional performance changed from 2025 to 2026.\nThis is the first project because the core calculation is familiar but full of choices: what one row represents, how returns affect revenue, how to compare years, and what to do when the prior-year denominator is zero.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#business-question",
+    "href": "ai-project-regional-growth.html#business-question",
+    "title": "Project 1: Regional Growth",
+    "section": "Business question",
+    "text": "Business question\n\nWhich regions grew the most in net revenue from 2025 to 2026, and what should the finance manager know before using the ranking?",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#data-contract",
+    "href": "ai-project-regional-growth.html#data-contract",
+    "title": "Project 1: Regional Growth",
+    "section": "Data contract",
+    "text": "Data contract\nAsk the AI assistant to create a reproducible hypothetical data frame called sales with:\n\nregion: character label;\nmonth: integer from 1 through 12;\nyear: integer;\nrevenue: numeric dollars before returns; and\nreturned_revenue: numeric dollars returned.\n\nEach row represents one region-month. Net revenue means revenue minus returned revenue.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#exact-prompt-to-use",
+    "href": "ai-project-regional-growth.html#exact-prompt-to-use",
+    "title": "Project 1: Regional Growth",
+    "section": "Exact prompt to use",
+    "text": "Exact prompt to use\n\nI am a junior business analyst working in R. Create a small reproducible hypothetical data frame named sales. Each row must represent one region-month. Include region as a character, month as an integer from 1 to 12, year as an integer, revenue as numeric dollars before returns, and returned_revenue as numeric dollars returned. Define net_revenue as revenue minus returned_revenue. Use dplyr and tidyr to keep 2025 and 2026, summarize total net revenue by region and year, reshape the result so each region has one row, and calculate year-over-year growth as (2026 net revenue minus 2025 net revenue) divided by 2025 net revenue. Return one row per region sorted by growth descending. Make the reporting period explicit, identify regions with zero or missing 2025 revenue, check for missing region values, and explain every transformation in plain English for a finance manager. Do not claim that growth proves a cause.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#what-to-inspect-in-the-response",
+    "href": "ai-project-regional-growth.html#what-to-inspect-in-the-response",
+    "title": "Project 1: Regional Growth",
+    "section": "What to inspect in the response",
+    "text": "What to inspect in the response\nBefore running the code, locate:\n\nThe line that defines the row unit.\nThe calculation of net revenue.\nThe filter for comparison years.\nThe grouping level before summarising.\nThe reshaping step that puts years side by side.\nThe denominator used for growth.\nThe treatment of missing and zero prior-year revenue.\nThe order of the final ranking.\n\nA frequent mistake is to calculate growth before aggregating to the region-year level. That produces a different metric: average monthly growth rather than annual regional growth.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#testing-protocol",
+    "href": "ai-project-regional-growth.html#testing-protocol",
+    "title": "Project 1: Regional Growth",
+    "section": "Testing protocol",
+    "text": "Testing protocol\nUse a tiny hand-check. If a region has 2025 net revenue of 100 and 2026 net revenue of 120, its growth should be 0.20, or 20 percent. If a region has no 2025 revenue, it should not receive an ordinary percentage-growth ranking without an explicit policy.\nCheck the generated output with:\n\nthe number of regions;\nthe number of region-year combinations;\nthe smallest and largest growth values;\nany missing growth values; and\nthe raw totals for one selected region.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#deliverable",
+    "href": "ai-project-regional-growth.html#deliverable",
+    "title": "Project 1: Regional Growth",
+    "section": "Deliverable",
+    "text": "Deliverable\nPrepare a short finance memo with:\n\nthe top-ranked region and its growth rate;\nthe definition of net revenue;\nthe comparison period;\nany region excluded or flagged because of missing or zero prior-year revenue; and\none limitation of ranking regions by percentage growth alone.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-project-regional-growth.html#extension-add-decision-context",
+    "href": "ai-project-regional-growth.html#extension-add-decision-context",
+    "title": "Project 1: Regional Growth",
+    "section": "Extension: add decision context",
+    "text": "Extension: add decision context\nAsk the AI assistant to add a second ranking based on absolute dollar change. Compare it with percentage growth. Explain why a small region can have the highest percentage growth while a large region contributes the largest dollar increase.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 1: Regional Growth"
+    ]
+  },
+  {
+    "objectID": "ai-getting-started.html",
+    "href": "ai-getting-started.html",
+    "title": "AI Coding Workflow: Getting Started",
+    "section": "",
+    "text": "An AI coding assistant is most useful when it can see the right context and when you can inspect the work it proposes. This chapter explains how to set up one assistant and establish a safe, repeatable workflow.\nThe examples use the ChatGPT desktop app with Codex as the primary path. Interface labels, account requirements, and availability can change, so use the current official Codex documentation and ChatGPT download page when you install the software.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "ai-getting-started.html#before-you-install",
+    "href": "ai-getting-started.html#before-you-install",
+    "title": "AI Coding Workflow: Getting Started",
+    "section": "Before you install",
+    "text": "Before you install\nPrepare three things:\n\nA current R installation and an editor such as RStudio or Positron.\nA folder for the course project, ideally tracked with Git.\nAn AI account approved for the type of data you plan to use.\n\nDo not upload confidential customer records, credentials, or regulated information to a tool unless your organization has explicitly approved that workflow. Start with simulated or de-identified data while learning.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "ai-getting-started.html#option-a-chatgpt-desktop-app-with-codex",
+    "href": "ai-getting-started.html#option-a-chatgpt-desktop-app-with-codex",
+    "title": "AI Coding Workflow: Getting Started",
+    "section": "Option A: ChatGPT desktop app with Codex",
+    "text": "Option A: ChatGPT desktop app with Codex\n\nDownload and install\n\nOpen the official ChatGPT download page.\nChoose the installer for Windows or macOS.\nRun the installer and follow the operating system prompts.\nOpen the ChatGPT desktop app and sign in with your account.\nIf the app offers a product selector, choose Codex. If Codex is not available, check your account, workspace, or administrator settings before troubleshooting the project.\nStart a new task and read the permissions or environment choices before accepting them.\n\nThe official OpenAI guidance describes Codex as a desktop workflow in which you sign in, choose a project, and send a first message. The app may present local, cloud, worktree, or other environment choices depending on your account and host.\n\n\nConnect a local course directory\n\nIn Codex, choose the option to open a local folder or project.\nSelect only the course directory you want the assistant to work with.\nGrant file access when prompted.\nConfirm that the opened project contains the files you expect, such as _quarto.yml and the Quarto documents.\nAsk the assistant to inspect the project before asking it to edit anything.\nKeep your original files under version control so changes can be reviewed or reverted safely.\n\nA useful first message is:\n\nInspect this Quarto project and summarize its current architecture. Do not modify files. Identify the site configuration, source pages, extensions, and any generated output directories.\n\n\n\nLearn the interface\nMost coding-agent interfaces have some version of these areas:\n\nA conversation or task panel for instructions and explanations.\nA file or project context area showing what the assistant can access.\nA terminal or command area for commands such as quarto render.\nA change or diff view where you can review proposed edits.\nAn approval or permission control for commands, file access, and external connections.\n\nTreat the diff as part of the analytical workflow. Read what changed, ask why it changed, and run the smallest relevant test before accepting a large revision.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "ai-getting-started.html#option-b-github-copilot-in-vs-code",
+    "href": "ai-getting-started.html#option-b-github-copilot-in-vs-code",
+    "title": "AI Coding Workflow: Getting Started",
+    "section": "Option B: GitHub Copilot in VS Code",
+    "text": "Option B: GitHub Copilot in VS Code\n\nInstall Visual Studio Code.\nOpen Extensions and search for GitHub Copilot.\nInstall the official GitHub Copilot extension.\nSign in with the GitHub account or organization that provides Copilot access.\nOpen the course folder in VS Code.\nCreate or open an R script or Quarto document.\nUse Copilot Chat to describe the business question and ask for an explanation before requesting code.\nReview suggested edits and run the code in RStudio, Quarto, or the Shinylive playground.\n\nCopilot is integrated into the editor; Codex can work across a project with a broader task-oriented workflow. The review principles are the same: provide context, inspect changes, run tests, and protect sensitive data.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "ai-getting-started.html#option-c-claude-or-claude-code",
+    "href": "ai-getting-started.html#option-c-claude-or-claude-code",
+    "title": "AI Coding Workflow: Getting Started",
+    "section": "Option C: Claude or Claude Code",
+    "text": "Option C: Claude or Claude Code\nYou can use the same workflow with Claude or Claude Code documentation:\n\nCreate or sign in to an approved account.\nInstall the desktop or command-line tool appropriate for your environment.\nOpen the course folder only after checking the tool’s local-file permissions.\nProvide the project context and business question.\nAsk for a plan and assumptions before asking for edits.\nPaste generated code into your R or Quarto workflow, then test it independently.\n\nThe tool may have different file, terminal, and approval controls. Learn those controls before using it with a real project.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "ai-getting-started.html#a-safe-first-session-checklist",
+    "href": "ai-getting-started.html#a-safe-first-session-checklist",
+    "title": "AI Coding Workflow: Getting Started",
+    "section": "A safe first-session checklist",
+    "text": "A safe first-session checklist\nBefore allowing an assistant to make changes, confirm:\n\nI know which folder it can read and write.\nI know whether it is operating locally or in a cloud environment.\nI have a recoverable copy or Git commit.\nI have removed secrets and confidential records.\nI know how to inspect a diff.\nI have a small test command ready, such as quarto render.\nI can explain the business definition the code is supposed to implement.\n\nSetup is successful when the assistant can see the appropriate project context and you can independently verify every material change.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html",
+    "href": "ai-debugging.html",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "",
+    "text": "Debugging is not a separate activity from analysis. It is the process of comparing what the code did with what you intended, then narrowing the difference until you can make a justified change.\nAn AI assistant can accelerate debugging, but only if you give it precise evidence and keep control of the test.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#read-the-console-in-layers",
+    "href": "ai-debugging.html#read-the-console-in-layers",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "Read the console in layers",
+    "text": "Read the console in layers\n\nOutput\nPrinted output is the value an expression returned. Inspect whether it has the expected number of rows, columns, groups, units, and range.\nA table with zero rows is output, not an error. It may mean a filter excluded everything.\n\n\nWarnings\nA warning means R completed an operation but wants you to review something. Common causes include missing values, failed type conversions, or values that could not be summarized.\nDo not hide warnings just to make a report look clean. Decide whether the warning indicates a data-quality problem, an expected edge case, or a mistake.\n\n\nErrors\nAn error means the requested operation did not complete. Read the final message and the function named near the top of the message. The error location is evidence about what R expected and what it received.\n\n\nMessages\nMessages are informational notices, such as package startup notes. They are not automatically failures.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#a-repeatable-debugging-loop",
+    "href": "ai-debugging.html#a-repeatable-debugging-loop",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "A repeatable debugging loop",
+    "text": "A repeatable debugging loop\n\nStep 1: Reproduce the smallest failure\nRun the smallest section of code that still produces the problem. If a long pipeline fails, execute the import, then the first transformation, then the next. This tells you which step changes the data into an unexpected shape.\n\n\nStep 2: Capture the evidence\nCopy:\n\nthe exact error or warning;\nthe smallest code that reproduces it;\nthe output of names(data), dim(data), and str(data);\nthe expected behavior; and\nany relevant package versions or file details.\n\nDo not send only “it does not work.” The assistant needs the mismatch, not just the conclusion.\n\n\nStep 3: Ask for explanation before a rewrite\nUse a prompt that asks the AI to diagnose the cause, explain the relevant R concept, and propose the smallest targeted fix. Ask it not to rewrite unrelated code.\n\n\nStep 4: Apply one change\nMake one change in your own script. If you change five things at once, you will not know which change solved the problem or created a new one.\n\n\nStep 5: Test the fix\nRun the smallest reproducing example again. Then run the full analysis and compare the output with the original business requirement.\n\n\nStep 6: Record the lesson\nWrite down what failed, why it failed, what fixed it, and how you verified the fix. A debugging note becomes a reusable review rule.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#common-error-patterns",
+    "href": "ai-debugging.html#common-error-patterns",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "Common error patterns",
+    "text": "Common error patterns\n\n\n\n\n\n\n\nMessage or symptom\nWhat to investigate\n\n\n\n\nobject ‘x’ not found\nMisspelled name, wrong execution order, or object created in a different scope\n\n\ncould not find function\nPackage is missing, not loaded, or the function name is wrong\n\n\nundefined columns selected\nColumn name does not match the data\n\n\nnon-numeric argument to binary operator\nText, factors, or missing values are being used in arithmetic\n\n\nreplacement has length zero\nThe object being assigned has no values or the index is empty\n\n\nunexpected results with no error\nWrong filter, join, grouping level, sign, unit, or denominator\n\n\n\nThe final row is particularly important in business analytics. Correct syntax can still produce an incorrect business result.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#a-debugging-prompt-template",
+    "href": "ai-debugging.html#a-debugging-prompt-template",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "A debugging prompt template",
+    "text": "A debugging prompt template\n\nI am working in R. Here is the smallest code that reproduces the issue: [paste code]. Here is the exact console output: [paste the complete message]. The data have these columns and types: [paste names and structure]. I expected: [describe expected behavior]. Please explain the likely cause in plain English, identify the specific line involved, suggest the smallest fix, and give me one test that will verify the fix. Do not rewrite unrelated parts of the code.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#reverse-engineer-the-proposed-fix",
+    "href": "ai-debugging.html#reverse-engineer-the-proposed-fix",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "Reverse-engineer the proposed fix",
+    "text": "Reverse-engineer the proposed fix\nWhen the AI suggests a change, ask:\n\nWhat assumption about the data does this fix rely on?\nDoes it change the result or only suppress the error?\nWill it work for missing values, empty groups, and new categories?\nDoes it preserve the business definition?\nWhat test would fail if the fix were wrong?\n\nFor example, if a tool suggests converting a character column to numeric, first inspect the values. Currency symbols, commas, text such as “unknown,” and empty strings may require different handling.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#debugging-joins-and-summaries",
+    "href": "ai-debugging.html#debugging-joins-and-summaries",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "Debugging joins and summaries",
+    "text": "Debugging joins and summaries\nJoins and summaries deserve extra attention because they can produce plausible but inflated results.\nFor a join, check:\n\nthe intended key;\nwhether the key is unique in each table;\nthe join type;\nthe number of rows before and after; and\nwhether unmatched records matter.\n\nFor a summary, check:\n\nthe observation unit;\nthe grouping columns;\nwhether the measure should be summed or averaged;\nwhether the denominator is weighted; and\nwhether missing values are excluded intentionally.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-debugging.html#when-the-code-runs-but-the-answer-is-wrong",
+    "href": "ai-debugging.html#when-the-code-runs-but-the-answer-is-wrong",
+    "title": "AI Coding Workflow: Debugging",
+    "section": "When the code runs but the answer is wrong",
+    "text": "When the code runs but the answer is wrong\nUse a result audit:\n\nprint the first and last rows;\ncount records before and after each filter;\ninspect a few records manually;\ncompare a total with an independent calculation;\ncheck the smallest and largest values;\ntest a known case; and\nask a stakeholder whether the metric matches their definition.\n\nThe best debugging question is often not “How do I fix this error?” It is “What would have to be true for this result to be correct?”",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Debugging"
+    ]
+  },
+  {
+    "objectID": "ai-exercises.html",
+    "href": "ai-exercises.html",
+    "title": "AI Coding Workflow: Project Map",
+    "section": "",
+    "text": "These projects practice the full workflow: define a business question, specify a data contract, ask an AI tool for a reproducible R solution, and review the result against the request.\nEach project is a standalone mini-case. Open the project page, copy its exact prompt into ChatGPT, Codex, Claude, or another approved assistant, and then evaluate the returned code in your own environment.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Practice Exercises"
+    ]
+  },
+  {
+    "objectID": "ai-exercises.html#a-progression-in-analytical-complexity",
+    "href": "ai-exercises.html#a-progression-in-analytical-complexity",
+    "title": "AI Coding Workflow: Project Map",
+    "section": "A progression in analytical complexity",
+    "text": "A progression in analytical complexity\n\nProject 1: Regional Growth\nBegin with grouped summaries and a year-over-year metric. This project emphasizes observation units, time periods, denominators, and edge cases such as zero prior-year revenue.\n\n\nProject 2: Customer Value\nMove from order-level data to customer-level features and business-defined segments. This project emphasizes unique identifiers, reproducible date windows, thresholds, and missing data.\n\n\nProject 3: Store Operations\nCombine financial, operational, and quality measures in a stakeholder-facing application. This project emphasizes validation checks, descriptive versus causal claims, and the limits of a single ranking.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Practice Exercises"
+    ]
+  },
+  {
+    "objectID": "ai-exercises.html#the-project-review-protocol",
+    "href": "ai-exercises.html#the-project-review-protocol",
+    "title": "AI Coding Workflow: Project Map",
+    "section": "The project review protocol",
+    "text": "The project review protocol\nFor every project:\n\nread the business request and identify the decision-maker;\ncopy the exact prompt and inspect the AI’s plan;\npaste the generated code into an R script, Quarto document, or the Sandbox;\ntest row counts, keys, filters, calculations, and output order;\nask the AI to explain any error before applying a fix; and\nwrite a stakeholder note that states the result, definition, and limitation.\n\nThe objective is not to obtain the longest script. It is to produce an analysis whose inputs, transformations, and claims can be inspected.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Practice Exercises"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html",
+    "href": "ai-project-customer-value.html",
+    "title": "Project 2: Customer Value",
+    "section": "",
+    "text": "You are an analyst supporting a subscription business. The marketing team wants a simple, transparent customer-value segmentation that can be used to prioritize outreach.\nThis project increases complexity by moving from order-level records to customer-level features. The central review question is whether the code counts and summarizes at the correct level.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#project-brief",
+    "href": "ai-project-customer-value.html#project-brief",
+    "title": "Project 2: Customer Value",
+    "section": "",
+    "text": "You are an analyst supporting a subscription business. The marketing team wants a simple, transparent customer-value segmentation that can be used to prioritize outreach.\nThis project increases complexity by moving from order-level records to customer-level features. The central review question is whether the code counts and summarizes at the correct level.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#business-question",
+    "href": "ai-project-customer-value.html#business-question",
+    "title": "Project 2: Customer Value",
+    "section": "Business question",
+    "text": "Business question\n\nWhich customers are Low, Core, or High value based on completed spending in the last twelve months, and how large is each segment?",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#data-contract",
+    "href": "ai-project-customer-value.html#data-contract",
+    "title": "Project 2: Customer Value",
+    "section": "Data contract",
+    "text": "Data contract\nAsk the AI assistant to create a reproducible hypothetical data frame called orders with:\n\ncustomer_id: character identifier;\norder_date: Date;\norder_value: numeric dollars; and\nstatus: character order status.\n\nEach row represents one order. The analysis should use completed orders only and should define a fixed analysis date so that the results can be reproduced.\nUse these segment rules:\n\nLow: total completed spend below 500;\nCore: total completed spend from 500 through 1,999.99; and\nHigh: total completed spend of 2,000 or more.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#exact-prompt-to-use",
+    "href": "ai-project-customer-value.html#exact-prompt-to-use",
+    "title": "Project 2: Customer Value",
+    "section": "Exact prompt to use",
+    "text": "Exact prompt to use\n\nWrite a reproducible R analysis using dplyr for a hypothetical data frame named orders. Each row represents one order. The columns are customer_id as character, order_date as Date, order_value as numeric dollars, and status as character. Create a fixed analysis_date in the example and keep only completed orders in the twelve months ending on that date. Exclude or clearly report missing customer IDs and missing order values. Summarize total completed spend, order count, and average order value for each unique customer_id. Classify customers as Low when total spend is below 500, Core when total spend is from 500 through 1,999.99, and High when total spend is 2,000 or more. Return both a customer-level table and a segment summary with customer count, total spend, and average customer spend. Include checks for duplicate order IDs, unexpected status values, missing dates, and whether the segment thresholds cover every customer. Explain the transformations in plain English for a marketing manager.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#what-to-inspect-in-the-response",
+    "href": "ai-project-customer-value.html#what-to-inspect-in-the-response",
+    "title": "Project 2: Customer Value",
+    "section": "What to inspect in the response",
+    "text": "What to inspect in the response\nFocus on the difference between an order and a customer:\n\nIs the segment assigned after grouping by customer_id?\nIs order count counted before or after customer aggregation?\nAre incomplete, cancelled, or returned orders treated consistently?\nIs the twelve-month period inclusive and reproducible?\nIs average order value different from average customer spend?\nAre customers with missing IDs excluded from the segment table?\nAre the threshold boundaries implemented exactly?\n\nAn AI tool may use n() when the requirement is a unique customer count. That is correct in the customer-level table only if one row has already been created per customer.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#testing-protocol",
+    "href": "ai-project-customer-value.html#testing-protocol",
+    "title": "Project 2: Customer Value",
+    "section": "Testing protocol",
+    "text": "Testing protocol\nCreate a hand-check customer with three completed orders of 200, 150, and 200 dollars. The customer should have total spend of 550 and belong to the Core segment. Add a cancelled order and verify that it does not change the segment if the business definition says completed orders only.\nAlso inspect:\n\ntotal rows before and after the date filter;\ntotal customers before and after missing-ID handling;\nthe sum of segment customer counts;\nthe sum of segment spend; and\nthe minimum and maximum customer spend.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#deliverable",
+    "href": "ai-project-customer-value.html#deliverable",
+    "title": "Project 2: Customer Value",
+    "section": "Deliverable",
+    "text": "Deliverable\nPrepare a marketing brief with:\n\nthe count and share of customers in each segment;\nthe total spend represented by each segment;\nthe definition of value used;\none action the marketing team could consider for each segment; and\none reason the segmentation should not be treated as a permanent customer identity.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-customer-value.html#extension-compare-threshold-and-quantile-approaches",
+    "href": "ai-project-customer-value.html#extension-compare-threshold-and-quantile-approaches",
+    "title": "Project 2: Customer Value",
+    "section": "Extension: compare threshold and quantile approaches",
+    "text": "Extension: compare threshold and quantile approaches\nAsk the AI assistant to create a second version using quantiles rather than fixed dollar thresholds. Compare the interpretability, stability, and business usefulness of the two approaches. Explain which method you would recommend and why.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 2: Customer Value"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html",
+    "href": "ai-project-store-operations.html",
+    "title": "Project 3: Store Operations",
+    "section": "",
+    "text": "You are supporting a retail operations director who wants to identify stores that combine strong sales with manageable checkout times. The request sounds like a ranking problem, but it actually combines data quality, financial measures, operational measures, and communication risk.\nThis project is intentionally multi-faceted. A polished table is not enough; the analysis must show what was included, how the metrics were defined, and what the evidence cannot prove.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#project-brief",
+    "href": "ai-project-store-operations.html#project-brief",
+    "title": "Project 3: Store Operations",
+    "section": "",
+    "text": "You are supporting a retail operations director who wants to identify stores that combine strong sales with manageable checkout times. The request sounds like a ranking problem, but it actually combines data quality, financial measures, operational measures, and communication risk.\nThis project is intentionally multi-faceted. A polished table is not enough; the analysis must show what was included, how the metrics were defined, and what the evidence cannot prove.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#business-question",
+    "href": "ai-project-store-operations.html#business-question",
+    "title": "Project 3: Store Operations",
+    "section": "Business question",
+    "text": "Business question\n\nWhich stores are performing strongly, which stores may need an operational review, and what evidence supports those observations?",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#data-contract",
+    "href": "ai-project-store-operations.html#data-contract",
+    "title": "Project 3: Store Operations",
+    "section": "Data contract",
+    "text": "Data contract\nAsk the AI assistant to create a reproducible hypothetical data frame called transactions with:\n\nstore_id: character store identifier;\ntransaction_id: character transaction identifier;\ntransaction_date: Date;\nsales: numeric dollars;\nunits: integer units sold; and\ncheckout_minutes: numeric time from checkout start to completion.\n\nEach row represents one transaction.\nThe analysis should:\n\nexclude rows missing store_id or transaction_id and report how many were excluded;\ncheck for duplicate transaction IDs;\nflag negative sales;\ncalculate unique transaction count, total sales, total units, average basket value, average units per transaction, and median checkout time by store;\nflag stores with median checkout time above 8 minutes; and\ndistinguish descriptive evidence from causal claims.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#exact-prompt-to-use",
+    "href": "ai-project-store-operations.html#exact-prompt-to-use",
+    "title": "Project 3: Store Operations",
+    "section": "Exact prompt to use",
+    "text": "Exact prompt to use\n\nBuild a self-contained R/Shiny example using shiny and dplyr for a hypothetical data frame named transactions. Each row represents one transaction. Columns are store_id as character, transaction_id as character, transaction_date as Date, sales as numeric dollars, units as integer, and checkout_minutes as numeric. Create a reproducible example with a fixed seed. Before summarising, report rows missing store_id or transaction_id, duplicate transaction IDs, negative sales, and missing operational measures. Exclude rows missing store_id or transaction_id, but do not silently discard them. Calculate one row per store with unique transaction count, total sales, total units, average basket value, average units per transaction, and median checkout time. Add an operational_watch flag when median checkout time is above 8 minutes. Sort the summary by total sales descending. Display the quality checks, the store summary, and a cautious plain-English interpretation. Explain that the results are descriptive and do not prove that checkout time causes sales performance. Use only shiny and dplyr.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#what-to-inspect-in-the-response",
+    "href": "ai-project-store-operations.html#what-to-inspect-in-the-response",
+    "title": "Project 3: Store Operations",
+    "section": "What to inspect in the response",
+    "text": "What to inspect in the response\nThis project has several opportunities for an AI-generated script to look reasonable while being wrong:\n\nDoes the code count unique transactions or raw rows?\nAre invalid rows reported before they are removed?\nDoes a negative sale get hidden in a total?\nIs average basket value total sales divided by transaction count?\nIs average units per transaction calculated at the store level?\nIs median used intentionally for checkout time?\nDoes the operational flag apply to the same store-level summary?\nDoes the narrative overstate correlation as causation?\n\nThe phrase “best store” is deliberately avoided. A store can lead in sales while having slow checkout, or have fast checkout while serving a smaller customer base.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#testing-protocol",
+    "href": "ai-project-store-operations.html#testing-protocol",
+    "title": "Project 3: Store Operations",
+    "section": "Testing protocol",
+    "text": "Testing protocol\nUse a small manual test with a store that has two transactions: 100 dollars and 50 dollars, with one unit and two units. Its total sales should be 150, transaction count should be 2, average basket value should be 75, and average units per transaction should be 1.5.\nThen test the quality checks by adding:\n\na missing store identifier;\na duplicate transaction ID;\na negative sales value; and\na missing checkout time.\n\nConfirm that the code reports each issue and that the summary’s inclusion rules are visible.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#deliverable",
+    "href": "ai-project-store-operations.html#deliverable",
+    "title": "Project 3: Store Operations",
+    "section": "Deliverable",
+    "text": "Deliverable\nPrepare an operations dashboard note with:\n\nthe store-level summary;\nthe stores flagged for operational review;\nthe quality issues found;\ntwo descriptive observations; and\none statement explaining why the analysis does not establish causation.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "ai-project-store-operations.html#extension-build-a-decision-matrix",
+    "href": "ai-project-store-operations.html#extension-build-a-decision-matrix",
+    "title": "Project 3: Store Operations",
+    "section": "Extension: build a decision matrix",
+    "text": "Extension: build a decision matrix\nAsk the AI assistant to add a four-quadrant classification using sales rank and checkout-time rank:\n\nstrong sales and manageable checkout;\nstrong sales and operational watch;\nlower sales and manageable checkout; and\nlower sales and operational watch.\n\nRequire the assistant to explain the cutoffs, identify their arbitrariness, and preserve the original measures beside the classification. This is a more decision-oriented output, but it also introduces more assumptions for you to audit.",
+    "crumbs": [
+      "The AI Coding Workflow",
+      "Project 3: Store Operations"
+    ]
+  },
+  {
+    "objectID": "data-wrangling.html",
+    "href": "data-wrangling.html",
+    "title": "Data Wrangling with dplyr",
+    "section": "",
+    "text": "Business data rarely arrives in the exact shape needed for a decision. Data wrangling is the process of selecting relevant observations, creating useful measures, grouping records, and producing a summary that answers a question.\nThe dplyr package organizes these tasks into a small set of readable verbs. A pipeline expresses the transformation as a sequence from top to bottom.",
+    "crumbs": [
+      "The R Foundation",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "data-wrangling.html#the-pipe",
+    "href": "data-wrangling.html#the-pipe",
+    "title": "Data Wrangling with dplyr",
+    "section": "The pipe",
+    "text": "The pipe\nThe base R pipe, written as |&gt;, passes the result of the expression on its left into the function on its right:\n\nmtcars |&gt;\n  head()\n\nMany R courses also use the pipe from magrittr, written as %&gt;%. Both styles support the same general idea. The base pipe is part of modern R and avoids requiring a separate package for the pipe itself.",
+    "crumbs": [
+      "The R Foundation",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "data-wrangling.html#the-core-dplyr-verbs",
+    "href": "data-wrangling.html#the-core-dplyr-verbs",
+    "title": "Data Wrangling with dplyr",
+    "section": "The core dplyr verbs",
+    "text": "The core dplyr verbs\n\nfilter(): choose rows\nUse filter() to keep observations that satisfy a condition. In a business dataset, this might mean a date range, region, customer segment, or product category.\n\nmtcars |&gt;\n  dplyr::filter(cyl &gt;= 6)\n\n\n\nselect(): choose columns\nUse select() to keep only the variables needed for the next step or the final report.\n\nmtcars |&gt;\n  dplyr::select(mpg, cyl, hp, wt)\n\n\n\nmutate(): create variables\nUse mutate() to add or modify columns. Every derived measure should have a clear definition and compatible units.\n\nmtcars |&gt;\n  dplyr::mutate(power_to_weight = hp / wt)\n\n\n\nsummarise(): reduce rows to metrics\nUse summarise() to calculate a smaller set of values, often after grouping. Common summary functions include mean(), sum(), median(), min(), max(), and n().\n\n\ngroup_by(): define the comparison\ngroup_by() tells dplyr to calculate summaries separately for each group. A summary without grouping answers a different question from a summary by region, segment, or month.\n\n\narrange(): sort the result\nUse arrange() to order rows. Add desc() inside arrange() when the largest values should appear first.",
+    "crumbs": [
+      "The R Foundation",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "data-wrangling.html#a-complete-pipeline-with-mtcars",
+    "href": "data-wrangling.html#a-complete-pipeline-with-mtcars",
+    "title": "Data Wrangling with dplyr",
+    "section": "A complete pipeline with mtcars",
+    "text": "A complete pipeline with mtcars\nThe built-in mtcars dataset contains one row per car model. For this teaching example, treat the cars as a product portfolio. We will:\n\nkeep cars with at least six cylinders;\nkeep the columns needed for the analysis;\ncalculate horsepower per unit of weight;\ngroup cars by cylinder count;\ncalculate group-level metrics; and\nsort the groups by average fuel efficiency.\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\nlibrary(dplyr)\n\ncar_summary &lt;- mtcars |&gt;\n  tibble::as_tibble(rownames = \"model\") |&gt;\n  filter(cyl &gt;= 6) |&gt;\n  select(model, mpg, cyl, hp, wt) |&gt;\n  mutate(power_to_weight = hp / wt) |&gt;\n  group_by(cyl) |&gt;\n  summarise(\n    cars = n(),\n    average_mpg = mean(mpg),\n    average_hp = mean(hp),\n    average_power_to_weight = mean(power_to_weight),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(average_mpg))\n\nui &lt;- fluidPage(\n  h3(\"Product portfolio summary\"),\n  p(\"The table compares car groups with six or more cylinders.\"),\n  tableOutput(\"summary_table\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$summary_table &lt;- renderTable({\n    car_summary\n  }, digits = 1)\n}\n\nshinyApp(ui, server)",
+    "crumbs": [
+      "The R Foundation",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "data-wrangling.html#read-the-pipeline-as-a-business-analyst",
+    "href": "data-wrangling.html#read-the-pipeline-as-a-business-analyst",
+    "title": "Data Wrangling with dplyr",
+    "section": "Read the pipeline as a business analyst",
+    "text": "Read the pipeline as a business analyst\nA pipeline is not automatically correct because it is readable. Ask:\n\nDoes the filter include the population the stakeholder intended?\nAre the selected columns sufficient to audit the calculation?\nAre the units compatible in every mutate() expression?\nIs the grouping level appropriate for the decision?\nDoes the summary hide important variation?\nIs the sort order emphasizing the right outcome?\n\nThese questions are equally important when the pipeline was written by you or generated by an AI assistant.",
+    "crumbs": [
+      "The R Foundation",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "r-basics.html",
+    "href": "r-basics.html",
+    "title": "R Basics: A Complete Foundation",
+    "section": "",
+    "text": "R is both a programming language and an environment for working with data. A business analyst uses R to represent a question, transform observations, calculate measures, visualize patterns, and create a record of the work.\nThis chapter builds the vocabulary needed to read and direct R code generated by an AI assistant.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#r-as-a-calculator",
+    "href": "r-basics.html#r-as-a-calculator",
+    "title": "R Basics: A Complete Foundation",
+    "section": "1. R as a calculator",
+    "text": "1. R as a calculator\nR can evaluate arithmetic expressions:\n\nrevenue &lt;- 185000\ncost &lt;- 112000\nprofit &lt;- revenue - cost\nmargin &lt;- profit / revenue\n\nThe assignment operator &lt;- stores a result under a name. The expression on the right is evaluated first. Use descriptive names that communicate the business meaning of an object.\n\nOperators\nCommon operators include:\n\n\n\nOperator\nMeaning\nExample\n\n\n\n\n+, -, *, /\nArithmetic\nrevenue - cost\n\n\n^\nExponent\ngrowth_rate ^ 2\n\n\n==\nEqual to\nregion == “North”\n\n\n!=\nNot equal to\nstatus != “Cancelled”\n\n\n&gt;, &lt;, &gt;=, &lt;=\nComparison\nrevenue &gt;= 10000\n\n\n&, |\nAnd, or for vectors\nactive & revenue &gt; 0\n\n\n!\nNot\n!returned\n\n\n\nThe single equals sign is used inside function arguments or assignments in other languages, while R commonly uses &lt;- for assignment and == for comparison.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#core-data-types",
+    "href": "r-basics.html#core-data-types",
+    "title": "R Basics: A Complete Foundation",
+    "section": "2. Core data types",
+    "text": "2. Core data types\nR uses different data types to represent different kinds of information:\n\n\n\n\n\n\n\n\nType\nExample\nBusiness use\n\n\n\n\nNumeric\n185000, 0.12\nRevenue, quantity, margin, rate\n\n\nCharacter\n“North”, “Enterprise”\nRegion, segment, product label\n\n\nLogical\nTRUE, FALSE\nFlags such as active or approved\n\n\nInteger\n1L, 12L\nCounts and positions\n\n\nDate\nas.Date(“2026-01-15”)\nTransaction dates and reporting periods\n\n\n\nInspect an object with class(), typeof(), and str():\n\namount &lt;- 185000\nregion &lt;- \"North\"\napproved &lt;- TRUE\nreport_date &lt;- as.Date(\"2026-01-15\")\n\nclass(amount)\ntypeof(region)\nstr(list(amount = amount, region = region, approved = approved, report_date = report_date))\n\nA type mismatch is a common source of errors. A number stored as character text cannot be reliably added to another number until it is cleaned and converted. A date stored as text may sort alphabetically rather than chronologically.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#vectors",
+    "href": "r-basics.html#vectors",
+    "title": "R Basics: A Complete Foundation",
+    "section": "3. Vectors",
+    "text": "3. Vectors\nA vector is a sequence of values. Most columns in a business dataset are vectors, with one value for each observation.\n\nregions &lt;- c(\"North\", \"South\", \"West\")\nsales &lt;- c(42000, 38500, 51750)\nis_target_met &lt;- c(TRUE, FALSE, TRUE)\n\nlength(regions)\nsales * 1.05\nsales &gt; 40000\n\nR performs element-by-element operations on vectors. Be careful when vectors have different lengths: R may recycle the shorter vector, which can be useful but can also hide a mistake.\nMissing values are represented by NA. Test for them with is.na(); do not compare with == NA.\n\nscores &lt;- c(91, 87, NA, 94)\n\nis.na(scores)\nmean(scores, na.rm = TRUE)\n\nThe business decision about missing data belongs in the analysis plan. Removing missing values can change the population being described.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#indexing-and-subsetting",
+    "href": "r-basics.html#indexing-and-subsetting",
+    "title": "R Basics: A Complete Foundation",
+    "section": "4. Indexing and subsetting",
+    "text": "4. Indexing and subsetting\nUse square brackets to select positions or conditions:\n\nsales[1]\nsales[1:2]\nsales[sales &gt; 40000]\nregions[sales &gt; 40000]\n\nThe expression sales &gt; 40000 produces a logical vector. Using that vector inside brackets keeps only the corresponding values. This pattern is the foundation for filtering rows in more advanced tools.\nUse the dollar sign to select a named column from a data frame:\n\nregional_sales &lt;- data.frame(\n  region = regions,\n  sales = sales,\n  target_met = is_target_met\n)\n\nregional_sales$region\nregional_sales[regional_sales$sales &gt; 40000, ]",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#data-frames-and-tibbles",
+    "href": "r-basics.html#data-frames-and-tibbles",
+    "title": "R Basics: A Complete Foundation",
+    "section": "5. Data frames and tibbles",
+    "text": "5. Data frames and tibbles\nA data frame combines equal-length vectors into rows and columns. Each row can represent a transaction, customer, store, or month. Each column represents a variable or measure.\n\nhead(regional_sales)\nnrow(regional_sales)\nncol(regional_sales)\nnames(regional_sales)\nsummary(regional_sales)\n\nA tibble is a modern data-frame format used throughout the tidyverse. It prints compactly and makes column behavior easier to inspect. The two structures represent rectangular data; the difference is mostly in printing and modern defaults.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#functions",
+    "href": "r-basics.html#functions",
+    "title": "R Basics: A Complete Foundation",
+    "section": "6. Functions",
+    "text": "6. Functions\nA function packages a reusable operation. Functions take arguments and return a result:\n\nmean(sales)\nround(mean(sales), digits = 0)\nsort(sales, decreasing = TRUE)\n\nYou can write your own function when a calculation will be repeated:\n\nmargin_rate &lt;- function(revenue, cost) {\n  (revenue - cost) / revenue\n}\n\nmargin_rate(185000, 112000)\n\nA good business function has clear inputs, a clear output, and a definition that a stakeholder can understand.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#conditional-logic",
+    "href": "r-basics.html#conditional-logic",
+    "title": "R Basics: A Complete Foundation",
+    "section": "7. Conditional logic",
+    "text": "7. Conditional logic\nUse if and else for a decision involving one value. Use ifelse() or dplyr’s if_else() for vectorized decisions.\n\nprofit &lt;- 73000\n\nif (profit &gt; 0) {\n  \"Profitable\"\n} else {\n  \"Loss\"\n}\n\nperformance &lt;- ifelse(sales &gt;= 40000, \"Above threshold\", \"Below threshold\")\nperformance\n\nWrite the threshold and its meaning down. A label such as “high value” is not self-explanatory unless the business rule is documented.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#repetition-and-iteration",
+    "href": "r-basics.html#repetition-and-iteration",
+    "title": "R Basics: A Complete Foundation",
+    "section": "8. Repetition and iteration",
+    "text": "8. Repetition and iteration\nMany business transformations can be expressed with vectorized operations and dplyr. Base R also provides loops and apply functions for repeated work.\n\nmonthly_sales &lt;- c(42000, 38500, 51750)\n\nfor (month_sales in monthly_sales) {\n  print(month_sales * 1.05)\n}\n\nLoops are useful, but they are not automatically better. Ask an AI assistant to explain whether a vectorized or grouped solution is clearer before accepting a complex loop.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#packages-scripts-and-projects",
+    "href": "r-basics.html#packages-scripts-and-projects",
+    "title": "R Basics: A Complete Foundation",
+    "section": "9. Packages, scripts, and projects",
+    "text": "9. Packages, scripts, and projects\nR’s core installation is extended by packages. A package may provide functions, datasets, documentation, and dependencies.\n\ninstall.packages() downloads a package once;\nlibrary() makes an installed package available in a session;\npackage documentation describes intended behavior; and\na project folder keeps scripts, data, and rendered outputs organized.\n\nA reproducible analysis records the packages and versions it relies on. When an AI-generated script begins with several library() calls, treat them as part of the data contract, not as decoration.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#practice-in-a-live-application",
+    "href": "r-basics.html#practice-in-a-live-application",
+    "title": "R Basics: A Complete Foundation",
+    "section": "10. Practice in a live application",
+    "text": "10. Practice in a live application\nThe application below creates objects of several basic types and shows how vectors become a data frame. Run it, then edit the values. Try adding a region, changing a logical flag, or calculating a new margin column.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\n\nregions &lt;- c(\"North\", \"South\", \"West\")\nsales &lt;- c(42000, 38500, 51750)\nis_target_met &lt;- c(TRUE, FALSE, TRUE)\n\nregional_sales &lt;- data.frame(\n  region = regions,\n  sales = sales,\n  target_met = is_target_met\n)\n\nregional_sales$margin &lt;- c(0.31, 0.27, 0.34)\n\nui &lt;- fluidPage(\n  h3(\"R objects, types, vectors, and data frames\"),\n  p(\"The table combines vectors into a small business dataset.\"),\n  h4(\"Object inspection\"),\n  verbatimTextOutput(\"types\"),\n  h4(\"Regional sales data\"),\n  tableOutput(\"sales_table\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$types &lt;- renderPrint({\n    list(\n      regions_class = class(regions),\n      sales_class = class(sales),\n      target_flag_class = class(is_target_met),\n      table_dimensions = c(nrow(regional_sales), ncol(regional_sales)),\n      column_names = names(regional_sales)\n    )\n  })\n\n  output$sales_table &lt;- renderTable({\n    regional_sales\n  }, digits = 2)\n}\n\nshinyApp(ui, server)",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "r-basics.html#foundation-checklist",
+    "href": "r-basics.html#foundation-checklist",
+    "title": "R Basics: A Complete Foundation",
+    "section": "Foundation checklist",
+    "text": "Foundation checklist\nBefore moving to data wrangling, you should be able to:\n\nassign and inspect named objects;\ndistinguish numeric, character, logical, integer, and date values;\ncreate and inspect vectors;\nidentify and handle missing values;\nsubset vectors and data frames;\nread a function call and its arguments;\nexplain a conditional rule; and\nidentify which packages a script requires.\n\nWhen an AI assistant proposes code, these foundations let you ask better questions about what the code receives, what it returns, and what the business result means.",
+    "crumbs": [
+      "The R Foundation",
+      "R Basics"
+    ]
+  },
+  {
+    "objectID": "sandbox.html",
+    "href": "sandbox.html",
+    "title": "Sandbox",
+    "section": "",
+    "text": "Use this page to test code generated by an AI assistant. Copy a complete R/Shiny application into the editor, run it, inspect the result, and revise it in small steps.\nBefore using real data, remove confidential information and confirm that the code uses the correct files, packages, filters, and business definitions.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]",
+    "crumbs": [
+      "Playground",
+      "Sandbox"
+    ]
+  },
+  {
+    "objectID": "sandbox.html#a-blank-slate-for-testing",
+    "href": "sandbox.html#a-blank-slate-for-testing",
+    "title": "Sandbox",
+    "section": "",
+    "text": "Use this page to test code generated by an AI assistant. Copy a complete R/Shiny application into the editor, run it, inspect the result, and revise it in small steps.\nBefore using real data, remove confidential information and confirm that the code uses the correct files, packages, filters, and business definitions.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]",
+    "crumbs": [
+      "Playground",
+      "Sandbox"
+    ]
+  }
+]
