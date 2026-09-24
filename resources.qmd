@@ -1,0 +1,73 @@
+---
+title: "Sources Used in This Course"
+---
+
+This page is a working bibliography for the course. These are the sources we used to shape the examples, explanations, technical setup, and human-in-the-loop AI workflow. The business projects are original teaching scenarios designed for this site; they are not copied case studies.
+
+## R and data science foundations
+
+### [R for Data Science, 2nd edition](https://r4ds.hadley.nz/)
+
+Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund’s open textbook informed the progression from data import and transformation to visualization and communication. Its emphasis on a repeatable data-science workflow shaped the organization of the R Foundation section.
+
+### [The R Project for Statistical Computing](https://www.r-project.org/)
+
+The official R project site was used for language-level context, installation references, and the distinction between the R language and contributed packages.
+
+### [R Language Definition](https://cran.r-project.org/doc/manuals/r-release/R-lang.html)
+
+This official manual informed the explanations of objects, evaluation, vectors, indexing, functions, and control flow. It is a technical reference rather than a beginner tutorial.
+
+### [dplyr documentation](https://dplyr.tidyverse.org/)
+
+The dplyr reference informed the descriptions of filter, select, mutate, summarise, group_by, arrange, and the behavior of grouped data.
+
+### [ggplot2 documentation](https://ggplot2.tidyverse.org/)
+
+The ggplot2 reference informed the visualization chapter’s explanation of data, aesthetic mappings, geometric layers, scales, and labels.
+
+## Quarto and browser-based R
+
+### [Quarto documentation](https://quarto.org/docs/)
+
+Quarto’s project, website, executable-document, and sidebar documentation informed the site architecture and rendering workflow.
+
+### [Quarto website documentation](https://quarto.org/docs/websites/)
+
+The website guide informed the project configuration, sidebar organization, page navigation, and static-site workflow.
+
+### [Shinylive for R](https://github.com/posit-dev/r-shinylive)
+
+The R Shinylive package documentation informed the client-side execution model and the package requirements for browser-based Shiny applications.
+
+### [Shinylive Quarto extension](https://quarto-ext.github.io/shinylive/)
+
+The extension documentation informed the live code-block syntax used throughout the course:
+
+
+The live blocks use the shinylive-r code label with standalone set to true and editor/viewer components. They are complete Shiny applications so students can connect R code, data preparation, and output.
+
+## AI-assisted analysis and responsible use
+
+### [OpenAI Codex documentation](https://developers.openai.com/learn/codex)
+
+The Codex setup chapter uses the official OpenAI documentation for current product orientation and project-based coding workflows. Product labels, access, and permissions can change, so the official page is the source of truth for current setup details.
+
+### [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
+
+The NIST framework informed the course’s emphasis on context, evaluation, verification, validation, documentation, and human accountability when AI is used in an organizational workflow. The framework is voluntary and is not a substitute for an organization’s own policies.
+
+### [NIST AI Resource Center](https://airc.nist.gov/)
+
+The AI Resource Center informed the distinction between generating an AI-assisted draft and evaluating whether an AI-enabled workflow is trustworthy for its intended use.
+
+## Business-analytics inspiration
+
+The project scenarios use familiar business-analytics patterns: regional growth reporting, customer value segmentation, store performance, operational monitoring, and stakeholder communication. These patterns were informed by the kinds of transformations emphasized in R for Data Science and by the NIST focus on defining the business context before evaluating an AI system.
+
+The datasets in the projects are hypothetical. They are intentionally small enough for a student to inspect row by row and are not claims about any particular company, market, or benchmark.
+
+## How this bibliography should be read
+
+These sources were used during design and implementation. They are not a list of fallback tutorials or a ranking of “best” resources. When a page in this course explains a package or workflow, follow the linked primary documentation for the authoritative and current version.
+
