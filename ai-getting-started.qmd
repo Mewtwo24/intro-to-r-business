@@ -1,0 +1,97 @@
+---
+title: "AI Coding Workflow: Getting Started"
+---
+
+An AI coding assistant is most useful when it can see the right context and when you can inspect the work it proposes. This chapter explains how to set up one assistant and establish a safe, repeatable workflow.
+
+The examples use the ChatGPT desktop app with Codex as the primary path. Interface labels, account requirements, and availability can change, so use the current [official Codex documentation](https://developers.openai.com/learn/codex) and [ChatGPT download page](https://chatgpt.com/download/) when you install the software.
+
+## Before you install
+
+Prepare three things:
+
+1. A current R installation and an editor such as RStudio or Positron.
+2. A folder for the course project, ideally tracked with Git.
+3. An AI account approved for the type of data you plan to use.
+
+Do not upload confidential customer records, credentials, or regulated information to a tool unless your organization has explicitly approved that workflow. Start with simulated or de-identified data while learning.
+
+## Option A: ChatGPT desktop app with Codex
+
+### Download and install
+
+1. Open the official ChatGPT download page.
+2. Choose the installer for Windows or macOS.
+3. Run the installer and follow the operating system prompts.
+4. Open the ChatGPT desktop app and sign in with your account.
+5. If the app offers a product selector, choose Codex. If Codex is not available, check your account, workspace, or administrator settings before troubleshooting the project.
+6. Start a new task and read the permissions or environment choices before accepting them.
+
+The official OpenAI guidance describes Codex as a desktop workflow in which you sign in, choose a project, and send a first message. The app may present local, cloud, worktree, or other environment choices depending on your account and host.
+
+### Connect a local course directory
+
+1. In Codex, choose the option to open a local folder or project.
+2. Select only the course directory you want the assistant to work with.
+3. Grant file access when prompted.
+4. Confirm that the opened project contains the files you expect, such as _quarto.yml and the Quarto documents.
+5. Ask the assistant to inspect the project before asking it to edit anything.
+6. Keep your original files under version control so changes can be reviewed or reverted safely.
+
+A useful first message is:
+
+> Inspect this Quarto project and summarize its current architecture. Do not modify files. Identify the site configuration, source pages, extensions, and any generated output directories.
+
+### Learn the interface
+
+Most coding-agent interfaces have some version of these areas:
+
+- A conversation or task panel for instructions and explanations.
+- A file or project context area showing what the assistant can access.
+- A terminal or command area for commands such as quarto render.
+- A change or diff view where you can review proposed edits.
+- An approval or permission control for commands, file access, and external connections.
+
+Treat the diff as part of the analytical workflow. Read what changed, ask why it changed, and run the smallest relevant test before accepting a large revision.
+
+## Option B: GitHub Copilot in VS Code
+
+1. Install [Visual Studio Code](https://code.visualstudio.com/).
+2. Open Extensions and search for GitHub Copilot.
+3. Install the official GitHub Copilot extension.
+4. Sign in with the GitHub account or organization that provides Copilot access.
+5. Open the course folder in VS Code.
+6. Create or open an R script or Quarto document.
+7. Use Copilot Chat to describe the business question and ask for an explanation before requesting code.
+8. Review suggested edits and run the code in RStudio, Quarto, or the Shinylive playground.
+
+Copilot is integrated into the editor; Codex can work across a project with a broader task-oriented workflow. The review principles are the same: provide context, inspect changes, run tests, and protect sensitive data.
+
+## Option C: Claude or Claude Code
+
+You can use the same workflow with [Claude](https://claude.ai/) or [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code/overview):
+
+1. Create or sign in to an approved account.
+2. Install the desktop or command-line tool appropriate for your environment.
+3. Open the course folder only after checking the tool’s local-file permissions.
+4. Provide the project context and business question.
+5. Ask for a plan and assumptions before asking for edits.
+6. Paste generated code into your R or Quarto workflow, then test it independently.
+
+The tool may have different file, terminal, and approval controls. Learn those controls before using it with a real project.
+
+## A safe first-session checklist
+
+Before allowing an assistant to make changes, confirm:
+
+- I know which folder it can read and write.
+- I know whether it is operating locally or in a cloud environment.
+- I have a recoverable copy or Git commit.
+- I have removed secrets and confidential records.
+- I know how to inspect a diff.
+- I have a small test command ready, such as quarto render.
+- I can explain the business definition the code is supposed to implement.
+
+Setup is successful when the assistant can see the appropriate project context and you can independently verify every material change.
+
+
