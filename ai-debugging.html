@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AI Coding Workflow: Debugging – Intro to R for Business Analytics</title>
+<title>Verification, Debugging, and Sanity Checking – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -86,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-debugging.html">Debugging</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-setup-prompting.html">AI-Partnered Coding Mastery</a></li><li class="breadcrumb-item"><a href="./ai-debugging.html">Debugging</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -123,13 +158,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -137,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -145,14 +186,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -161,12 +202,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -174,14 +221,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -190,36 +243,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,8 +256,43 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -243,36 +307,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#read-the-console-in-layers" id="toc-read-the-console-in-layers" class="nav-link active" data-scroll-target="#read-the-console-in-layers">Read the console in layers</a>
-  <ul class="collapse">
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  <li><a href="#warnings" id="toc-warnings" class="nav-link" data-scroll-target="#warnings">Warnings</a></li>
-  <li><a href="#errors" id="toc-errors" class="nav-link" data-scroll-target="#errors">Errors</a></li>
-  <li><a href="#messages" id="toc-messages" class="nav-link" data-scroll-target="#messages">Messages</a></li>
-  </ul></li>
-  <li><a href="#a-repeatable-debugging-loop" id="toc-a-repeatable-debugging-loop" class="nav-link" data-scroll-target="#a-repeatable-debugging-loop">A repeatable debugging loop</a>
-  <ul class="collapse">
-  <li><a href="#step-1-reproduce-the-smallest-failure" id="toc-step-1-reproduce-the-smallest-failure" class="nav-link" data-scroll-target="#step-1-reproduce-the-smallest-failure">Step 1: Reproduce the smallest failure</a></li>
-  <li><a href="#step-2-capture-the-evidence" id="toc-step-2-capture-the-evidence" class="nav-link" data-scroll-target="#step-2-capture-the-evidence">Step 2: Capture the evidence</a></li>
-  <li><a href="#step-3-ask-for-explanation-before-a-rewrite" id="toc-step-3-ask-for-explanation-before-a-rewrite" class="nav-link" data-scroll-target="#step-3-ask-for-explanation-before-a-rewrite">Step 3: Ask for explanation before a rewrite</a></li>
-  <li><a href="#step-4-apply-one-change" id="toc-step-4-apply-one-change" class="nav-link" data-scroll-target="#step-4-apply-one-change">Step 4: Apply one change</a></li>
-  <li><a href="#step-5-test-the-fix" id="toc-step-5-test-the-fix" class="nav-link" data-scroll-target="#step-5-test-the-fix">Step 5: Test the fix</a></li>
-  <li><a href="#step-6-record-the-lesson" id="toc-step-6-record-the-lesson" class="nav-link" data-scroll-target="#step-6-record-the-lesson">Step 6: Record the lesson</a></li>
-  </ul></li>
-  <li><a href="#common-error-patterns" id="toc-common-error-patterns" class="nav-link" data-scroll-target="#common-error-patterns">Common error patterns</a></li>
-  <li><a href="#a-debugging-prompt-template" id="toc-a-debugging-prompt-template" class="nav-link" data-scroll-target="#a-debugging-prompt-template">A debugging prompt template</a></li>
-  <li><a href="#reverse-engineer-the-proposed-fix" id="toc-reverse-engineer-the-proposed-fix" class="nav-link" data-scroll-target="#reverse-engineer-the-proposed-fix">Reverse-engineer the proposed fix</a></li>
-  <li><a href="#debugging-joins-and-summaries" id="toc-debugging-joins-and-summaries" class="nav-link" data-scroll-target="#debugging-joins-and-summaries">Debugging joins and summaries</a></li>
-  <li><a href="#when-the-code-runs-but-the-answer-is-wrong" id="toc-when-the-code-runs-but-the-answer-is-wrong" class="nav-link" data-scroll-target="#when-the-code-runs-but-the-answer-is-wrong">When the code runs but the answer is wrong</a></li>
+  <li><a href="#the-complete-debugging-loop" id="toc-the-complete-debugging-loop" class="nav-link active" data-scroll-target="#the-complete-debugging-loop">The complete debugging loop</a></li>
+  <li><a href="#syntax-errors-versus-logic-errors" id="toc-syntax-errors-versus-logic-errors" class="nav-link" data-scroll-target="#syntax-errors-versus-logic-errors">Syntax errors versus logic errors</a></li>
+  <li><a href="#a-root-cause-prompt" id="toc-a-root-cause-prompt" class="nav-link" data-scroll-target="#a-root-cause-prompt">A root-cause prompt</a></li>
+  <li><a href="#sanity-checks-that-belong-in-production-code" id="toc-sanity-checks-that-belong-in-production-code" class="nav-link" data-scroll-target="#sanity-checks-that-belong-in-production-code">Sanity checks that belong in production code</a></li>
+  <li><a href="#read-the-console-like-an-investigator" id="toc-read-the-console-like-an-investigator" class="nav-link" data-scroll-target="#read-the-console-like-an-investigator">Read the console like an investigator</a></li>
+  <li><a href="#final-review-questions" id="toc-final-review-questions" class="nav-link" data-scroll-target="#final-review-questions">Final review questions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-debugging.html">Debugging</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-setup-prompting.html">AI-Partnered Coding Mastery</a></li><li class="breadcrumb-item"><a href="./ai-debugging.html">Debugging</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">AI Coding Workflow: Debugging</h1>
+<h1 class="title">Verification, Debugging, and Sanity Checking</h1>
+<p class="subtitle lead">Treat errors and failed tests as evidence, not as interruptions</p>
 </div>
 
 
@@ -289,157 +339,121 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Debugging is not a separate activity from analysis. It is the process of comparing what the code did with what you intended, then narrowing the difference until you can make a justified change.</p>
-<p>An AI assistant can accelerate debugging, but only if you give it precise evidence and keep control of the test.</p>
-<section id="read-the-console-in-layers" class="level2">
-<h2 class="anchored" data-anchor-id="read-the-console-in-layers">Read the console in layers</h2>
-<section id="output" class="level3">
-<h3 class="anchored" data-anchor-id="output">Output</h3>
-<p>Printed output is the value an expression returned. Inspect whether it has the expected number of rows, columns, groups, units, and range.</p>
-<p>A table with zero rows is output, not an error. It may mean a filter excluded everything.</p>
+<p>Debugging is the process of narrowing the difference between the intended analysis and the observed behavior. An AI assistant can shorten the search, but it cannot decide whether the intended behavior was correct. Your job is to preserve the evidence and ask for a root-cause analysis.</p>
+<section id="the-complete-debugging-loop" class="level2">
+<h2 class="anchored" data-anchor-id="the-complete-debugging-loop">The complete debugging loop</h2>
+<ol type="1">
+<li><strong>Run the smallest reproducible example.</strong> Reduce the data and code until the failure remains.</li>
+<li><strong>Copy the complete error.</strong> Include the error class, message, and the line or call named in the traceback.</li>
+<li><strong>Add context.</strong> Share the relevant code, object classes, dimensions, and expected behavior. Remove sensitive values.</li>
+<li><strong>Ask for causes before fixes.</strong> Require two or three plausible causes, a test for each, and the smallest change.</li>
+<li><strong>Apply one change.</strong> Do not accept a wholesale rewrite that makes it impossible to know what fixed the issue.</li>
+<li><strong>Run acceptance tests.</strong> Confirm the original error is gone and the business meaning is unchanged.</li>
+<li><strong>Record the lesson.</strong> Add the cause, fix, and prevention check to the prompt log.</li>
+</ol>
 </section>
-<section id="warnings" class="level3">
-<h3 class="anchored" data-anchor-id="warnings">Warnings</h3>
-<p>A warning means R completed an operation but wants you to review something. Common causes include missing values, failed type conversions, or values that could not be summarized.</p>
-<p>Do not hide warnings just to make a report look clean. Decide whether the warning indicates a data-quality problem, an expected edge case, or a mistake.</p>
-</section>
-<section id="errors" class="level3">
-<h3 class="anchored" data-anchor-id="errors">Errors</h3>
-<p>An error means the requested operation did not complete. Read the final message and the function named near the top of the message. The error location is evidence about what R expected and what it received.</p>
-</section>
-<section id="messages" class="level3">
-<h3 class="anchored" data-anchor-id="messages">Messages</h3>
-<p>Messages are informational notices, such as package startup notes. They are not automatically failures.</p>
-</section>
-</section>
-<section id="a-repeatable-debugging-loop" class="level2">
-<h2 class="anchored" data-anchor-id="a-repeatable-debugging-loop">A repeatable debugging loop</h2>
-<section id="step-1-reproduce-the-smallest-failure" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-reproduce-the-smallest-failure">Step 1: Reproduce the smallest failure</h3>
-<p>Run the smallest section of code that still produces the problem. If a long pipeline fails, execute the import, then the first transformation, then the next. This tells you which step changes the data into an unexpected shape.</p>
-</section>
-<section id="step-2-capture-the-evidence" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-capture-the-evidence">Step 2: Capture the evidence</h3>
-<p>Copy:</p>
-<ul>
-<li>the exact error or warning;</li>
-<li>the smallest code that reproduces it;</li>
-<li>the output of names(data), dim(data), and str(data);</li>
-<li>the expected behavior; and</li>
-<li>any relevant package versions or file details.</li>
-</ul>
-<p>Do not send only “it does not work.” The assistant needs the mismatch, not just the conclusion.</p>
-</section>
-<section id="step-3-ask-for-explanation-before-a-rewrite" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-ask-for-explanation-before-a-rewrite">Step 3: Ask for explanation before a rewrite</h3>
-<p>Use a prompt that asks the AI to diagnose the cause, explain the relevant R concept, and propose the smallest targeted fix. Ask it not to rewrite unrelated code.</p>
-</section>
-<section id="step-4-apply-one-change" class="level3">
-<h3 class="anchored" data-anchor-id="step-4-apply-one-change">Step 4: Apply one change</h3>
-<p>Make one change in your own script. If you change five things at once, you will not know which change solved the problem or created a new one.</p>
-</section>
-<section id="step-5-test-the-fix" class="level3">
-<h3 class="anchored" data-anchor-id="step-5-test-the-fix">Step 5: Test the fix</h3>
-<p>Run the smallest reproducing example again. Then run the full analysis and compare the output with the original business requirement.</p>
-</section>
-<section id="step-6-record-the-lesson" class="level3">
-<h3 class="anchored" data-anchor-id="step-6-record-the-lesson">Step 6: Record the lesson</h3>
-<p>Write down what failed, why it failed, what fixed it, and how you verified the fix. A debugging note becomes a reusable review rule.</p>
-</section>
-</section>
-<section id="common-error-patterns" class="level2">
-<h2 class="anchored" data-anchor-id="common-error-patterns">Common error patterns</h2>
+<section id="syntax-errors-versus-logic-errors" class="level2">
+<h2 class="anchored" data-anchor-id="syntax-errors-versus-logic-errors">Syntax errors versus logic errors</h2>
+<p>A syntax error prevents R from parsing or evaluating an expression. A logic error produces a result that looks reasonable but answers the wrong question.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Message or symptom</th>
-<th>What to investigate</th>
+<th>Signal</th>
+<th>Likely category</th>
+<th>Example check</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>object ‘x’ not found</td>
-<td>Misspelled name, wrong execution order, or object created in a different scope</td>
+<td><code>unexpected ')'</code></td>
+<td>Syntax</td>
+<td>Balance parentheses and commas</td>
 </tr>
 <tr class="even">
-<td>could not find function</td>
-<td>Package is missing, not loaded, or the function name is wrong</td>
+<td><code>object 'x' not found</code></td>
+<td>Scope or naming</td>
+<td>Inspect object creation and spelling</td>
 </tr>
 <tr class="odd">
-<td>undefined columns selected</td>
-<td>Column name does not match the data</td>
+<td><code>could not find function</code></td>
+<td>Package or namespace</td>
+<td>Load the package or use <code>pkg::fn()</code></td>
 </tr>
 <tr class="even">
-<td>non-numeric argument to binary operator</td>
-<td>Text, factors, or missing values are being used in arithmetic</td>
+<td>Output has too many rows after a join</td>
+<td>Logic/grain</td>
+<td>Check key uniqueness and row counts</td>
 </tr>
 <tr class="odd">
-<td>replacement has length zero</td>
-<td>The object being assigned has no values or the index is empty</td>
+<td>Result changes dramatically after <code>na.rm = TRUE</code></td>
+<td>Data/method</td>
+<td>Report missing count and compare denominators</td>
 </tr>
 <tr class="even">
-<td>unexpected results with no error</td>
-<td>Wrong filter, join, grouping level, sign, unit, or denominator</td>
+<td>Plot is correct but misleadingly labeled</td>
+<td>Communication</td>
+<td>Compare title, scale, population, and metric</td>
 </tr>
 </tbody>
 </table>
-<p>The final row is particularly important in business analytics. Correct syntax can still produce an incorrect business result.</p>
 </section>
-<section id="a-debugging-prompt-template" class="level2">
-<h2 class="anchored" data-anchor-id="a-debugging-prompt-template">A debugging prompt template</h2>
-<blockquote class="blockquote">
-<p>I am working in R. Here is the smallest code that reproduces the issue: [paste code]. Here is the exact console output: [paste the complete message]. The data have these columns and types: [paste names and structure]. I expected: [describe expected behavior]. Please explain the likely cause in plain English, identify the specific line involved, suggest the smallest fix, and give me one test that will verify the fix. Do not rewrite unrelated parts of the code.</p>
-</blockquote>
+<section id="a-root-cause-prompt" class="level2">
+<h2 class="anchored" data-anchor-id="a-root-cause-prompt">A root-cause prompt</h2>
+<pre class="text"><code>Act as a debugging investigator, not a code generator.
+
+Business intent: produce one row per customer with total completed-order revenue.
+Expected row count: equal to the number of customer IDs in customers.
+
+Code:
+customers |&gt; left_join(orders, by = "customer_id") |&gt;
+  group_by(customer_id) |&gt; summarize(revenue = sum(order_value))
+
+Complete error/output:
+&lt;paste the exact console output here&gt;
+
+Please return:
+1. the most likely root cause;
+2. two tests that would confirm or reject it;
+3. the smallest code change;
+4. one business-logic risk that could remain even if the code runs.
+Do not rewrite the entire pipeline.</code></pre>
+<p>If the assistant proposes <code>na.rm = TRUE</code>, ask what population is being excluded and whether missing order values mean zero, unknown, or an invalid record. If it proposes <code>inner_join()</code>, ask which customers would disappear.</p>
 </section>
-<section id="reverse-engineer-the-proposed-fix" class="level2">
-<h2 class="anchored" data-anchor-id="reverse-engineer-the-proposed-fix">Reverse-engineer the proposed fix</h2>
-<p>When the AI suggests a change, ask:</p>
-<ol type="1">
-<li>What assumption about the data does this fix rely on?</li>
-<li>Does it change the result or only suppress the error?</li>
-<li>Will it work for missing values, empty groups, and new categories?</li>
-<li>Does it preserve the business definition?</li>
-<li>What test would fail if the fix were wrong?</li>
-</ol>
-<p>For example, if a tool suggests converting a character column to numeric, first inspect the values. Currency symbols, commas, text such as “unknown,” and empty strings may require different handling.</p>
+<section id="sanity-checks-that-belong-in-production-code" class="level2">
+<h2 class="anchored" data-anchor-id="sanity-checks-that-belong-in-production-code">Sanity checks that belong in production code</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(customers) <span class="sc">==</span> <span class="fu">n_distinct</span>(customers<span class="sc">$</span>customer_id))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> customers <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(orders, <span class="at">by =</span> <span class="st">"customer_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(customer_id) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">revenue =</span> <span class="fu">sum</span>(order_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">orders =</span> <span class="fu">n_distinct</span>(order_id),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(result) <span class="sc">==</span> <span class="fu">nrow</span>(customers))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(result<span class="sc">$</span>orders <span class="sc">&gt;=</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Tests should encode the business contract, not just implementation details. A test that passes because a column exists is weaker than a test that confirms the output has one row per customer and no negative completed-order counts.</p>
 </section>
-<section id="debugging-joins-and-summaries" class="level2">
-<h2 class="anchored" data-anchor-id="debugging-joins-and-summaries">Debugging joins and summaries</h2>
-<p>Joins and summaries deserve extra attention because they can produce plausible but inflated results.</p>
-<p>For a join, check:</p>
+<section id="read-the-console-like-an-investigator" class="level2">
+<h2 class="anchored" data-anchor-id="read-the-console-like-an-investigator">Read the console like an investigator</h2>
+<p>Warnings are evidence. A warning about an unmatched join, a coercion, or removed rows can change the result without stopping execution. Copy the warning into the review log and decide whether it is expected. A clean console is not proof of a correct analysis; a noisy console is a request for an explanation.</p>
+</section>
+<section id="final-review-questions" class="level2">
+<h2 class="anchored" data-anchor-id="final-review-questions">Final review questions</h2>
 <ul>
-<li>the intended key;</li>
-<li>whether the key is unique in each table;</li>
-<li>the join type;</li>
-<li>the number of rows before and after; and</li>
-<li>whether unmatched records matter.</li>
+<li>Can another analyst reproduce the error from the shared snippet?</li>
+<li>Did the fix address the root cause or merely suppress the message?</li>
+<li>Did row count, grain, denominators, and missingness behavior change?</li>
+<li>Does the corrected result pass a hand calculation on a tiny example?</li>
+<li>Did the stakeholder summary change after the fix?</li>
 </ul>
-<p>For a summary, check:</p>
-<ul>
-<li>the observation unit;</li>
-<li>the grouping columns;</li>
-<li>whether the measure should be summed or averaged;</li>
-<li>whether the denominator is weighted; and</li>
-<li>whether missing values are excluded intentionally.</li>
-</ul>
-</section>
-<section id="when-the-code-runs-but-the-answer-is-wrong" class="level2">
-<h2 class="anchored" data-anchor-id="when-the-code-runs-but-the-answer-is-wrong">When the code runs but the answer is wrong</h2>
-<p>Use a result audit:</p>
-<ul>
-<li>print the first and last rows;</li>
-<li>count records before and after each filter;</li>
-<li>inspect a few records manually;</li>
-<li>compare a total with an independent calculation;</li>
-<li>check the smallest and largest values;</li>
-<li>test a known case; and</li>
-<li>ask a stakeholder whether the metric matches their definition.</li>
-</ul>
-<p>The best debugging question is often not “How do I fix this error?” It is “What would have to be true for this result to be correct?”</p>
 
 
 </section>

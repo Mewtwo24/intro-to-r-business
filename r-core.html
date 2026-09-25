@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Open Analytical Sandbox – Intro to R for Business Analytics</title>
+<title>R Core: Syntax, Types, and Structures – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -91,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sandbox.html">Interactive Lab &amp; Resources</a></li><li class="breadcrumb-item"><a href="./sandbox.html">Open Analytical Sandbox</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./r-core.html">R Core: Syntax, Types, and Structures</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -156,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
@@ -255,7 +290,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sandbox.html" class="sidebar-item-text sidebar-link active">
+  <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Open Analytical Sandbox</span></a>
   </div>
 </li>
@@ -272,16 +307,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#names-and-assignment" id="toc-names-and-assignment" class="nav-link active" data-scroll-target="#names-and-assignment">1. Names and assignment</a></li>
+  <li><a href="#atomic-data-types" id="toc-atomic-data-types" class="nav-link" data-scroll-target="#atomic-data-types">2. Atomic data types</a></li>
+  <li><a href="#vectors-and-indexing" id="toc-vectors-and-indexing" class="nav-link" data-scroll-target="#vectors-and-indexing">3. Vectors and indexing</a></li>
+  <li><a href="#data-frames-and-tibbles" id="toc-data-frames-and-tibbles" class="nav-link" data-scroll-target="#data-frames-and-tibbles">4. Data frames and tibbles</a></li>
+  <li><a href="#missing-values-and-comparisons" id="toc-missing-values-and-comparisons" class="nav-link" data-scroll-target="#missing-values-and-comparisons">5. Missing values and comparisons</a></li>
+  <li><a href="#functions-and-control-flow" id="toc-functions-and-control-flow" class="nav-link" data-scroll-target="#functions-and-control-flow">6. Functions and control flow</a></li>
+  <li><a href="#a-repeatable-inspection-checklist" id="toc-a-repeatable-inspection-checklist" class="nav-link" data-scroll-target="#a-repeatable-inspection-checklist">7. A repeatable inspection checklist</a></li>
+  <li><a href="#live-lab-read-the-object-before-changing-it" id="toc-live-lab-read-the-object-before-changing-it" class="nav-link" data-scroll-target="#live-lab-read-the-object-before-changing-it">Live lab: read the object before changing it</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sandbox.html">Interactive Lab &amp; Resources</a></li><li class="breadcrumb-item"><a href="./sandbox.html">Open Analytical Sandbox</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./r-core.html">R Core: Syntax, Types, and Structures</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Open Analytical Sandbox</h1>
-<p class="subtitle lead">A self-contained workspace for testing, inspecting, and translating AI-generated R</p>
+<h1 class="title">R Core: Syntax, Types, and Structures</h1>
+<p class="subtitle lead">The minimum language you need to read, direct, and verify analytical code</p>
 </div>
 
 
@@ -298,14 +346,135 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This lab starts with three small synthetic tables so you can practice joins, summaries, filters, and plots without importing an external file. Use it as a safe place to paste code from an AI assistant. Before you ask for a solution, write down the expected row grain and one result you can calculate by hand.</p>
-<p>The tables are:</p>
-<ul>
-<li><code>customers</code>: one row per customer;</li>
-<li><code>products</code>: one row per product;</li>
-<li><code>transactions</code>: one row per transaction.</li>
-</ul>
-<p>The live application joins the tables and reports revenue by product category. Your tasks are to add a date filter, calculate average order value, compare repeat and new customers, and write a three-sentence stakeholder summary.</p>
+<p>R is a language for describing objects and transformations. In business analytics, the important question is not whether you can memorize every function. It is whether you can look at a script and explain what each object represents, what shape it has, and how a transformation changes the evidence available for a decision.</p>
+<section id="names-and-assignment" class="level2">
+<h2 class="anchored" data-anchor-id="names-and-assignment">1. Names and assignment</h2>
+<p>Use <code>&lt;-</code> to assign a value to a name. Read the statement as “store the value on the right under the name on the left.” Names should describe business meaning rather than implementation details.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>unit_price <span class="ot">&lt;-</span> <span class="fl">42.50</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>units_sold <span class="ot">&lt;-</span> <span class="dv">18</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>revenue <span class="ot">&lt;-</span> unit_price <span class="sc">*</span> units_sold</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>revenue</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>R is case-sensitive: <code>revenue</code> and <code>Revenue</code> are different names. Avoid names that shadow common functions such as <code>mean</code>, <code>data</code>, or <code>c</code>. Use <code>snake_case</code> consistently, and keep a clear distinction between raw fields (<code>units_sold</code>) and derived metrics (<code>revenue</code>).</p>
+</section>
+<section id="atomic-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="atomic-data-types">2. Atomic data types</h2>
+<p>The most common atomic types are numeric, character, logical, and date-like values. Use <code>typeof()</code> for the underlying storage type and <code>class()</code> for the object’s higher-level behavior.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Example</th>
+<th>Business use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Numeric</td>
+<td><code>1250.50</code>, <code>3L</code></td>
+<td>Revenue, quantity, score, count</td>
+</tr>
+<tr class="even">
+<td>Character</td>
+<td><code>"North"</code></td>
+<td>Labels, codes, free text</td>
+</tr>
+<tr class="odd">
+<td>Logical</td>
+<td><code>TRUE</code>, <code>FALSE</code></td>
+<td>Flags and conditions</td>
+</tr>
+<tr class="even">
+<td>Missing</td>
+<td><code>NA</code></td>
+<td>Unknown or unrecorded value</td>
+</tr>
+<tr class="odd">
+<td>Factor</td>
+<td><code>factor(c("Web", "Store"))</code></td>
+<td>A categorical variable with known levels</td>
+</tr>
+<tr class="even">
+<td>Date</td>
+<td><code>as.Date("2026-01-15")</code></td>
+<td>Time windows and ordering</td>
+</tr>
+</tbody>
+</table>
+<p>R will often coerce values to a common type when you combine them. <code>c(1, "2")</code> becomes a character vector because a character value cannot be stored as numeric without loss of information. Do not let automatic coercion decide the meaning of a field silently; inspect it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="fl">42.5</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(<span class="st">"42.5"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is.numeric</span>(<span class="fl">42.5</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(<span class="st">"42.5"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="st">"42.5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="vectors-and-indexing" class="level2">
+<h2 class="anchored" data-anchor-id="vectors-and-indexing">3. Vectors and indexing</h2>
+<p>Most R objects begin as vectors: ordered collections of values of one type. The <code>c()</code> function combines values, and square brackets select positions or names.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"North"</span>, <span class="st">"South"</span>, <span class="st">"West"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>targets <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">North =</span> <span class="dv">100000</span>, <span class="at">South =</span> <span class="dv">85000</span>, <span class="at">West =</span> <span class="dv">92000</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>regions[<span class="dv">1</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>targets[<span class="st">"West"</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>targets[targets <span class="sc">&gt;</span> <span class="dv">90000</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(targets)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Indexing begins at 1. Logical indexing is especially useful for business filters, but remember that <code>NA</code> in a logical condition can produce an <code>NA</code> result rather than <code>TRUE</code> or <code>FALSE</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>margin <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.32</span>, <span class="cn">NA</span>, <span class="fl">0.18</span>, <span class="fl">0.41</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>margin <span class="sc">&gt;</span> <span class="fl">0.25</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>margin[<span class="sc">!</span><span class="fu">is.na</span>(margin) <span class="sc">&amp;</span> margin <span class="sc">&gt;</span> <span class="fl">0.25</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="data-frames-and-tibbles" class="level2">
+<h2 class="anchored" data-anchor-id="data-frames-and-tibbles">4. Data frames and tibbles</h2>
+<p>A data frame is a rectangular object: each column is a vector, and all columns have the same number of rows. A row is an observation at a particular grain. Before writing a summary, state the grain in plain English: “one row per order,” “one row per customer-month,” or “one row per store-quarter.”</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>orders <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">order_id =</span> <span class="fu">c</span>(<span class="st">"A01"</span>, <span class="st">"A02"</span>, <span class="st">"A03"</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">region =</span> <span class="fu">c</span>(<span class="st">"North"</span>, <span class="st">"North"</span>, <span class="st">"West"</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">1</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">revenue =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">250</span>, <span class="dv">45</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(orders)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(orders)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(orders)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>orders<span class="sc">$</span>revenue</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>orders[orders<span class="sc">$</span>units <span class="sc">&gt;=</span> <span class="dv">2</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The tidyverse uses tibbles, which print more safely in a console and preserve useful metadata. <code>tibble::as_tibble(orders)</code> converts a data frame. In a table, <code>orders$revenue</code> extracts a vector; <code>orders["revenue"]</code> extracts a one-column table. This distinction matters when a function expects a vector.</p>
+</section>
+<section id="missing-values-and-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="missing-values-and-comparisons">5. Missing values and comparisons</h2>
+<p><code>NA</code> means “unknown,” not zero, not false, and not “not applicable” unless your data dictionary explicitly says so. Most arithmetic involving <code>NA</code> returns <code>NA</code>. Functions such as <code>sum()</code> and <code>mean()</code> can remove missing values with <code>na.rm = TRUE</code>, but you must report how many values were removed.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.72</span>, <span class="cn">NA</span>, <span class="fl">0.91</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(scores))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use <code>is.na(x)</code> to test for missingness. Do not use <code>x == NA</code>; the result of that comparison is <code>NA</code>, not a usable logical answer.</p>
+</section>
+<section id="functions-and-control-flow" class="level2">
+<h2 class="anchored" data-anchor-id="functions-and-control-flow">6. Functions and control flow</h2>
+<p>Functions package a repeatable transformation. Name the inputs and make the return value clear. A function is a useful unit for both human review and AI-assisted testing.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>attainment <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, target) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(target <span class="sc">==</span> <span class="dv">0</span>, <span class="cn">NA_real_</span>, actual <span class="sc">/</span> target)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attainment</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">110</span>), <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use <code>if</code> when you need one branch of code to run and <code>ifelse()</code> or <code>dplyr::if_else()</code> when you need a vectorized result. <code>for</code> loops are valid, but vectorized functions, <code>summarise()</code>, and <code>mutate()</code> usually express business transformations more clearly.</p>
+</section>
+<section id="a-repeatable-inspection-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="a-repeatable-inspection-checklist">7. A repeatable inspection checklist</h2>
+<p>Before trusting an object, inspect:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(orders)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(orders)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(orders)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(orders)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ask four questions: What is the object’s type? What is its row grain? Which columns can be missing? What should happen if the object is empty? These questions are the foundation for directing an AI assistant.</p>
+</section>
+<section id="live-lab-read-the-object-before-changing-it" class="level2">
+<h2 class="anchored" data-anchor-id="live-lab-read-the-object-before-changing-it">Live lab: read the object before changing it</h2>
+<p>Run the application, inspect the structure output, and change the minimum-revenue filter. The exercise is deliberately small: your goal is to predict the result before you click <strong>Run</strong>.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -313,88 +482,45 @@ ul.task-list li input[type="checkbox"] {
 #| components: [editor, viewer]
 
 library(shiny)
-library(dplyr)
-library(ggplot2)
 
-customers &lt;- data.frame(
-  customer_id = paste0("C", 101:108),
-  segment = c("Starter", "Starter", "Growth", "Growth", "Enterprise", "Enterprise", "Starter", "Growth"),
-  region = c("North", "West", "North", "South", "East", "West", "South", "East")
-)
-
-products &lt;- data.frame(
-  product_id = paste0("P", 1:6),
-  product_name = c("Core Plan", "Analytics Add-on", "Team Seats", "Training", "Integration", "Premium Support"),
-  category = c("Subscription", "Subscription", "Subscription", "Service", "Service", "Service"),
-  list_price = c(80, 35, 25, 300, 450, 120)
-)
-
-transactions &lt;- data.frame(
-  transaction_id = paste0("T", 1:16),
-  customer_id = c("C101", "C101", "C102", "C103", "C103", "C104", "C105", "C105", "C106", "C107", "C107", "C108", "C102", "C104", "C106", "C108"),
-  product_id = c("P1", "P2", "P1", "P3", "P4", "P1", "P5", "P6", "P1", "P2", "P4", "P3", "P6", "P2", "P5", "P1"),
-  quantity = c(1, 2, 1, 4, 1, 2, 1, 1, 3, 2, 1, 5, 1, 1, 1, 2),
-  transaction_value = c(80, 70, 80, 100, 300, 160, 450, 120, 240, 70, 300, 125, 120, 35, 450, 160),
-  month = c("Jan", "Jan", "Jan", "Jan", "Feb", "Feb", "Feb", "Feb", "Feb", "Mar", "Mar", "Mar", "Mar", "Mar", "Mar", "Mar")
+orders &lt;- data.frame(
+  order_id = c("A01", "A02", "A03", "A04"),
+  region = c("North", "North", "West", "West"),
+  units = c(2, 5, 1, 4),
+  revenue = c(80, 250, 45, 220),
+  repeat_customer = c(TRUE, FALSE, TRUE, FALSE)
 )
 
 ui &lt;- fluidPage(
-  titlePanel("Open analytical sandbox"),
+  titlePanel("R core inspection lab"),
   sidebarLayout(
     sidebarPanel(
-      selectInput("category", "Product category", choices = c("All", sort(unique(products$category)))),
-      selectInput("month", "Month", choices = c("All", unique(transactions$month))),
-      helpText("Modify the code and rerun the app. Keep the tables synthetic.")
+      numericInput("minimum", "Minimum revenue", value = 100, min = 0),
+      helpText("Change the threshold, then explain which rows remain.")
     ),
     mainPanel(
-      h4("Joined summary"),
-      tableOutput("summary"),
-      h4("Revenue by category"),
-      plotOutput("plot", height = "420px")
+      h4("Object structure"),
+      verbatimTextOutput("structure"),
+      h4("Filtered orders"),
+      tableOutput("selected")
     )
   )
 )
 
 server &lt;- function(input, output, session) {
-  joined &lt;- reactive({
-    data &lt;- transactions |&gt;
-      left_join(customers, by = "customer_id") |&gt;
-      left_join(products, by = "product_id")
-
-    if (input$category != "All") data &lt;- data |&gt; filter(category == input$category)
-    if (input$month != "All") data &lt;- data |&gt; filter(month == input$month)
-    data
+  output$structure &lt;- renderPrint({
+    str(orders)
   })
 
-  output$summary &lt;- renderTable({
-    joined() |&gt;
-      group_by(category) |&gt;
-      summarize(
-        transactions = n(),
-        customers = n_distinct(customer_id),
-        units = sum(quantity),
-        revenue = sum(transaction_value),
-        average_transaction = mean(transaction_value),
-        .groups = "drop"
-      )
-  })
-
-  output$plot &lt;- renderPlot({
-    joined() |&gt;
-      group_by(category) |&gt;
-      summarize(revenue = sum(transaction_value), .groups = "drop") |&gt;
-      ggplot(aes(x = reorder(category, revenue), y = revenue)) +
-      geom_col(fill = "#176B87") +
-      scale_y_continuous(labels = scales::label_dollar()) +
-      labs(x = NULL, y = "Revenue", title = "Revenue by product category") +
-      coord_flip() +
-      theme_minimal(base_size = 12)
+  output$selected &lt;- renderTable({
+    orders[orders$revenue &gt;= input$minimum, ]
   })
 }
 
 shinyApp(ui, server)</code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

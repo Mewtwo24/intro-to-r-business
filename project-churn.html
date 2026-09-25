@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling with dplyr – Intro to R for Business Analytics</title>
+<title>Project 2: Customer Retention and Churn Economics – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,41 +25,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -126,7 +91,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-basics.html">The R Foundation</a></li><li class="breadcrumb-item"><a href="./data-wrangling.html">Data Wrangling</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project-sales.html">Guided Business Projects</a></li><li class="breadcrumb-item"><a href="./project-churn.html">Project 2: Customer Retention and Churn Economics</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -163,13 +128,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -177,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -185,14 +156,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -201,12 +172,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -214,14 +191,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -230,36 +213,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -267,8 +226,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -283,27 +277,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link active" data-scroll-target="#the-pipe">The pipe</a></li>
-  <li><a href="#the-core-dplyr-verbs" id="toc-the-core-dplyr-verbs" class="nav-link" data-scroll-target="#the-core-dplyr-verbs">The core dplyr verbs</a>
+  <li><a href="#business-background-and-problem-scenario" id="toc-business-background-and-problem-scenario" class="nav-link active" data-scroll-target="#business-background-and-problem-scenario">Business background and problem scenario</a></li>
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data dictionary</a>
   <ul class="collapse">
-  <li><a href="#filter-choose-rows" id="toc-filter-choose-rows" class="nav-link" data-scroll-target="#filter-choose-rows">filter(): choose rows</a></li>
-  <li><a href="#select-choose-columns" id="toc-select-choose-columns" class="nav-link" data-scroll-target="#select-choose-columns">select(): choose columns</a></li>
-  <li><a href="#mutate-create-variables" id="toc-mutate-create-variables" class="nav-link" data-scroll-target="#mutate-create-variables">mutate(): create variables</a></li>
-  <li><a href="#summarise-reduce-rows-to-metrics" id="toc-summarise-reduce-rows-to-metrics" class="nav-link" data-scroll-target="#summarise-reduce-rows-to-metrics">summarise(): reduce rows to metrics</a></li>
-  <li><a href="#group_by-define-the-comparison" id="toc-group_by-define-the-comparison" class="nav-link" data-scroll-target="#group_by-define-the-comparison">group_by(): define the comparison</a></li>
-  <li><a href="#arrange-sort-the-result" id="toc-arrange-sort-the-result" class="nav-link" data-scroll-target="#arrange-sort-the-result">arrange(): sort the result</a></li>
+  <li><a href="#customers-one-row-per-active-or-recently-inactive-customer" id="toc-customers-one-row-per-active-or-recently-inactive-customer" class="nav-link" data-scroll-target="#customers-one-row-per-active-or-recently-inactive-customer"><code>customers</code>: one row per active or recently inactive customer</a></li>
+  <li><a href="#activity-one-row-per-customer-month" id="toc-activity-one-row-per-customer-month" class="nav-link" data-scroll-target="#activity-one-row-per-customer-month"><code>activity</code>: one row per customer-month</a></li>
   </ul></li>
-  <li><a href="#a-complete-pipeline-with-mtcars" id="toc-a-complete-pipeline-with-mtcars" class="nav-link" data-scroll-target="#a-complete-pipeline-with-mtcars">A complete pipeline with mtcars</a></li>
-  <li><a href="#read-the-pipeline-as-a-business-analyst" id="toc-read-the-pipeline-as-a-business-analyst" class="nav-link" data-scroll-target="#read-the-pipeline-as-a-business-analyst">Read the pipeline as a business analyst</a></li>
+  <li><a href="#technical-milestones" id="toc-technical-milestones" class="nav-link" data-scroll-target="#technical-milestones">Technical milestones</a>
+  <ul class="collapse">
+  <li><a href="#milestone-1-data-cleaning-and-sanity-checks" id="toc-milestone-1-data-cleaning-and-sanity-checks" class="nav-link" data-scroll-target="#milestone-1-data-cleaning-and-sanity-checks">Milestone 1: Data cleaning and sanity checks</a></li>
+  <li><a href="#milestone-2-core-aggregation-and-metric-calculation" id="toc-milestone-2-core-aggregation-and-metric-calculation" class="nav-link" data-scroll-target="#milestone-2-core-aggregation-and-metric-calculation">Milestone 2: Core aggregation and metric calculation</a></li>
+  <li><a href="#milestone-3-exploratory-visual-chart" id="toc-milestone-3-exploratory-visual-chart" class="nav-link" data-scroll-target="#milestone-3-exploratory-visual-chart">Milestone 3: Exploratory visual chart</a></li>
+  <li><a href="#milestone-4-executive-memo" id="toc-milestone-4-executive-memo" class="nav-link" data-scroll-target="#milestone-4-executive-memo">Milestone 4: Executive memo</a></li>
+  </ul></li>
+  <li><a href="#ai-prompts-in-action" id="toc-ai-prompts-in-action" class="nav-link" data-scroll-target="#ai-prompts-in-action">AI prompts in action</a></li>
+  <li><a href="#interactive-project-lab" id="toc-interactive-project-lab" class="nav-link" data-scroll-target="#interactive-project-lab">Interactive project lab</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-basics.html">The R Foundation</a></li><li class="breadcrumb-item"><a href="./data-wrangling.html">Data Wrangling</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project-sales.html">Guided Business Projects</a></li><li class="breadcrumb-item"><a href="./project-churn.html">Project 2: Customer Retention and Churn Economics</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Data Wrangling with dplyr</h1>
+<h1 class="title">Project 2: Customer Retention and Churn Economics</h1>
+<p class="subtitle lead">Join customer attributes to activity without confusing churn rate and revenue at risk</p>
 </div>
 
 
@@ -320,67 +318,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Business data rarely arrives in the exact shape needed for a decision. Data wrangling is the process of selecting relevant observations, creating useful measures, grouping records, and producing a summary that answers a question.</p>
-<p>The dplyr package organizes these tasks into a small set of readable verbs. A pipeline expresses the transformation as a sequence from top to bottom.</p>
-<section id="the-pipe" class="level2">
-<h2 class="anchored" data-anchor-id="the-pipe">The pipe</h2>
-<p>The base R pipe, written as |&gt;, passes the result of the expression on its left into the function on its right:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Many R courses also use the pipe from magrittr, written as %&gt;%. Both styles support the same general idea. The base pipe is part of modern R and avoids requiring a separate package for the pipe itself.</p>
+<section id="business-background-and-problem-scenario" class="level2">
+<h2 class="anchored" data-anchor-id="business-background-and-problem-scenario">Business background and problem scenario</h2>
+<p>You are an analyst at a subscription business. The retention team knows how many customers churned last month but does not know whether the highest churn rate is also the largest economic risk. Leadership wants a segment-level view that connects customer behavior to recurring revenue and identifies where a retention experiment could have the greatest value.</p>
+<p>The central question is: <strong>Which customer segment combines meaningful churn exposure with meaningful recurring-revenue risk?</strong> The analysis is descriptive. It does not prove that a customer characteristic causes churn.</p>
 </section>
-<section id="the-core-dplyr-verbs" class="level2">
-<h2 class="anchored" data-anchor-id="the-core-dplyr-verbs">The core dplyr verbs</h2>
-<section id="filter-choose-rows" class="level3">
-<h3 class="anchored" data-anchor-id="filter-choose-rows">filter(): choose rows</h3>
-<p>Use filter() to keep observations that satisfy a condition. In a business dataset, this might mean a date range, region, customer segment, or product category.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(cyl <span class="sc">&gt;=</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="data-dictionary">Data dictionary</h2>
+<section id="customers-one-row-per-active-or-recently-inactive-customer" class="level3">
+<h3 class="anchored" data-anchor-id="customers-one-row-per-active-or-recently-inactive-customer"><code>customers</code>: one row per active or recently inactive customer</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>customer_id</code></td>
+<td>character</td>
+<td>Stable customer key</td>
+</tr>
+<tr class="even">
+<td><code>segment</code></td>
+<td>character</td>
+<td>Commercial segment assigned at the start of the period</td>
+</tr>
+<tr class="odd">
+<td><code>monthly_fee</code></td>
+<td>numeric</td>
+<td>Contracted monthly recurring revenue in dollars</td>
+</tr>
+<tr class="even">
+<td><code>tenure_months</code></td>
+<td>integer</td>
+<td>Months since subscription start</td>
+</tr>
+<tr class="odd">
+<td><code>acquisition_channel</code></td>
+<td>character</td>
+<td>Channel credited with acquisition</td>
+</tr>
+<tr class="even">
+<td><code>churned</code></td>
+<td>logical</td>
+<td>Whether the customer ended the subscription during the observation month</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="select-choose-columns" class="level3">
-<h3 class="anchored" data-anchor-id="select-choose-columns">select(): choose columns</h3>
-<p>Use select() to keep only the variables needed for the next step or the final report.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(mpg, cyl, hp, wt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="activity-one-row-per-customer-month" class="level3">
+<h3 class="anchored" data-anchor-id="activity-one-row-per-customer-month"><code>activity</code>: one row per customer-month</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>customer_id</code></td>
+<td>character</td>
+<td>Foreign key to <code>customers</code></td>
+</tr>
+<tr class="even">
+<td><code>month</code></td>
+<td>character</td>
+<td>Observation month</td>
+</tr>
+<tr class="odd">
+<td><code>sessions</code></td>
+<td>integer</td>
+<td>Product sessions during the month</td>
+</tr>
+<tr class="even">
+<td><code>support_tickets</code></td>
+<td>integer</td>
+<td>Support tickets opened during the month</td>
+</tr>
+<tr class="odd">
+<td><code>last_active_days</code></td>
+<td>integer</td>
+<td>Days since most recent activity at month end</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="mutate-create-variables" class="level3">
-<h3 class="anchored" data-anchor-id="mutate-create-variables">mutate(): create variables</h3>
-<p>Use mutate() to add or modify columns. Every derived measure should have a clear definition and compatible units.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">power_to_weight =</span> hp <span class="sc">/</span> wt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </section>
-<section id="summarise-reduce-rows-to-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="summarise-reduce-rows-to-metrics">summarise(): reduce rows to metrics</h3>
-<p>Use summarise() to calculate a smaller set of values, often after grouping. Common summary functions include mean(), sum(), median(), min(), max(), and n().</p>
+<section id="technical-milestones" class="level2">
+<h2 class="anchored" data-anchor-id="technical-milestones">Technical milestones</h2>
+<section id="milestone-1-data-cleaning-and-sanity-checks" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-1-data-cleaning-and-sanity-checks">Milestone 1: Data cleaning and sanity checks</h3>
+<ul>
+<li>Confirm <code>customer_id</code> is unique in <code>customers</code> and repeated appropriately in <code>activity</code>.</li>
+<li>Check that every activity customer exists in the customer table.</li>
+<li>Confirm <code>monthly_fee</code> is non-negative and <code>churned</code> is logical.</li>
+<li>State whether churn is measured at the customer level and whether the denominator includes all customers or only customers with observed activity.</li>
+</ul>
 </section>
-<section id="group_by-define-the-comparison" class="level3">
-<h3 class="anchored" data-anchor-id="group_by-define-the-comparison">group_by(): define the comparison</h3>
-<p>group_by() tells dplyr to calculate summaries separately for each group. A summary without grouping answers a different question from a summary by region, segment, or month.</p>
+<section id="milestone-2-core-aggregation-and-metric-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-2-core-aggregation-and-metric-calculation">Milestone 2: Core aggregation and metric calculation</h3>
+<p>Join activity to customer attributes, then produce one row per segment with customer count, churned customers, churn rate, recurring revenue, and recurring revenue at risk. Define revenue at risk as the sum of <code>monthly_fee</code> for churned customers; do not multiply churn rate by total revenue unless the weighting is equivalent.</p>
 </section>
-<section id="arrange-sort-the-result" class="level3">
-<h3 class="anchored" data-anchor-id="arrange-sort-the-result">arrange(): sort the result</h3>
-<p>Use arrange() to order rows. Add desc() inside arrange() when the largest values should appear first.</p>
+<section id="milestone-3-exploratory-visual-chart" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-3-exploratory-visual-chart">Milestone 3: Exploratory visual chart</h3>
+<p>Create a quadrant or paired view of churn rate and revenue at risk. Add sample sizes so a high rate based on five customers is not visually treated like a high rate based on five thousand.</p>
+</section>
+<section id="milestone-4-executive-memo" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-4-executive-memo">Milestone 4: Executive memo</h3>
+<p>Describe the segment that deserves attention, the evidence supporting that prioritization, the limitation of the observation window, and one retention action that should be tested rather than assumed to work.</p>
 </section>
 </section>
-<section id="a-complete-pipeline-with-mtcars" class="level2">
-<h2 class="anchored" data-anchor-id="a-complete-pipeline-with-mtcars">A complete pipeline with mtcars</h2>
-<p>The built-in mtcars dataset contains one row per car model. For this teaching example, treat the cars as a product portfolio. We will:</p>
-<ol type="1">
-<li>keep cars with at least six cylinders;</li>
-<li>keep the columns needed for the analysis;</li>
-<li>calculate horsepower per unit of weight;</li>
-<li>group cars by cylinder count;</li>
-<li>calculate group-level metrics; and</li>
-<li>sort the groups by average fuel efficiency.</li>
-</ol>
+<section id="ai-prompts-in-action" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prompts-in-action">AI prompts in action</h2>
+<pre class="text"><code>I have customers (one row per customer) and activity (one row per customer-month).
+Customers has customer_id, segment, monthly_fee, tenure_months, acquisition_channel,
+and churned. Activity has customer_id, month, sessions, support_tickets, and
+last_active_days. Write a dplyr pipeline that verifies key uniqueness, left-joins
+activity to customers, and returns one row per segment. Include customer count,
+churned count, churn rate, total monthly fee, and monthly fee at risk.
+Do not average ratios without explaining the weighting. Return row-count checks and
+the expected grain before any code rewrite.</code></pre>
+<p>Common pitfalls to verify: joining customer attributes to multiple activity rows and then summing <code>monthly_fee</code> repeatedly; using activity rows rather than customers as the churn denominator; and labeling an association as a retention cause.</p>
+<p>For a visual prompt, ask:</p>
+<pre class="text"><code>Using the verified segment summary, design a two-panel ggplot2 view: churn rate
+by segment and monthly recurring revenue at risk by segment. Show customer counts,
+use percentages only for the rate panel, and write a subtitle that defines the
+observation window. Do not rank segments by churn rate alone.</code></pre>
+</section>
+<section id="interactive-project-lab" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-project-lab">Interactive project lab</h2>
+<p>This sandbox includes two linked tables. Try changing a fee or churn flag, then explain why the segment summary changes. A useful extension is to add a minimum customer-count warning.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -389,48 +471,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 library(shiny)
 library(dplyr)
+library(ggplot2)
 
-car_summary &lt;- mtcars |&gt;
-  tibble::as_tibble(rownames = "model") |&gt;
-  filter(cyl &gt;= 6) |&gt;
-  select(model, mpg, cyl, hp, wt) |&gt;
-  mutate(power_to_weight = hp / wt) |&gt;
-  group_by(cyl) |&gt;
-  summarise(
-    cars = n(),
-    average_mpg = mean(mpg),
-    average_hp = mean(hp),
-    average_power_to_weight = mean(power_to_weight),
-    .groups = "drop"
-  ) |&gt;
-  arrange(desc(average_mpg))
+customers &lt;- data.frame(
+  customer_id = paste0("C", 101:112),
+  segment = c("Starter", "Starter", "Starter", "Starter", "Growth", "Growth", "Growth", "Growth", "Enterprise", "Enterprise", "Enterprise", "Enterprise"),
+  monthly_fee = c(35, 40, 45, 50, 120, 135, 150, 160, 450, 500, 550, 600),
+  tenure_months = c(4, 8, 14, 22, 6, 12, 18, 30, 10, 20, 36, 48),
+  acquisition_channel = c("Paid", "Organic", "Paid", "Partner", "Organic", "Paid", "Partner", "Organic", "Partner", "Organic", "Paid", "Partner"),
+  churned = c(TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE)
+)
+
+activity &lt;- data.frame(
+  customer_id = rep(customers$customer_id, each = 2),
+  month = rep(c("May", "June"), times = nrow(customers)),
+  sessions = c(2, 1, 8, 7, 4, 2, 12, 10, 18, 16, 20, 21, 6, 5, 14, 13, 40, 42, 35, 38, 24, 8, 30, 29),
+  support_tickets = c(1, 2, 0, 1, 2, 1, 0, 0, 3, 2, 1, 1, 0, 0, 2, 2, 1, 0, 0, 1, 2, 4, 0, 0),
+  last_active_days = c(20, 28, 4, 6, 12, 20, 3, 4, 8, 6, 5, 4, 18, 25, 7, 8, 2, 3, 4, 4, 6, 30, 3, 4)
+)
 
 ui &lt;- fluidPage(
-  h3("Product portfolio summary"),
-  p("The table compares car groups with six or more cylinders."),
-  tableOutput("summary_table")
+  titlePanel("Churn economics project lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("segment", "Segment", choices = c("All", unique(customers$segment))),
+      helpText("Revenue at risk is the fee of churned customers, counted once per customer.")
+    ),
+    mainPanel(tableOutput("summary"), plotOutput("plot", height = "430px"))
+  )
 )
 
 server &lt;- function(input, output, session) {
-  output$summary_table &lt;- renderTable({
-    car_summary
-  }, digits = 1)
+  output$summary &lt;- renderTable({
+    data &lt;- customers
+    if (input$segment != "All") data &lt;- data |&gt; filter(segment == input$segment)
+    data |&gt;
+      group_by(segment) |&gt;
+      summarize(
+        customers = n(),
+        churned = sum(churned),
+        churn_rate = mean(churned),
+        recurring_revenue = sum(monthly_fee),
+        revenue_at_risk = sum(monthly_fee[churned]),
+        .groups = "drop"
+      )
+  })
+
+  output$plot &lt;- renderPlot({
+    customers |&gt;
+      group_by(segment) |&gt;
+      summarize(churn_rate = mean(churned), revenue_at_risk = sum(monthly_fee[churned]), .groups = "drop") |&gt;
+      ggplot(aes(churn_rate, revenue_at_risk, label = segment)) +
+      geom_point(size = 4, color = "#B54708") +
+      geom_text(nudge_y = 25, size = 3) +
+      scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +
+      labs(x = "Churn rate", y = "Monthly revenue at risk", title = "Prioritize by rate and economic exposure") +
+      theme_minimal(base_size = 12)
+  })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
-<section id="read-the-pipeline-as-a-business-analyst" class="level2">
-<h2 class="anchored" data-anchor-id="read-the-pipeline-as-a-business-analyst">Read the pipeline as a business analyst</h2>
-<p>A pipeline is not automatically correct because it is readable. Ask:</p>
-<ul>
-<li>Does the filter include the population the stakeholder intended?</li>
-<li>Are the selected columns sufficient to audit the calculation?</li>
-<li>Are the units compatible in every mutate() expression?</li>
-<li>Is the grouping level appropriate for the decision?</li>
-<li>Does the summary hide important variation?</li>
-<li>Is the sort order emphasizing the right outcome?</li>
-</ul>
-<p>These questions are equally important when the pipeline was written by you or generated by an AI assistant.</p>
 
 
 </section>

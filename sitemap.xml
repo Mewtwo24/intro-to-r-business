@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/visualization.html</loc>
-    <lastmod>2026-09-24T05:25:53.694Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/wrangling.html</loc>
+    <lastmod>2026-09-25T05:54:54.385Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/schedule.html</loc>
+    <lastmod>2026-09-25T05:53:19.603Z</lastmod>
   </url>
   <url>
     <loc>https://Mewtwo24.github.io/intro-to-r-business/resources.html</loc>
-    <lastmod>2026-09-24T05:25:53.692Z</lastmod>
+    <lastmod>2026-09-25T06:04:06.937Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/index.html</loc>
-    <lastmod>2026-09-24T05:25:53.690Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/project-sales.html</loc>
+    <lastmod>2026-09-25T06:00:52.988Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-prompting.html</loc>
-    <lastmod>2026-09-24T05:25:53.688Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/project-churn.html</loc>
+    <lastmod>2026-09-25T06:00:53.954Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-project-regional-growth.html</loc>
-    <lastmod>2026-09-24T05:25:53.685Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/eda.html</loc>
+    <lastmod>2026-09-25T05:57:39.055Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-getting-started.html</loc>
-    <lastmod>2026-09-24T05:25:53.683Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-socratic-tutor.html</loc>
+    <lastmod>2026-09-25T05:59:23.375Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-framework.html</loc>
+    <lastmod>2026-09-25T05:53:20.762Z</lastmod>
   </url>
   <url>
     <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-debugging.html</loc>
-    <lastmod>2026-09-24T05:25:53.682Z</lastmod>
+    <lastmod>2026-09-25T05:59:28.232Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-exercises.html</loc>
-    <lastmod>2026-09-24T05:25:53.683Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-setup-prompting.html</loc>
+    <lastmod>2026-09-25T05:59:21.239Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-project-customer-value.html</loc>
-    <lastmod>2026-09-24T05:25:53.684Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-visualization.html</loc>
+    <lastmod>2026-09-25T06:06:45.465Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/ai-project-store-operations.html</loc>
-    <lastmod>2026-09-24T05:25:53.686Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/index.html</loc>
+    <lastmod>2026-09-25T06:03:09.674Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/data-wrangling.html</loc>
-    <lastmod>2026-09-24T05:25:53.689Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/project-logistics.html</loc>
+    <lastmod>2026-09-25T06:01:37.001Z</lastmod>
   </url>
   <url>
-    <loc>https://Mewtwo24.github.io/intro-to-r-business/r-basics.html</loc>
-    <lastmod>2026-09-24T05:25:53.691Z</lastmod>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/r-core.html</loc>
+    <lastmod>2026-09-25T05:54:51.971Z</lastmod>
   </url>
   <url>
     <loc>https://Mewtwo24.github.io/intro-to-r-business/sandbox.html</loc>
-    <lastmod>2026-09-24T05:25:53.693Z</lastmod>
+    <lastmod>2026-09-25T06:02:22.878Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Mewtwo24.github.io/intro-to-r-business/visualization.html</loc>
+    <lastmod>2026-09-25T05:57:36.867Z</lastmod>
   </url>
 </urlset>

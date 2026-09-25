@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Open Analytical Sandbox – Intro to R for Business Analytics</title>
+<title>Project 3: Supply Chain Logistics and Bottlenecks – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -91,7 +91,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sandbox.html">Interactive Lab &amp; Resources</a></li><li class="breadcrumb-item"><a href="./sandbox.html">Open Analytical Sandbox</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project-sales.html">Guided Business Projects</a></li><li class="breadcrumb-item"><a href="./project-logistics.html">Project 3: Supply Chain Logistics and Bottlenecks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -238,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
   </div>
 </li>
@@ -255,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sandbox.html" class="sidebar-item-text sidebar-link active">
+  <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Open Analytical Sandbox</span></a>
   </div>
 </li>
@@ -272,16 +272,32 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#business-background-and-problem-scenario" id="toc-business-background-and-problem-scenario" class="nav-link active" data-scroll-target="#business-background-and-problem-scenario">Business background and problem scenario</a></li>
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data dictionary</a></li>
+  <li><a href="#technical-milestones" id="toc-technical-milestones" class="nav-link" data-scroll-target="#technical-milestones">Technical milestones</a>
+  <ul class="collapse">
+  <li><a href="#milestone-1-data-cleaning-and-sanity-checks" id="toc-milestone-1-data-cleaning-and-sanity-checks" class="nav-link" data-scroll-target="#milestone-1-data-cleaning-and-sanity-checks">Milestone 1: Data cleaning and sanity checks</a></li>
+  <li><a href="#milestone-2-core-aggregation-and-metric-calculation" id="toc-milestone-2-core-aggregation-and-metric-calculation" class="nav-link" data-scroll-target="#milestone-2-core-aggregation-and-metric-calculation">Milestone 2: Core aggregation and metric calculation</a></li>
+  <li><a href="#milestone-3-exploratory-visual-chart" id="toc-milestone-3-exploratory-visual-chart" class="nav-link" data-scroll-target="#milestone-3-exploratory-visual-chart">Milestone 3: Exploratory visual chart</a></li>
+  <li><a href="#milestone-4-executive-memo" id="toc-milestone-4-executive-memo" class="nav-link" data-scroll-target="#milestone-4-executive-memo">Milestone 4: Executive memo</a></li>
+  </ul></li>
+  <li><a href="#ai-prompts-in-action" id="toc-ai-prompts-in-action" class="nav-link" data-scroll-target="#ai-prompts-in-action">AI prompts in action</a></li>
+  <li><a href="#interactive-project-lab" id="toc-interactive-project-lab" class="nav-link" data-scroll-target="#interactive-project-lab">Interactive project lab</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sandbox.html">Interactive Lab &amp; Resources</a></li><li class="breadcrumb-item"><a href="./sandbox.html">Open Analytical Sandbox</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project-sales.html">Guided Business Projects</a></li><li class="breadcrumb-item"><a href="./project-logistics.html">Project 3: Supply Chain Logistics and Bottlenecks</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Open Analytical Sandbox</h1>
-<p class="subtitle lead">A self-contained workspace for testing, inspecting, and translating AI-generated R</p>
+<h1 class="title">Project 3: Supply Chain Logistics and Bottlenecks</h1>
+<p class="subtitle lead">Combine service-level metrics with volume before recommending an operational response</p>
 </div>
 
 
@@ -298,14 +314,120 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This lab starts with three small synthetic tables so you can practice joins, summaries, filters, and plots without importing an external file. Use it as a safe place to paste code from an AI assistant. Before you ask for a solution, write down the expected row grain and one result you can calculate by hand.</p>
-<p>The tables are:</p>
+<section id="business-background-and-problem-scenario" class="level2">
+<h2 class="anchored" data-anchor-id="business-background-and-problem-scenario">Business background and problem scenario</h2>
+<p>You are supporting a distribution network that has missed delivery promises in several lanes. The operations director needs to know whether the bottleneck is concentrated in a carrier, a warehouse, or a route. The director also wants to avoid “fixing” the lane with the highest late rate if that lane has very little volume.</p>
+<p>The central question is: <strong>Where is service risk concentrated when both late-delivery rate and shipment volume are considered?</strong> The analysis should prioritize investigation; it should not claim that a carrier or warehouse caused the delay without process evidence.</p>
+</section>
+<section id="data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="data-dictionary">Data dictionary</h2>
+<p>The main table has one row per shipment.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>shipment_id</code></td>
+<td>character</td>
+<td>Unique shipment key</td>
+</tr>
+<tr class="even">
+<td><code>warehouse</code></td>
+<td>character</td>
+<td>Origin fulfillment center</td>
+</tr>
+<tr class="odd">
+<td><code>route</code></td>
+<td>character</td>
+<td>Destination lane or route code</td>
+</tr>
+<tr class="even">
+<td><code>carrier</code></td>
+<td>character</td>
+<td>Delivery carrier</td>
+</tr>
+<tr class="odd">
+<td><code>ship_date</code></td>
+<td>character</td>
+<td>Date shipment left the warehouse</td>
+</tr>
+<tr class="even">
+<td><code>promised_days</code></td>
+<td>integer</td>
+<td>Service promise in days</td>
+</tr>
+<tr class="odd">
+<td><code>actual_days</code></td>
+<td>integer</td>
+<td>Observed transit time in days</td>
+</tr>
+<tr class="even">
+<td><code>shipping_cost_usd</code></td>
+<td>numeric</td>
+<td>Shipment-level transportation cost</td>
+</tr>
+<tr class="odd">
+<td><code>units</code></td>
+<td>integer</td>
+<td>Units shipped</td>
+</tr>
+<tr class="even">
+<td><code>priority</code></td>
+<td>character</td>
+<td>Standard or expedited service</td>
+</tr>
+</tbody>
+</table>
+<p>Derived fields include <code>late = actual_days &gt; promised_days</code>, <code>delay_days = actual_days - promised_days</code>, and <code>cost_per_unit = shipping_cost_usd / units</code>. A negative delay is early delivery, not a missing value.</p>
+</section>
+<section id="technical-milestones" class="level2">
+<h2 class="anchored" data-anchor-id="technical-milestones">Technical milestones</h2>
+<section id="milestone-1-data-cleaning-and-sanity-checks" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-1-data-cleaning-and-sanity-checks">Milestone 1: Data cleaning and sanity checks</h3>
 <ul>
-<li><code>customers</code>: one row per customer;</li>
-<li><code>products</code>: one row per product;</li>
-<li><code>transactions</code>: one row per transaction.</li>
+<li>Confirm <code>shipment_id</code> is unique.</li>
+<li>Check dates, positive units, non-negative costs, and plausible transit times.</li>
+<li>Confirm promised and actual days use the same business-day convention.</li>
+<li>Check whether any route-carrier combination has too few shipments for a stable rate.</li>
 </ul>
-<p>The live application joins the tables and reports revenue by product category. Your tasks are to add a date filter, calculate average order value, compare repeat and new customers, and write a three-sentence stakeholder summary.</p>
+</section>
+<section id="milestone-2-core-aggregation-and-metric-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-2-core-aggregation-and-metric-calculation">Milestone 2: Core aggregation and metric calculation</h3>
+<p>Produce one row per warehouse-route-carrier combination with shipments, late shipments, late rate, average delay among late shipments, total units, and total shipping cost. Distinguish <code>mean(late)</code> from the share of late shipments and show the denominator.</p>
+</section>
+<section id="milestone-3-exploratory-visual-chart" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-3-exploratory-visual-chart">Milestone 3: Exploratory visual chart</h3>
+<p>Build a volume-versus-late-rate scatter plot with point size representing shipments and labels for the most material lanes. Add a second view of average delay or cost per unit only after defining its population.</p>
+</section>
+<section id="milestone-4-executive-memo" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-4-executive-memo">Milestone 4: Executive memo</h3>
+<p>Recommend one operational investigation. Name the evidence, the decision it informs, the data limitation, and the next measurement needed to determine root cause.</p>
+</section>
+</section>
+<section id="ai-prompts-in-action" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prompts-in-action">AI prompts in action</h2>
+<pre class="text"><code>I have a shipment table with one row per shipment and these fields: shipment_id,
+warehouse, route, carrier, promised_days, actual_days, shipping_cost_usd, units,
+and priority. Write a dplyr workflow that audits unique shipment IDs and invalid
+units/costs, creates late and delay_days, and summarizes one row per
+warehouse-route-carrier. Include shipment count, late count, late rate, mean delay
+among late shipments, total units, and cost per unit. State every denominator and
+do not infer a root cause.</code></pre>
+<p>Ask a second pass:</p>
+<pre class="text"><code>Review this bottleneck chart specification. I want to prioritize lanes using both
+volume and late rate. Identify how a small denominator, a high-volume route, or
+an unequal mix of priority shipments could distort the recommendation. Propose
+three sensitivity checks; do not rewrite the chart yet.</code></pre>
+<p>Common pitfalls include calculating average delay across on-time shipments, ranking by late rate alone, and summing shipping cost after a many-to-many join.</p>
+</section>
+<section id="interactive-project-lab" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-project-lab">Interactive project lab</h2>
+<p>This synthetic network includes a high-rate low-volume lane and a moderate-rate high-volume lane. Use the summary to decide which one deserves the first operational review.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -316,85 +438,68 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 
-customers &lt;- data.frame(
-  customer_id = paste0("C", 101:108),
-  segment = c("Starter", "Starter", "Growth", "Growth", "Enterprise", "Enterprise", "Starter", "Growth"),
-  region = c("North", "West", "North", "South", "East", "West", "South", "East")
-)
-
-products &lt;- data.frame(
-  product_id = paste0("P", 1:6),
-  product_name = c("Core Plan", "Analytics Add-on", "Team Seats", "Training", "Integration", "Premium Support"),
-  category = c("Subscription", "Subscription", "Subscription", "Service", "Service", "Service"),
-  list_price = c(80, 35, 25, 300, 450, 120)
-)
-
-transactions &lt;- data.frame(
-  transaction_id = paste0("T", 1:16),
-  customer_id = c("C101", "C101", "C102", "C103", "C103", "C104", "C105", "C105", "C106", "C107", "C107", "C108", "C102", "C104", "C106", "C108"),
-  product_id = c("P1", "P2", "P1", "P3", "P4", "P1", "P5", "P6", "P1", "P2", "P4", "P3", "P6", "P2", "P5", "P1"),
-  quantity = c(1, 2, 1, 4, 1, 2, 1, 1, 3, 2, 1, 5, 1, 1, 1, 2),
-  transaction_value = c(80, 70, 80, 100, 300, 160, 450, 120, 240, 70, 300, 125, 120, 35, 450, 160),
-  month = c("Jan", "Jan", "Jan", "Jan", "Feb", "Feb", "Feb", "Feb", "Feb", "Mar", "Mar", "Mar", "Mar", "Mar", "Mar", "Mar")
+shipments &lt;- data.frame(
+  shipment_id = paste0("S", 1:16),
+  warehouse = rep(c("North DC", "South DC"), each = 8),
+  route = c(rep("Metro", 6), rep("Rural", 2), rep("Metro", 5), rep("Rural", 3)),
+  carrier = c(rep("Swift", 4), rep("ParcelPro", 4), rep("Swift", 4), rep("ParcelPro", 4)),
+  promised_days = c(rep(2, 8), rep(3, 8)),
+  actual_days = c(2, 3, 2, 4, 2, 2, 5, 6, 3, 3, 4, 3, 3, 5, 6, 4),
+  shipping_cost_usd = c(18, 20, 19, 22, 18, 21, 35, 38, 17, 18, 20, 19, 18, 32, 36, 31),
+  units = c(10, 8, 12, 11, 9, 10, 2, 3, 15, 14, 13, 16, 12, 3, 2, 4),
+  priority = c("Standard", "Standard", "Expedited", "Standard", "Standard", "Expedited", "Standard", "Standard", "Standard", "Standard", "Expedited", "Standard", "Standard", "Standard", "Standard", "Expedited")
 )
 
 ui &lt;- fluidPage(
-  titlePanel("Open analytical sandbox"),
+  titlePanel("Supply-chain bottleneck lab"),
   sidebarLayout(
     sidebarPanel(
-      selectInput("category", "Product category", choices = c("All", sort(unique(products$category)))),
-      selectInput("month", "Month", choices = c("All", unique(transactions$month))),
-      helpText("Modify the code and rerun the app. Keep the tables synthetic.")
+      selectInput("warehouse", "Warehouse", choices = c("All", unique(shipments$warehouse))),
+      helpText("Compare rate and volume before selecting an investigation target.")
     ),
-    mainPanel(
-      h4("Joined summary"),
-      tableOutput("summary"),
-      h4("Revenue by category"),
-      plotOutput("plot", height = "420px")
-    )
+    mainPanel(tableOutput("summary"), plotOutput("plot", height = "430px"))
   )
 )
 
 server &lt;- function(input, output, session) {
-  joined &lt;- reactive({
-    data &lt;- transactions |&gt;
-      left_join(customers, by = "customer_id") |&gt;
-      left_join(products, by = "product_id")
-
-    if (input$category != "All") data &lt;- data |&gt; filter(category == input$category)
-    if (input$month != "All") data &lt;- data |&gt; filter(month == input$month)
-    data
+  filtered &lt;- reactive({
+    if (input$warehouse == "All") shipments else shipments |&gt; filter(warehouse == input$warehouse)
   })
 
   output$summary &lt;- renderTable({
-    joined() |&gt;
-      group_by(category) |&gt;
+    filtered() |&gt;
+      mutate(late = actual_days &gt; promised_days, delay_days = actual_days - promised_days) |&gt;
+      group_by(route, carrier) |&gt;
       summarize(
-        transactions = n(),
-        customers = n_distinct(customer_id),
-        units = sum(quantity),
-        revenue = sum(transaction_value),
-        average_transaction = mean(transaction_value),
+        shipments = n(),
+        late_shipments = sum(late),
+        late_rate = mean(late),
+        average_late_delay = mean(delay_days[late], na.rm = TRUE),
+        units = sum(units),
+        cost_per_unit = sum(shipping_cost_usd) / sum(units),
         .groups = "drop"
       )
   })
 
   output$plot &lt;- renderPlot({
-    joined() |&gt;
-      group_by(category) |&gt;
-      summarize(revenue = sum(transaction_value), .groups = "drop") |&gt;
-      ggplot(aes(x = reorder(category, revenue), y = revenue)) +
-      geom_col(fill = "#176B87") +
-      scale_y_continuous(labels = scales::label_dollar()) +
-      labs(x = NULL, y = "Revenue", title = "Revenue by product category") +
-      coord_flip() +
-      theme_minimal(base_size = 12)
+    filtered() |&gt;
+      mutate(late = actual_days &gt; promised_days) |&gt;
+      group_by(route, carrier) |&gt;
+      summarize(shipments = n(), late_rate = mean(late), .groups = "drop") |&gt;
+      ggplot(aes(shipments, late_rate, size = shipments, label = paste(route, carrier))) +
+      geom_point(color = "#176B87", alpha = 0.8) +
+      geom_text(nudge_y = 0.04, size = 3, show.legend = FALSE) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+      labs(x = "Shipment volume", y = "Late-delivery rate", size = "Shipments", title = "Volume and service risk") +
+      theme_minimal(base_size = 12) +
+      theme(legend.position = "none")
   })
 }
 
 shinyApp(ui, server)</code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

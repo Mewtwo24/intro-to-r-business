@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Basics: A Complete Foundation – Intro to R for Business Analytics</title>
+<title>AI Partnership Framework and Ethics – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -81,11 +81,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-bcb91d9711d77f3a7927b302eb48b284.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content=".">
-<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
-<link href="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -126,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-basics.html">The R Foundation</a></li><li class="breadcrumb-item"><a href="./r-basics.html">R Basics</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Course Overview</a></li><li class="breadcrumb-item"><a href="./ai-framework.html">AI Partnership Framework and Ethics</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -163,13 +158,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -177,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -185,14 +186,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -201,12 +202,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -214,14 +221,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -230,36 +243,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -267,8 +256,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -283,29 +307,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#r-as-a-calculator" id="toc-r-as-a-calculator" class="nav-link active" data-scroll-target="#r-as-a-calculator">1. R as a calculator</a>
+  <li><a href="#course-position" id="toc-course-position" class="nav-link active" data-scroll-target="#course-position">Course position</a></li>
+  <li><a href="#the-ai-code-reviewer-standard" id="toc-the-ai-code-reviewer-standard" class="nav-link" data-scroll-target="#the-ai-code-reviewer-standard">The AI Code Reviewer Standard</a></li>
+  <li><a href="#responsible-use-policy" id="toc-responsible-use-policy" class="nav-link" data-scroll-target="#responsible-use-policy">Responsible use policy</a>
   <ul class="collapse">
-  <li><a href="#operators" id="toc-operators" class="nav-link" data-scroll-target="#operators">Operators</a></li>
+  <li><a href="#allowed-uses" id="toc-allowed-uses" class="nav-link" data-scroll-target="#allowed-uses">Allowed uses</a></li>
+  <li><a href="#uses-that-require-care" id="toc-uses-that-require-care" class="nav-link" data-scroll-target="#uses-that-require-care">Uses that require care</a></li>
+  <li><a href="#not-acceptable" id="toc-not-acceptable" class="nav-link" data-scroll-target="#not-acceptable">Not acceptable</a></li>
   </ul></li>
-  <li><a href="#core-data-types" id="toc-core-data-types" class="nav-link" data-scroll-target="#core-data-types">2. Core data types</a></li>
-  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors">3. Vectors</a></li>
-  <li><a href="#indexing-and-subsetting" id="toc-indexing-and-subsetting" class="nav-link" data-scroll-target="#indexing-and-subsetting">4. Indexing and subsetting</a></li>
-  <li><a href="#data-frames-and-tibbles" id="toc-data-frames-and-tibbles" class="nav-link" data-scroll-target="#data-frames-and-tibbles">5. Data frames and tibbles</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">6. Functions</a></li>
-  <li><a href="#conditional-logic" id="toc-conditional-logic" class="nav-link" data-scroll-target="#conditional-logic">7. Conditional logic</a></li>
-  <li><a href="#repetition-and-iteration" id="toc-repetition-and-iteration" class="nav-link" data-scroll-target="#repetition-and-iteration">8. Repetition and iteration</a></li>
-  <li><a href="#packages-scripts-and-projects" id="toc-packages-scripts-and-projects" class="nav-link" data-scroll-target="#packages-scripts-and-projects">9. Packages, scripts, and projects</a></li>
-  <li><a href="#practice-in-a-live-application" id="toc-practice-in-a-live-application" class="nav-link" data-scroll-target="#practice-in-a-live-application">10. Practice in a live application</a></li>
-  <li><a href="#foundation-checklist" id="toc-foundation-checklist" class="nav-link" data-scroll-target="#foundation-checklist">Foundation checklist</a></li>
+  <li><a href="#hallucination-patterns-in-business-statistics" id="toc-hallucination-patterns-in-business-statistics" class="nav-link" data-scroll-target="#hallucination-patterns-in-business-statistics">Hallucination patterns in business statistics</a></li>
+  <li><a href="#schema-first-prompting-without-raw-data-leakage" id="toc-schema-first-prompting-without-raw-data-leakage" class="nav-link" data-scroll-target="#schema-first-prompting-without-raw-data-leakage">Schema-first prompting without raw data leakage</a></li>
+  <li><a href="#plain-english-translation-requirement" id="toc-plain-english-translation-requirement" class="nav-link" data-scroll-target="#plain-english-translation-requirement">Plain-English translation requirement</a></li>
+  <li><a href="#grading-and-mastery" id="toc-grading-and-mastery" class="nav-link" data-scroll-target="#grading-and-mastery">Grading and mastery</a></li>
+  <li><a href="#a-review-conversation" id="toc-a-review-conversation" class="nav-link" data-scroll-target="#a-review-conversation">A review conversation</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-basics.html">The R Foundation</a></li><li class="breadcrumb-item"><a href="./r-basics.html">R Basics</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Course Overview</a></li><li class="breadcrumb-item"><a href="./ai-framework.html">AI Partnership Framework and Ethics</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">R Basics: A Complete Foundation</h1>
+<h1 class="title">AI Partnership Framework and Ethics</h1>
+<p class="subtitle lead">The analyst remains accountable when the first draft comes from an AI system</p>
 </div>
 
 
@@ -322,73 +346,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>R is both a programming language and an environment for working with data. A business analyst uses R to represent a question, transform observations, calculate measures, visualize patterns, and create a record of the work.</p>
-<p>This chapter builds the vocabulary needed to read and direct R code generated by an AI assistant.</p>
-<section id="r-as-a-calculator" class="level2">
-<h2 class="anchored" data-anchor-id="r-as-a-calculator">1. R as a calculator</h2>
-<p>R can evaluate arithmetic expressions:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>revenue <span class="ot">&lt;-</span> <span class="dv">185000</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cost <span class="ot">&lt;-</span> <span class="dv">112000</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>profit <span class="ot">&lt;-</span> revenue <span class="sc">-</span> cost</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>margin <span class="ot">&lt;-</span> profit <span class="sc">/</span> revenue</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The assignment operator &lt;- stores a result under a name. The expression on the right is evaluated first. Use descriptive names that communicate the business meaning of an object.</p>
-<section id="operators" class="level3">
-<h3 class="anchored" data-anchor-id="operators">Operators</h3>
-<p>Common operators include:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Operator</th>
-<th>Meaning</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>+, -, *, /</td>
-<td>Arithmetic</td>
-<td>revenue - cost</td>
-</tr>
-<tr class="even">
-<td>^</td>
-<td>Exponent</td>
-<td>growth_rate ^ 2</td>
-</tr>
-<tr class="odd">
-<td>==</td>
-<td>Equal to</td>
-<td>region == “North”</td>
-</tr>
-<tr class="even">
-<td>!=</td>
-<td>Not equal to</td>
-<td>status != “Cancelled”</td>
-</tr>
-<tr class="odd">
-<td>&gt;, &lt;, &gt;=, &lt;=</td>
-<td>Comparison</td>
-<td>revenue &gt;= 10000</td>
-</tr>
-<tr class="even">
-<td>&amp;, |</td>
-<td>And, or for vectors</td>
-<td>active &amp; revenue &gt; 0</td>
-</tr>
-<tr class="odd">
-<td>!</td>
-<td>Not</td>
-<td>!returned</td>
-</tr>
-</tbody>
-</table>
-<p>The single equals sign is used inside function arguments or assignments in other languages, while R commonly uses &lt;- for assignment and == for comparison.</p>
+<section id="course-position" class="level2">
+<h2 class="anchored" data-anchor-id="course-position">Course position</h2>
+<p>AI coding assistants are powerful autocomplete systems, reasoning partners, and private tutors. They are not a source of authority about your data or your organization. In this course, an assistant may write a first draft, explain a function, propose a test, or help locate a bug. The student is still responsible for the definition of the metric, the validity of the computation, the protection of the data, and the accuracy of the stakeholder message.</p>
+<p>The governing principle is simple:</p>
+<blockquote class="blockquote">
+<p>Delegate keystrokes, not accountability.</p>
+</blockquote>
+</section>
+<section id="the-ai-code-reviewer-standard" class="level2">
+<h2 class="anchored" data-anchor-id="the-ai-code-reviewer-standard">The AI Code Reviewer Standard</h2>
+<p>Every AI-assisted submission must pass five gates.</p>
+<ol type="1">
+<li><strong>Question gate.</strong> State the decision the analysis is meant to support. A prompt that asks for “interesting insights” is not a business specification.</li>
+<li><strong>Schema gate.</strong> Provide field names, types, units, grain, and permitted missingness. Do not upload confidential raw records merely to avoid describing the schema.</li>
+<li><strong>Computation gate.</strong> Inspect the generated pipeline line by line. Confirm filters, joins, grouping levels, denominators, date windows, and NA behavior.</li>
+<li><strong>Evidence gate.</strong> Run small tests that could falsify the result: row counts, duplicate checks, hand calculations, known totals, and edge cases.</li>
+<li><strong>Translation gate.</strong> Explain the result in plain English, including uncertainty and a next action. A chart or a console table is not an executive conclusion.</li>
+</ol>
+<p>An AI-generated script that fails one of these gates is a draft, not an answer.</p>
+</section>
+<section id="responsible-use-policy" class="level2">
+<h2 class="anchored" data-anchor-id="responsible-use-policy">Responsible use policy</h2>
+<section id="allowed-uses" class="level3">
+<h3 class="anchored" data-anchor-id="allowed-uses">Allowed uses</h3>
+<ul>
+<li>Asking an assistant to explain R syntax, propose a tidyverse pipeline, or compare two chart designs.</li>
+<li>Supplying a synthetic dataset or a schema-only description to obtain a reproducible example.</li>
+<li>Pasting a complete error message and the smallest relevant code snippet for root-cause analysis.</li>
+<li>Asking the assistant to generate tests, assumptions, and questions that you then verify independently.</li>
+</ul>
+</section>
+<section id="uses-that-require-care" class="level3">
+<h3 class="anchored" data-anchor-id="uses-that-require-care">Uses that require care</h3>
+<ul>
+<li>Copying organizational data into a tool that has not been approved for that data classification.</li>
+<li>Accepting a statistical result because the code is polished or because the assistant sounds confident.</li>
+<li>Presenting an AI-generated causal explanation when the analysis only shows association.</li>
+<li>Using a generated chart without checking its denominator, time period, population, or excluded rows.</li>
+</ul>
+</section>
+<section id="not-acceptable" class="level3">
+<h3 class="anchored" data-anchor-id="not-acceptable">Not acceptable</h3>
+<ul>
+<li>Treating an AI response as a citation or as evidence that a number is correct.</li>
+<li>Hiding AI assistance when a course, employer, or client requires disclosure.</li>
+<li>Uploading personally identifiable, proprietary, regulated, or credential information into an unapproved service.</li>
+<li>Submitting code that the analyst cannot explain or reproduce.</li>
+</ul>
 </section>
 </section>
-<section id="core-data-types" class="level2">
-<h2 class="anchored" data-anchor-id="core-data-types">2. Core data types</h2>
-<p>R uses different data types to represent different kinds of information:</p>
+<section id="hallucination-patterns-in-business-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="hallucination-patterns-in-business-statistics">Hallucination patterns in business statistics</h2>
+<p>AI systems often produce code that is syntactically valid and economically wrong. Watch for these patterns:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -397,230 +407,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </colgroup>
 <thead>
 <tr class="header">
-<th>Type</th>
-<th>Example</th>
-<th>Business use</th>
+<th>Risk</th>
+<th>What the code may do</th>
+<th>Verification question</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Numeric</td>
-<td>185000, 0.12</td>
-<td>Revenue, quantity, margin, rate</td>
+<td>Silent NA removal</td>
+<td><code>mean(x, na.rm = TRUE)</code> calculates a value on an unknown subset</td>
+<td>How many observations were removed, and could missingness be systematic?</td>
 </tr>
 <tr class="even">
-<td>Character</td>
-<td>“North”, “Enterprise”</td>
-<td>Region, segment, product label</td>
+<td>Mean of ratios</td>
+<td>Averages store-level conversion rates with equal weight</td>
+<td>Should the result be a ratio of totals, weighted by opportunities or transactions?</td>
 </tr>
 <tr class="odd">
-<td>Logical</td>
-<td>TRUE, FALSE</td>
-<td>Flags such as active or approved</td>
+<td>Wrong join grain</td>
+<td>Joins a customer table to a transaction table and repeats customer attributes</td>
+<td>What is the expected row count and key uniqueness before and after the join?</td>
 </tr>
 <tr class="even">
-<td>Integer</td>
-<td>1L, 12L</td>
-<td>Counts and positions</td>
+<td>Hidden grouping</td>
+<td>Leaves a prior <code>group_by()</code> active while calculating a supposedly global metric</td>
+<td>What is the grouping structure immediately before <code>summarize()</code>?</td>
 </tr>
 <tr class="odd">
-<td>Date</td>
-<td>as.Date(“2026-01-15”)</td>
-<td>Transaction dates and reporting periods</td>
+<td>Date ambiguity</td>
+<td>Treats a fiscal quarter or local timestamp as a calendar date</td>
+<td>Which timezone, fiscal calendar, and boundary convention apply?</td>
+</tr>
+<tr class="even">
+<td>Directional claim</td>
+<td>Describes correlation as a driver or cause</td>
+<td>What design or evidence supports causality?</td>
 </tr>
 </tbody>
 </table>
-<p>Inspect an object with class(), typeof(), and str():</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>amount <span class="ot">&lt;-</span> <span class="dv">185000</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>region <span class="ot">&lt;-</span> <span class="st">"North"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>approved <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>report_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-01-15"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(amount)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(region)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">list</span>(<span class="at">amount =</span> amount, <span class="at">region =</span> region, <span class="at">approved =</span> approved, <span class="at">report_date =</span> report_date))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>A type mismatch is a common source of errors. A number stored as character text cannot be reliably added to another number until it is cleaned and converted. A date stored as text may sort alphabetically rather than chronologically.</p>
+<p>The correction is not “ask the AI to be more accurate.” The correction is to specify the denominator, grain, missingness rule, and acceptance test.</p>
 </section>
-<section id="vectors" class="level2">
-<h2 class="anchored" data-anchor-id="vectors">3. Vectors</h2>
-<p>A vector is a sequence of values. Most columns in a business dataset are vectors, with one value for each observation.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"North"</span>, <span class="st">"South"</span>, <span class="st">"West"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">42000</span>, <span class="dv">38500</span>, <span class="dv">51750</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>is_target_met <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(regions)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sales <span class="sc">*</span> <span class="fl">1.05</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sales <span class="sc">&gt;</span> <span class="dv">40000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>R performs element-by-element operations on vectors. Be careful when vectors have different lengths: R may recycle the shorter vector, which can be useful but can also hide a mistake.</p>
-<p>Missing values are represented by NA. Test for them with is.na(); do not compare with == NA.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">91</span>, <span class="dv">87</span>, <span class="cn">NA</span>, <span class="dv">94</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(scores)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The business decision about missing data belongs in the analysis plan. Removing missing values can change the population being described.</p>
+<section id="schema-first-prompting-without-raw-data-leakage" class="level2">
+<h2 class="anchored" data-anchor-id="schema-first-prompting-without-raw-data-leakage">Schema-first prompting without raw data leakage</h2>
+<p>Before asking for code, create a compact schema card. It can be generated locally with <code>glimpse()</code> and <code>str()</code> and then edited to remove sensitive values.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(transactions)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(transactions)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Share information such as <code>customer_id: character, one row per transaction, not for modeling</code>, not the actual customer IDs. Include units (<code>revenue_usd</code>), allowed values (<code>channel</code> is one of store, web, partner), and key relationships (<code>customer_id</code> repeats in transactions; <code>product_id</code> is unique in products). A useful schema prompt also states the expected output grain and the business decision.</p>
 </section>
-<section id="indexing-and-subsetting" class="level2">
-<h2 class="anchored" data-anchor-id="indexing-and-subsetting">4. Indexing and subsetting</h2>
-<p>Use square brackets to select positions or conditions:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sales[<span class="dv">1</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sales[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sales[sales <span class="sc">&gt;</span> <span class="dv">40000</span>]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>regions[sales <span class="sc">&gt;</span> <span class="dv">40000</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The expression sales &gt; 40000 produces a logical vector. Using that vector inside brackets keeps only the corresponding values. This pattern is the foundation for filtering rows in more advanced tools.</p>
-<p>Use the dollar sign to select a named column from a data frame:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>regional_sales <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">region =</span> regions,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sales =</span> sales,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_met =</span> is_target_met</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>regional_sales<span class="sc">$</span>region</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>regional_sales[regional_sales<span class="sc">$</span>sales <span class="sc">&gt;</span> <span class="dv">40000</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="plain-english-translation-requirement" class="level2">
+<h2 class="anchored" data-anchor-id="plain-english-translation-requirement">Plain-English translation requirement</h2>
+<p>Every meaningful result ends with exactly three sentences:</p>
+<ol type="1">
+<li><strong>Finding:</strong> what changed or differs, with the population and time window.</li>
+<li><strong>Meaning:</strong> why that pattern matters to the stakeholder, including the metric definition.</li>
+<li><strong>Action:</strong> what to investigate or do next, plus the most important limitation.</li>
+</ol>
+<p>For example: “West-region revenue grew 12% from Q1 to Q2 across 184 completed orders. Growth came primarily from higher order volume, while average order value was broadly stable. Prioritize a review of West-region fulfillment capacity before expanding promotion spend, because cancelled orders were excluded from the current calculation.”</p>
 </section>
-<section id="data-frames-and-tibbles" class="level2">
-<h2 class="anchored" data-anchor-id="data-frames-and-tibbles">5. Data frames and tibbles</h2>
-<p>A data frame combines equal-length vectors into rows and columns. Each row can represent a transaction, customer, store, or month. Each column represents a variable or measure.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(regional_sales)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(regional_sales)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(regional_sales)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(regional_sales)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regional_sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>A tibble is a modern data-frame format used throughout the tidyverse. It prints compactly and makes column behavior easier to inspect. The two structures represent rectangular data; the difference is mostly in printing and modern defaults.</p>
+<section id="grading-and-mastery" class="level2">
+<h2 class="anchored" data-anchor-id="grading-and-mastery">Grading and mastery</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterion</th>
+<th style="text-align: right;">Weight</th>
+<th>Full-credit evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Code accuracy and reproducibility</td>
+<td style="text-align: right;">40%</td>
+<td>The script runs from a clean session, preserves the stated grain, handles edge cases, and includes checks</td>
+</tr>
+<tr class="even">
+<td>Visual clarity and honesty</td>
+<td style="text-align: right;">25%</td>
+<td>The graphic uses an appropriate geometry, readable scales, useful labels, and no misleading transformations</td>
+</tr>
+<tr class="odd">
+<td>Executive summary quality</td>
+<td style="text-align: right;">25%</td>
+<td>The three-sentence summary states a supported finding, business meaning, action, and limitation</td>
+</tr>
+<tr class="even">
+<td>AI process documentation</td>
+<td style="text-align: right;">10%</td>
+<td>Prompts, revisions, rejected suggestions, and verification steps are recorded</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="functions" class="level2">
-<h2 class="anchored" data-anchor-id="functions">6. Functions</h2>
-<p>A function packages a reusable operation. Functions take arguments and return a result:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sales)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">mean</span>(sales), <span class="at">digits =</span> <span class="dv">0</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(sales, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>You can write your own function when a calculation will be repeated:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>margin_rate <span class="ot">&lt;-</span> <span class="cf">function</span>(revenue, cost) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  (revenue <span class="sc">-</span> cost) <span class="sc">/</span> revenue</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">margin_rate</span>(<span class="dv">185000</span>, <span class="dv">112000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>A good business function has clear inputs, a clear output, and a definition that a stakeholder can understand.</p>
-</section>
-<section id="conditional-logic" class="level2">
-<h2 class="anchored" data-anchor-id="conditional-logic">7. Conditional logic</h2>
-<p>Use if and else for a decision involving one value. Use ifelse() or dplyr’s if_else() for vectorized decisions.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>profit <span class="ot">&lt;-</span> <span class="dv">73000</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (profit <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Profitable"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Loss"</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(sales <span class="sc">&gt;=</span> <span class="dv">40000</span>, <span class="st">"Above threshold"</span>, <span class="st">"Below threshold"</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>performance</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Write the threshold and its meaning down. A label such as “high value” is not self-explanatory unless the business rule is documented.</p>
-</section>
-<section id="repetition-and-iteration" class="level2">
-<h2 class="anchored" data-anchor-id="repetition-and-iteration">8. Repetition and iteration</h2>
-<p>Many business transformations can be expressed with vectorized operations and dplyr. Base R also provides loops and apply functions for repeated work.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>monthly_sales <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">42000</span>, <span class="dv">38500</span>, <span class="dv">51750</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (month_sales <span class="cf">in</span> monthly_sales) {</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(month_sales <span class="sc">*</span> <span class="fl">1.05</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Loops are useful, but they are not automatically better. Ask an AI assistant to explain whether a vectorized or grouped solution is clearer before accepting a complex loop.</p>
-</section>
-<section id="packages-scripts-and-projects" class="level2">
-<h2 class="anchored" data-anchor-id="packages-scripts-and-projects">9. Packages, scripts, and projects</h2>
-<p>R’s core installation is extended by packages. A package may provide functions, datasets, documentation, and dependencies.</p>
-<ul>
-<li>install.packages() downloads a package once;</li>
-<li>library() makes an installed package available in a session;</li>
-<li>package documentation describes intended behavior; and</li>
-<li>a project folder keeps scripts, data, and rendered outputs organized.</li>
-</ul>
-<p>A reproducible analysis records the packages and versions it relies on. When an AI-generated script begins with several library() calls, treat them as part of the data contract, not as decoration.</p>
-</section>
-<section id="practice-in-a-live-application" class="level2">
-<h2 class="anchored" data-anchor-id="practice-in-a-live-application">10. Practice in a live application</h2>
-<p>The application below creates objects of several basic types and shows how vectors become a data frame. Run it, then edit the values. Try adding a region, changing a logical flag, or calculating a new margin column.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| components: [editor, viewer]
-
-library(shiny)
-
-regions &lt;- c("North", "South", "West")
-sales &lt;- c(42000, 38500, 51750)
-is_target_met &lt;- c(TRUE, FALSE, TRUE)
-
-regional_sales &lt;- data.frame(
-  region = regions,
-  sales = sales,
-  target_met = is_target_met
-)
-
-regional_sales$margin &lt;- c(0.31, 0.27, 0.34)
-
-ui &lt;- fluidPage(
-  h3("R objects, types, vectors, and data frames"),
-  p("The table combines vectors into a small business dataset."),
-  h4("Object inspection"),
-  verbatimTextOutput("types"),
-  h4("Regional sales data"),
-  tableOutput("sales_table")
-)
-
-server &lt;- function(input, output, session) {
-  output$types &lt;- renderPrint({
-    list(
-      regions_class = class(regions),
-      sales_class = class(sales),
-      target_flag_class = class(is_target_met),
-      table_dimensions = c(nrow(regional_sales), ncol(regional_sales)),
-      column_names = names(regional_sales)
-    )
-  })
-
-  output$sales_table &lt;- renderTable({
-    regional_sales
-  }, digits = 2)
-}
-
-shinyApp(ui, server)</code></pre>
-</section>
-<section id="foundation-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="foundation-checklist">Foundation checklist</h2>
-<p>Before moving to data wrangling, you should be able to:</p>
-<ul>
-<li>assign and inspect named objects;</li>
-<li>distinguish numeric, character, logical, integer, and date values;</li>
-<li>create and inspect vectors;</li>
-<li>identify and handle missing values;</li>
-<li>subset vectors and data frames;</li>
-<li>read a function call and its arguments;</li>
-<li>explain a conditional rule; and</li>
-<li>identify which packages a script requires.</li>
-</ul>
-<p>When an AI assistant proposes code, these foundations let you ask better questions about what the code receives, what it returns, and what the business result means.</p>
+<section id="a-review-conversation" class="level2">
+<h2 class="anchored" data-anchor-id="a-review-conversation">A review conversation</h2>
+<p>When reviewing a classmate’s AI-assisted work, ask: “What would have to be true for this number to be correct?” Then inspect the code for those conditions. Good review is specific, respectful, and evidence-based: point to a field, a line, a row count, or a chart scale. The aim is not to punish the use of AI; it is to make the analyst’s reasoning visible.</p>
 
 
 </section>

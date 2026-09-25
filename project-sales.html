@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project 3: Store Operations – Intro to R for Business Analytics</title>
+<title>Project 1: Regional Sales and Attainment Analysis – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -46,6 +46,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-bcb91d9711d77f3a7927b302eb48b284.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -86,7 +91,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-project-store-operations.html">Project 3: Store Operations</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project-sales.html">Guided Business Projects</a></li><li class="breadcrumb-item"><a href="./project-sales.html">Project 1: Regional Sales and Attainment</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -123,13 +128,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -137,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -145,14 +156,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -161,12 +172,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -174,14 +191,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -190,36 +213,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,8 +226,43 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -243,23 +277,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#project-brief" id="toc-project-brief" class="nav-link active" data-scroll-target="#project-brief">Project brief</a></li>
-  <li><a href="#business-question" id="toc-business-question" class="nav-link" data-scroll-target="#business-question">Business question</a></li>
-  <li><a href="#data-contract" id="toc-data-contract" class="nav-link" data-scroll-target="#data-contract">Data contract</a></li>
-  <li><a href="#exact-prompt-to-use" id="toc-exact-prompt-to-use" class="nav-link" data-scroll-target="#exact-prompt-to-use">Exact prompt to use</a></li>
-  <li><a href="#what-to-inspect-in-the-response" id="toc-what-to-inspect-in-the-response" class="nav-link" data-scroll-target="#what-to-inspect-in-the-response">What to inspect in the response</a></li>
-  <li><a href="#testing-protocol" id="toc-testing-protocol" class="nav-link" data-scroll-target="#testing-protocol">Testing protocol</a></li>
-  <li><a href="#deliverable" id="toc-deliverable" class="nav-link" data-scroll-target="#deliverable">Deliverable</a></li>
-  <li><a href="#extension-build-a-decision-matrix" id="toc-extension-build-a-decision-matrix" class="nav-link" data-scroll-target="#extension-build-a-decision-matrix">Extension: build a decision matrix</a></li>
+  <li><a href="#business-background-and-problem-scenario" id="toc-business-background-and-problem-scenario" class="nav-link active" data-scroll-target="#business-background-and-problem-scenario">Business background and problem scenario</a></li>
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data dictionary</a></li>
+  <li><a href="#technical-milestones" id="toc-technical-milestones" class="nav-link" data-scroll-target="#technical-milestones">Technical milestones</a>
+  <ul class="collapse">
+  <li><a href="#milestone-1-data-cleaning-and-sanity-checks" id="toc-milestone-1-data-cleaning-and-sanity-checks" class="nav-link" data-scroll-target="#milestone-1-data-cleaning-and-sanity-checks">Milestone 1: Data cleaning and sanity checks</a></li>
+  <li><a href="#milestone-2-core-aggregation-and-metric-calculation" id="toc-milestone-2-core-aggregation-and-metric-calculation" class="nav-link" data-scroll-target="#milestone-2-core-aggregation-and-metric-calculation">Milestone 2: Core aggregation and metric calculation</a></li>
+  <li><a href="#milestone-3-exploratory-visual-chart" id="toc-milestone-3-exploratory-visual-chart" class="nav-link" data-scroll-target="#milestone-3-exploratory-visual-chart">Milestone 3: Exploratory visual chart</a></li>
+  <li><a href="#milestone-4-executive-memo" id="toc-milestone-4-executive-memo" class="nav-link" data-scroll-target="#milestone-4-executive-memo">Milestone 4: Executive memo</a></li>
+  </ul></li>
+  <li><a href="#ai-prompts-in-action" id="toc-ai-prompts-in-action" class="nav-link" data-scroll-target="#ai-prompts-in-action">AI prompts in action</a>
+  <ul class="collapse">
+  <li><a href="#prompt-a-schema-first-cleaning-draft" id="toc-prompt-a-schema-first-cleaning-draft" class="nav-link" data-scroll-target="#prompt-a-schema-first-cleaning-draft">Prompt A: schema-first cleaning draft</a></li>
+  <li><a href="#prompt-b-metric-review" id="toc-prompt-b-metric-review" class="nav-link" data-scroll-target="#prompt-b-metric-review">Prompt B: metric review</a></li>
+  <li><a href="#prompt-c-visual-translation" id="toc-prompt-c-visual-translation" class="nav-link" data-scroll-target="#prompt-c-visual-translation">Prompt C: visual translation</a></li>
+  </ul></li>
+  <li><a href="#interactive-project-lab" id="toc-interactive-project-lab" class="nav-link" data-scroll-target="#interactive-project-lab">Interactive project lab</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-project-store-operations.html">Project 3: Store Operations</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project-sales.html">Guided Business Projects</a></li><li class="breadcrumb-item"><a href="./project-sales.html">Project 1: Regional Sales and Attainment</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Project 3: Store Operations</h1>
+<h1 class="title">Project 1: Regional Sales and Attainment Analysis</h1>
+<p class="subtitle lead">A first project in metric definition, grouping, and executive translation</p>
 </div>
 
 
@@ -276,93 +319,193 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="project-brief" class="level2">
-<h2 class="anchored" data-anchor-id="project-brief">Project brief</h2>
-<p>You are supporting a retail operations director who wants to identify stores that combine strong sales with manageable checkout times. The request sounds like a ranking problem, but it actually combines data quality, financial measures, operational measures, and communication risk.</p>
-<p>This project is intentionally multi-faceted. A polished table is not enough; the analysis must show what was included, how the metrics were defined, and what the evidence cannot prove.</p>
+<section id="business-background-and-problem-scenario" class="level2">
+<h2 class="anchored" data-anchor-id="business-background-and-problem-scenario">Business background and problem scenario</h2>
+<p>You are an analyst supporting a sales operations director. The director believes the organization is “close to target” overall but suspects that a national average is hiding meaningful regional differences. The request is to produce a regional attainment view for the first half of 2026 and identify where a management conversation is warranted.</p>
+<p>The central question is: <strong>Which regions are above or below target, and what should the director investigate next?</strong> Do not claim that the analysis explains the cause of performance. It describes attainment and creates a prioritized question list.</p>
 </section>
-<section id="business-question" class="level2">
-<h2 class="anchored" data-anchor-id="business-question">Business question</h2>
-<blockquote class="blockquote">
-<p>Which stores are performing strongly, which stores may need an operational review, and what evidence supports those observations?</p>
-</blockquote>
+<section id="data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="data-dictionary">Data dictionary</h2>
+<p>The source table has one row per region-month.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Type</th>
+<th>Definition</th>
+<th>Review note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>region</code></td>
+<td>character</td>
+<td>Commercial region</td>
+<td>Expected to be unique within a month</td>
+</tr>
+<tr class="even">
+<td><code>month</code></td>
+<td>character</td>
+<td>Calendar month label</td>
+<td>Use an explicit ordering, not alphabetical order</td>
+</tr>
+<tr class="odd">
+<td><code>sales_usd</code></td>
+<td>numeric</td>
+<td>Completed-order net sales in US dollars</td>
+<td>Excludes cancelled orders</td>
+</tr>
+<tr class="even">
+<td><code>target_usd</code></td>
+<td>numeric</td>
+<td>Monthly sales target in US dollars</td>
+<td>Zero targets are invalid for attainment</td>
+</tr>
+<tr class="odd">
+<td><code>orders</code></td>
+<td>integer</td>
+<td>Count of completed orders</td>
+<td>Check whether this is order count or line count</td>
+</tr>
+<tr class="even">
+<td><code>sales_rep_count</code></td>
+<td>integer</td>
+<td>Active sales representatives</td>
+<td>Denominator for a productivity follow-up</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="data-contract" class="level2">
-<h2 class="anchored" data-anchor-id="data-contract">Data contract</h2>
-<p>Ask the AI assistant to create a reproducible hypothetical data frame called transactions with:</p>
+<section id="technical-milestones" class="level2">
+<h2 class="anchored" data-anchor-id="technical-milestones">Technical milestones</h2>
+<section id="milestone-1-data-cleaning-and-sanity-checks" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-1-data-cleaning-and-sanity-checks">Milestone 1: Data cleaning and sanity checks</h3>
 <ul>
-<li>store_id: character store identifier;</li>
-<li>transaction_id: character transaction identifier;</li>
-<li>transaction_date: Date;</li>
-<li>sales: numeric dollars;</li>
-<li>units: integer units sold; and</li>
-<li>checkout_minutes: numeric time from checkout start to completion.</li>
-</ul>
-<p>Each row represents one transaction.</p>
-<p>The analysis should:</p>
-<ul>
-<li>exclude rows missing store_id or transaction_id and report how many were excluded;</li>
-<li>check for duplicate transaction IDs;</li>
-<li>flag negative sales;</li>
-<li>calculate unique transaction count, total sales, total units, average basket value, average units per transaction, and median checkout time by store;</li>
-<li>flag stores with median checkout time above 8 minutes; and</li>
-<li>distinguish descriptive evidence from causal claims.</li>
-</ul>
-</section>
-<section id="exact-prompt-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="exact-prompt-to-use">Exact prompt to use</h2>
-<blockquote class="blockquote">
-<p>Build a self-contained R/Shiny example using shiny and dplyr for a hypothetical data frame named transactions. Each row represents one transaction. Columns are store_id as character, transaction_id as character, transaction_date as Date, sales as numeric dollars, units as integer, and checkout_minutes as numeric. Create a reproducible example with a fixed seed. Before summarising, report rows missing store_id or transaction_id, duplicate transaction IDs, negative sales, and missing operational measures. Exclude rows missing store_id or transaction_id, but do not silently discard them. Calculate one row per store with unique transaction count, total sales, total units, average basket value, average units per transaction, and median checkout time. Add an operational_watch flag when median checkout time is above 8 minutes. Sort the summary by total sales descending. Display the quality checks, the store summary, and a cautious plain-English interpretation. Explain that the results are descriptive and do not prove that checkout time causes sales performance. Use only shiny and dplyr.</p>
-</blockquote>
-</section>
-<section id="what-to-inspect-in-the-response" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-inspect-in-the-response">What to inspect in the response</h2>
-<p>This project has several opportunities for an AI-generated script to look reasonable while being wrong:</p>
-<ul>
-<li>Does the code count unique transactions or raw rows?</li>
-<li>Are invalid rows reported before they are removed?</li>
-<li>Does a negative sale get hidden in a total?</li>
-<li>Is average basket value total sales divided by transaction count?</li>
-<li>Is average units per transaction calculated at the store level?</li>
-<li>Is median used intentionally for checkout time?</li>
-<li>Does the operational flag apply to the same store-level summary?</li>
-<li>Does the narrative overstate correlation as causation?</li>
-</ul>
-<p>The phrase “best store” is deliberately avoided. A store can lead in sales while having slow checkout, or have fast checkout while serving a smaller customer base.</p>
-</section>
-<section id="testing-protocol" class="level2">
-<h2 class="anchored" data-anchor-id="testing-protocol">Testing protocol</h2>
-<p>Use a small manual test with a store that has two transactions: 100 dollars and 50 dollars, with one unit and two units. Its total sales should be 150, transaction count should be 2, average basket value should be 75, and average units per transaction should be 1.5.</p>
-<p>Then test the quality checks by adding:</p>
-<ul>
-<li>a missing store identifier;</li>
-<li>a duplicate transaction ID;</li>
-<li>a negative sales value; and</li>
-<li>a missing checkout time.</li>
-</ul>
-<p>Confirm that the code reports each issue and that the summary’s inclusion rules are visible.</p>
-</section>
-<section id="deliverable" class="level2">
-<h2 class="anchored" data-anchor-id="deliverable">Deliverable</h2>
-<p>Prepare an operations dashboard note with:</p>
-<ul>
-<li>the store-level summary;</li>
-<li>the stores flagged for operational review;</li>
-<li>the quality issues found;</li>
-<li>two descriptive observations; and</li>
-<li>one statement explaining why the analysis does not establish causation.</li>
+<li>Confirm one row per region-month.</li>
+<li>Parse month as an ordered date or factor.</li>
+<li>Check for missing or non-positive targets.</li>
+<li>Compare the number of observed region-months with the expected calendar.</li>
+<li>Write a short data-quality note before calculating attainment.</li>
 </ul>
 </section>
-<section id="extension-build-a-decision-matrix" class="level2">
-<h2 class="anchored" data-anchor-id="extension-build-a-decision-matrix">Extension: build a decision matrix</h2>
-<p>Ask the AI assistant to add a four-quadrant classification using sales rank and checkout-time rank:</p>
-<ul>
-<li>strong sales and manageable checkout;</li>
-<li>strong sales and operational watch;</li>
-<li>lower sales and manageable checkout; and</li>
-<li>lower sales and operational watch.</li>
-</ul>
-<p>Require the assistant to explain the cutoffs, identify their arbitrariness, and preserve the original measures beside the classification. This is a more decision-oriented output, but it also introduces more assumptions for you to audit.</p>
+<section id="milestone-2-core-aggregation-and-metric-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-2-core-aggregation-and-metric-calculation">Milestone 2: Core aggregation and metric calculation</h3>
+<p>Calculate regional first-half totals and define attainment as:</p>
+<p>[ = ]</p>
+<p>Do not average monthly attainment rates unless you can defend equal weighting. Report total sales, total target, attainment, orders, and sales per representative.</p>
+</section>
+<section id="milestone-3-exploratory-visual-chart" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-3-exploratory-visual-chart">Milestone 3: Exploratory visual chart</h3>
+<p>Create an ordered horizontal bar chart of attainment with a 100% reference line. Add a subtitle stating the period, population, and denominator. Consider a second chart of monthly attainment to distinguish persistent performance from a single-month result.</p>
+</section>
+<section id="milestone-4-executive-memo" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-4-executive-memo">Milestone 4: Executive memo</h3>
+<p>Write the three-sentence takeaway required by the course. Include the strongest finding, the business meaning, the next diagnostic question, and one limitation about causality or data coverage.</p>
+</section>
+</section>
+<section id="ai-prompts-in-action" class="level2">
+<h2 class="anchored" data-anchor-id="ai-prompts-in-action">AI prompts in action</h2>
+<section id="prompt-a-schema-first-cleaning-draft" class="level3">
+<h3 class="anchored" data-anchor-id="prompt-a-schema-first-cleaning-draft">Prompt A: schema-first cleaning draft</h3>
+<pre class="text"><code>Write a dplyr pipeline for a table named sales_monthly with one row per
+region-month. Fields are region (character), month (character), sales_usd
+(numeric), target_usd (numeric), orders (integer), and sales_rep_count (integer).
+Return a data-quality audit before the metric calculation. Do not invent dates,
+do not drop rows silently, and include checks for duplicate region-month keys,
+missing values, and target_usd &lt;= 0. Show the expected output grain.</code></pre>
+<p>Expected output: an audit table plus an aggregation pipeline. Verify that the AI did not turn an invalid target into zero or use <code>mean(sales_usd / target_usd)</code> as the primary attainment definition.</p>
+</section>
+<section id="prompt-b-metric-review" class="level3">
+<h3 class="anchored" data-anchor-id="prompt-b-metric-review">Prompt B: metric review</h3>
+<pre class="text"><code>Review this regional attainment calculation as a skeptical finance analyst.
+The intended metric is sum(sales_usd) / sum(target_usd), one row per region.
+Identify any denominator, grouping, date-window, or NA risk. Return tests and
+questions before suggesting a revised line of code.</code></pre>
+<p>Expected output: a review checklist, not an unsupported performance narrative. Common pitfalls include averaging ratios, mixing fiscal and calendar periods, and treating missing sales as zero.</p>
+</section>
+<section id="prompt-c-visual-translation" class="level3">
+<h3 class="anchored" data-anchor-id="prompt-c-visual-translation">Prompt C: visual translation</h3>
+<pre class="text"><code>Given a verified table with region, total_sales, total_target, and attainment,
+propose an executive ggplot2 bar chart. Order regions by attainment, format the
+y-axis as percentages, add a 100% reference line, and label the period. Explain
+how each design choice supports comparison. Do not infer why any region missed target.</code></pre>
+</section>
+</section>
+<section id="interactive-project-lab" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-project-lab">Interactive project lab</h2>
+<p>The synthetic table below is deliberately small enough to audit by hand. Change the region selector, inspect the aggregation, and test whether your summary remains correct when you alter one value.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+library(ggplot2)
+
+sales_monthly &lt;- data.frame(
+  region = rep(c("North", "South", "East", "West"), each = 3),
+  month = rep(c("Jan", "Feb", "Mar"), times = 4),
+  sales_usd = c(118000, 124000, 131000, 106000, 111000, 108000, 126000, 132000, 139000, 92000, 98000, 101000),
+  target_usd = c(120000, 120000, 125000, 115000, 115000, 120000, 120000, 130000, 135000, 110000, 110000, 115000),
+  orders = c(410, 430, 445, 390, 400, 405, 420, 440, 470, 350, 370, 380),
+  sales_rep_count = c(12, 12, 13, 11, 11, 11, 12, 12, 12, 10, 10, 10)
+)
+
+ui &lt;- fluidPage(
+  titlePanel("Regional attainment project lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("region", "Region", choices = c("All", sort(unique(sales_monthly$region)))),
+      helpText("The metric is total sales divided by total target.")
+    ),
+    mainPanel(
+      tableOutput("summary"),
+      plotOutput("plot", height = "430px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  selected &lt;- reactive({
+    if (input$region == "All") sales_monthly else sales_monthly |&gt; filter(region == input$region)
+  })
+
+  output$summary &lt;- renderTable({
+    selected() |&gt;
+      group_by(region) |&gt;
+      summarize(
+        months = n(),
+        total_sales = sum(sales_usd),
+        total_target = sum(target_usd),
+        attainment = total_sales / total_target,
+        total_orders = sum(orders),
+        .groups = "drop"
+      )
+  })
+
+  output$plot &lt;- renderPlot({
+    sales_monthly |&gt;
+      group_by(region) |&gt;
+      summarize(attainment = sum(sales_usd) / sum(target_usd), .groups = "drop") |&gt;
+      mutate(region = reorder(region, attainment)) |&gt;
+      ggplot(aes(region, attainment)) +
+      geom_col(fill = "#176B87") +
+      geom_hline(yintercept = 1, linetype = "dashed") +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+      labs(x = NULL, y = "Attainment", title = "Regional attainment") +
+      theme_minimal(base_size = 12)
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 
 
 </section>

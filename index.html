@@ -40,6 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -85,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Course Overview</a></li><li class="breadcrumb-item"><a href="./index.html">Syllabus and Policies</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -113,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -122,13 +123,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -136,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -144,14 +151,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -160,12 +167,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -173,14 +186,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -189,36 +208,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -226,8 +221,43 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -240,76 +270,212 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
+   
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
-  <li><a href="#the-course-philosophy" id="toc-the-course-philosophy" class="nav-link" data-scroll-target="#the-course-philosophy">The course philosophy</a></li>
-  <li><a href="#what-you-will-learn" id="toc-what-you-will-learn" class="nav-link" data-scroll-target="#what-you-will-learn">What you will learn</a>
+  <li><a href="#course-identity" id="toc-course-identity" class="nav-link active" data-scroll-target="#course-identity">Course identity</a>
   <ul class="collapse">
-  <li><a href="#the-r-foundation" id="toc-the-r-foundation" class="nav-link" data-scroll-target="#the-r-foundation">The R foundation</a></li>
-  <li><a href="#the-ai-coding-workflow" id="toc-the-ai-coding-workflow" class="nav-link" data-scroll-target="#the-ai-coding-workflow">The AI coding workflow</a></li>
-  <li><a href="#practice-and-transfer" id="toc-practice-and-transfer" class="nav-link" data-scroll-target="#practice-and-transfer">Practice and transfer</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#target-competencies" id="toc-target-competencies" class="nav-link" data-scroll-target="#target-competencies">Target competencies</a></li>
   </ul></li>
-  <li><a href="#suggested-path" id="toc-suggested-path" class="nav-link" data-scroll-target="#suggested-path">Suggested path</a></li>
+  <li><a href="#teaching-philosophy" id="toc-teaching-philosophy" class="nav-link" data-scroll-target="#teaching-philosophy">Teaching philosophy</a></li>
+  <li><a href="#the-ai-code-reviewer-standard" id="toc-the-ai-code-reviewer-standard" class="nav-link" data-scroll-target="#the-ai-code-reviewer-standard">The AI Code Reviewer Standard</a></li>
+  <li><a href="#six-module-progression" id="toc-six-module-progression" class="nav-link" data-scroll-target="#six-module-progression">Six-module progression</a></li>
+  <li><a href="#grading-and-mastery-metrics" id="toc-grading-and-mastery-metrics" class="nav-link" data-scroll-target="#grading-and-mastery-metrics">Grading and mastery metrics</a></li>
+  <li><a href="#plain-english-translation-requirement" id="toc-plain-english-translation-requirement" class="nav-link" data-scroll-target="#plain-english-translation-requirement">Plain-English translation requirement</a></li>
+  <li><a href="#how-to-use-this-site" id="toc-how-to-use-this-site" class="nav-link" data-scroll-target="#how-to-use-this-site">How to use this site</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<div class="quarto-about-jolla">
- <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Course Overview</a></li><li class="breadcrumb-item"><a href="./index.html">Syllabus and Policies</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Intro to R for Business Analytics</h1>
-<p class="subtitle lead">A practical textbook for R, data, and AI-assisted analysis</p>
+<p class="subtitle lead">Syllabus and policies for an AI-partnered analytical computing course</p>
 </div>
+
+
+
 <div class="quarto-title-meta">
+
+    
+  
+    
   </div>
-</header><main class="content" id="quarto-document-content">
+  
 
-<section id="welcome" class="level2">
-<h2 data-anchor-id="welcome">Welcome</h2>
-<p>Business analysts increasingly work in partnership with AI. An assistant can draft a data import, suggest a transformation, or explain an error in seconds. The analyst still has to decide what the business question means, whether the data support the question, and whether the result is safe to share.</p>
-<p>This course teaches the R foundation needed to direct that partnership. You will learn enough syntax and data reasoning to ask for useful code, inspect what an AI tool produced, and explain the analysis in language a stakeholder can act on.</p>
+
+</header>
+
+
+<section id="course-identity" class="level2">
+<h2 class="anchored" data-anchor-id="course-identity">Course identity</h2>
+<p>This is a rigorous introduction to R for students who want to make defensible business decisions from data. The course treats R as a language for computational thinking: you will represent a question, define a data contract, transform observations, inspect evidence, design a visual argument, and translate the result for a stakeholder.</p>
+<p>Modern analysts do not need to type every line from memory. They do need to understand enough R to direct an AI assistant, recognize a plausible-looking mistake, test a result, and explain the business logic. We move from syntax memorization to computational orchestration and verification.</p>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<p>No prior R programming is required. Students should be comfortable with percentages, averages, tables, and reading a short business case. Curiosity, careful note-taking, and a willingness to test assumptions matter more than prior coding experience.</p>
 </section>
-<section id="the-course-philosophy" class="level2">
-<h2 data-anchor-id="the-course-philosophy">The course philosophy</h2>
-<p>AI is a powerful collaborator, not a substitute for analytical judgment. A prompt that says “analyze my sales data” leaves too many decisions unstated: Which period? Which measure of sales? Which level of aggregation? What counts as a customer? What should the final output look like?</p>
-<p>The better workflow is:</p>
+<section id="target-competencies" class="level3">
+<h3 class="anchored" data-anchor-id="target-competencies">Target competencies</h3>
+<p>By the end of the course, you should be able to:</p>
+<ul>
+<li>read and write core R expressions involving names, vectors, tables, functions, and conditions;</li>
+<li>construct dplyr and tidyr pipelines with explicit row grain, joins, missing-value rules, and denominators;</li>
+<li>design ggplot2 graphics using the Grammar of Graphics and audience-appropriate annotation;</li>
+<li>conduct EDA that checks distributions, missingness, outliers, and relationships before making a claim;</li>
+<li>prompt Codex, Claude, ChatGPT, or another approved assistant using a schema-first specification;</li>
+<li>debug AI-generated code by preserving errors, testing root causes, and applying small fixes;</li>
+<li>write a three-sentence executive takeaway that is supported by the verified output.</li>
+</ul>
+</section>
+</section>
+<section id="teaching-philosophy" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-philosophy">Teaching philosophy</h2>
+<p>The course uses a Code Reviewer framework. Every script is treated as a proposal that must be inspected. The analyst is accountable for correctness even when an AI writes the first draft. We value reproducible evidence over clever syntax, explicit assumptions over confident prose, and useful questions over premature conclusions.</p>
+<p>The learning loop is:</p>
+<pre class="text"><code>Business question → data contract → small code draft → run and inspect
+→ verify grain, counts, denominators, and edge cases → visualize
+→ translate for a stakeholder → record the decision and limitation</code></pre>
+</section>
+<section id="the-ai-code-reviewer-standard" class="level2">
+<h2 class="anchored" data-anchor-id="the-ai-code-reviewer-standard">The AI Code Reviewer Standard</h2>
+<p>AI assistance is permitted and expected when used transparently. It cannot replace the following responsibilities:</p>
 <ol type="1">
-<li>understand the structure of the data and the decision to be made;</li>
-<li>describe the task precisely to an AI coding tool;</li>
-<li>run the proposed code in a controlled environment;</li>
-<li>inspect the output, warnings, and errors;</li>
-<li>revise the code and test the revision; and</li>
-<li>communicate assumptions and limitations alongside the result.</li>
+<li>Define the population, time window, metric, and decision.</li>
+<li>Protect sensitive data by sharing schemas or synthetic examples instead of raw records.</li>
+<li>Check joins, grouping levels, missing values, zero denominators, duplicate keys, and date boundaries.</li>
+<li>Test generated code on a tiny hand-calculated example.</li>
+<li>Explain what the output means and what it does not establish.</li>
 </ol>
-<p>Foundational R knowledge makes every step more reliable. You do not need to memorize every function, but you do need to recognize what objects, filters, joins, summaries, and plots are doing.</p>
+<p>Students should keep a prompt log for substantial work: the request, schema supplied, returned code, errors, changes, and acceptance tests. If the assistant’s suggestion is rejected, record why. Rejection is evidence of analytical judgment.</p>
 </section>
-<section id="what-you-will-learn" class="level2">
-<h2 data-anchor-id="what-you-will-learn">What you will learn</h2>
-<section id="the-r-foundation" class="level3">
-<h3 data-anchor-id="the-r-foundation">The R foundation</h3>
-<p>Build a mental model of objects, types, vectors, data frames, functions, pipes, and packages. Then use dplyr and ggplot2 to perform common business transformations and visualizations.</p>
+<section id="six-module-progression" class="level2">
+<h2 class="anchored" data-anchor-id="six-module-progression">Six-module progression</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Module</th>
+<th>Primary concept</th>
+<th>Required readings</th>
+<th>Hands-on lab</th>
+<th>Target AI skill</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>R objects, types, vectors, and functions</td>
+<td><a href="https://r4ds.hadley.nz/whole-game.html">R4DS: Whole game</a>; <a href="https://r4ds.hadley.nz/workflow-basics.html">R for Data Science: workflow</a></td>
+<td>Inspect and subset a small business table in <code>r-core.qmd</code></td>
+<td>Ask for explanations and output predictions without surrendering the attempt</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>Tidy transformation, joins, and reshaping</td>
+<td><a href="https://r4ds.hadley.nz/data-transform.html">R4DS: Data transformation</a></td>
+<td>Audit <code>airquality</code> or <code>mtcars</code> through a complete pipeline</td>
+<td>Schema-first prompting with explicit grain and acceptance tests</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>Visualization and exploratory analysis</td>
+<td><a href="https://r4ds.hadley.nz/data-visualize.html">R4DS: Data visualization</a>; <a href="https://r4ds.hadley.nz/explore.html">R4DS: Explore</a></td>
+<td>Build a chart sequence and missing/outlier audit</td>
+<td>Iterative visual refinement without changing the claim</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>AI partnership and verification</td>
+<td><a href="https://r4ds.hadley.nz/workflow-basics.html">R4DS: Workflow</a>; <a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI RMF</a></td>
+<td>Debug a generated pipeline and produce a review log</td>
+<td>Request root-cause analysis, tests, and limitations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>Guided business projects</td>
+<td><a href="https://r4ds.hadley.nz/communicate.html">R4DS: Communicate</a></td>
+<td>Complete one project through Milestones 1–3</td>
+<td>Delegate bounded subtasks while checking denominators and joins</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>Executive communication and reproducibility</td>
+<td><a href="https://r4ds.hadley.nz/whole-game.html">R4DS: The whole game</a></td>
+<td>Publish a verified brief and three-sentence takeaway</td>
+<td>Ask the AI to critique clarity without inventing evidence</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="the-ai-coding-workflow" class="level3">
-<h3 data-anchor-id="the-ai-coding-workflow">The AI coding workflow</h3>
-<p>Learn how to write context-rich prompts, move generated code into RStudio or Quarto, interpret console feedback, and debug in short, testable iterations.</p>
+<section id="grading-and-mastery-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="grading-and-mastery-metrics">Grading and mastery metrics</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th style="text-align: right;">Weight</th>
+<th>What mastery looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Code accuracy and reproducibility</td>
+<td style="text-align: right;">40%</td>
+<td>Clean-session execution, explicit assumptions, correct grain, and tests for edge cases</td>
+</tr>
+<tr class="even">
+<td>Visual clarity and honesty</td>
+<td style="text-align: right;">25%</td>
+<td>Appropriate geometry, readable scales, useful labels, and no unsupported causal framing</td>
+</tr>
+<tr class="odd">
+<td>Executive summary quality</td>
+<td style="text-align: right;">25%</td>
+<td>Three sentences that state a finding, meaning, action, and limitation using verified values</td>
+</tr>
+<tr class="even">
+<td>AI process documentation</td>
+<td style="text-align: right;">10%</td>
+<td>Prompt log, review notes, debugging evidence, and a clear acceptance decision</td>
+</tr>
+</tbody>
+</table>
+<p>Grades reward reasoning that another analyst can inspect. A concise, well-tested pipeline is stronger than a long script that cannot explain its denominator.</p>
 </section>
-<section id="practice-and-transfer" class="level3">
-<h3 data-anchor-id="practice-and-transfer">Practice and transfer</h3>
-<p>Apply the workflow to business word problems, then use the blank <a href="./sandbox.html">Sandbox</a> to test your own AI-generated solutions.</p>
+<section id="plain-english-translation-requirement" class="level2">
+<h2 class="anchored" data-anchor-id="plain-english-translation-requirement">Plain-English translation requirement</h2>
+<p>Every project must end with three sentences:</p>
+<ol type="1">
+<li><strong>Finding:</strong> what happened, for which population, and during which period.</li>
+<li><strong>Meaning:</strong> why the pattern matters, using the defined metric.</li>
+<li><strong>Action:</strong> what to investigate or do next, plus the most important limitation.</li>
+</ol>
+<p>Avoid function names, unexplained acronyms, causal verbs, and numbers that do not appear in the verified output.</p>
 </section>
-</section>
-<section id="suggested-path" class="level2">
-<h2 data-anchor-id="suggested-path">Suggested path</h2>
-<p>Start with <a href="./r-basics.html">R Basics</a>, continue through <a href="./data-wrangling.html">Data Wrangling</a> and <a href="./visualization.html">Visualization</a>, and then complete the <a href="./ai-getting-started.html">AI Coding Workflow</a>. Return to the exercises and playground whenever you want to practice.</p>
-<p>The <a href="./resources.html">Sources &amp; Links</a> page collects references for continuing beyond this course.</p>
+<section id="how-to-use-this-site" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-this-site">How to use this site</h2>
+<p>Start with <a href="./schedule.html">Schedule and Milestones</a>, then work through the R Foundations in order. The AI mastery pages provide reusable prompts and review patterns. The guided projects are specifications, not answer keys: use the sandbox to test your own draft, and keep your evidence with the final memo.</p>
 
 
 </section>
-</main>  
-</div>
- <!-- /main -->
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>AI Coding Workflow: Prompting – Intro to R for Business Analytics</title>
+<title>Automated Visual Refinement: Prompting for Executive Visuals – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -46,6 +46,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-bcb91d9711d77f3a7927b302eb48b284.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -86,7 +91,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-prompting.html">Prompting</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-setup-prompting.html">AI-Partnered Coding Mastery</a></li><li class="breadcrumb-item"><a href="./ai-visualization.html">Automated Visual Refinement</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -123,13 +128,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -137,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -145,14 +156,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -161,12 +172,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -174,14 +191,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -190,36 +213,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,8 +226,43 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -243,38 +277,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-anatomy-of-a-strong-r-prompt" id="toc-the-anatomy-of-a-strong-r-prompt" class="nav-link active" data-scroll-target="#the-anatomy-of-a-strong-r-prompt">The anatomy of a strong R prompt</a>
+  <li><a href="#start-with-a-chart-brief" id="toc-start-with-a-chart-brief" class="nav-link active" data-scroll-target="#start-with-a-chart-brief">Start with a chart brief</a></li>
+  <li><a href="#iterative-styling-sequence" id="toc-iterative-styling-sequence" class="nav-link" data-scroll-target="#iterative-styling-sequence">Iterative styling sequence</a>
   <ul class="collapse">
-  <li><a href="#state-the-business-goal" id="toc-state-the-business-goal" class="nav-link" data-scroll-target="#state-the-business-goal">1. State the business goal</a></li>
-  <li><a href="#describe-the-data-contract" id="toc-describe-the-data-contract" class="nav-link" data-scroll-target="#describe-the-data-contract">2. Describe the data contract</a></li>
-  <li><a href="#define-the-business-terms" id="toc-define-the-business-terms" class="nav-link" data-scroll-target="#define-the-business-terms">3. Define the business terms</a></li>
-  <li><a href="#name-the-desired-packages" id="toc-name-the-desired-packages" class="nav-link" data-scroll-target="#name-the-desired-packages">4. Name the desired packages</a></li>
-  <li><a href="#specify-the-output" id="toc-specify-the-output" class="nav-link" data-scroll-target="#specify-the-output">5. Specify the output</a></li>
-  <li><a href="#ask-for-assumptions-and-checks" id="toc-ask-for-assumptions-and-checks" class="nav-link" data-scroll-target="#ask-for-assumptions-and-checks">6. Ask for assumptions and checks</a></li>
+  <li><a href="#format-currency-and-percentages" id="toc-format-currency-and-percentages" class="nav-link" data-scroll-target="#format-currency-and-percentages">1. Format currency and percentages</a></li>
+  <li><a href="#re-order-factor-bars" id="toc-re-order-factor-bars" class="nav-link" data-scroll-target="#re-order-factor-bars">2. Re-order factor bars</a></li>
+  <li><a href="#add-context-without-adding-claims" id="toc-add-context-without-adding-claims" class="nav-link" data-scroll-target="#add-context-without-adding-claims">3. Add context without adding claims</a></li>
+  <li><a href="#apply-professional-styling" id="toc-apply-professional-styling" class="nav-link" data-scroll-target="#apply-professional-styling">4. Apply professional styling</a></li>
   </ul></li>
-  <li><a href="#bad-prompt-versus-good-prompt" id="toc-bad-prompt-versus-good-prompt" class="nav-link" data-scroll-target="#bad-prompt-versus-good-prompt">Bad prompt versus good prompt</a>
-  <ul class="collapse">
-  <li><a href="#bad-prompt" id="toc-bad-prompt" class="nav-link" data-scroll-target="#bad-prompt">Bad prompt</a></li>
-  <li><a href="#good-prompt" id="toc-good-prompt" class="nav-link" data-scroll-target="#good-prompt">Good prompt</a></li>
-  </ul></li>
-  <li><a href="#prompt-patterns-worth-reusing" id="toc-prompt-patterns-worth-reusing" class="nav-link" data-scroll-target="#prompt-patterns-worth-reusing">Prompt patterns worth reusing</a>
-  <ul class="collapse">
-  <li><a href="#ask-for-a-plan-before-code" id="toc-ask-for-a-plan-before-code" class="nav-link" data-scroll-target="#ask-for-a-plan-before-code">Ask for a plan before code</a></li>
-  <li><a href="#ask-for-a-minimal-reproducible-example" id="toc-ask-for-a-minimal-reproducible-example" class="nav-link" data-scroll-target="#ask-for-a-minimal-reproducible-example">Ask for a minimal reproducible example</a></li>
-  <li><a href="#ask-for-two-explanations" id="toc-ask-for-two-explanations" class="nav-link" data-scroll-target="#ask-for-two-explanations">Ask for two explanations</a></li>
-  <li><a href="#ask-for-a-validation-section" id="toc-ask-for-a-validation-section" class="nav-link" data-scroll-target="#ask-for-a-validation-section">Ask for a validation section</a></li>
-  <li><a href="#ask-for-a-constrained-revision" id="toc-ask-for-a-constrained-revision" class="nav-link" data-scroll-target="#ask-for-a-constrained-revision">Ask for a constrained revision</a></li>
-  </ul></li>
-  <li><a href="#a-prompt-is-a-specification-not-a-command-to-trust" id="toc-a-prompt-is-a-specification-not-a-command-to-trust" class="nav-link" data-scroll-target="#a-prompt-is-a-specification-not-a-command-to-trust">A prompt is a specification, not a command to trust</a></li>
+  <li><a href="#review-the-revised-chart" id="toc-review-the-revised-chart" class="nav-link" data-scroll-target="#review-the-revised-chart">Review the revised chart</a></li>
+  <li><a href="#prompting-for-an-executive-summary" id="toc-prompting-for-an-executive-summary" class="nav-link" data-scroll-target="#prompting-for-an-executive-summary">Prompting for an executive summary</a></li>
+  <li><a href="#live-lab-one-change-at-a-time" id="toc-live-lab-one-change-at-a-time" class="nav-link" data-scroll-target="#live-lab-one-change-at-a-time">Live lab: one change at a time</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-prompting.html">Prompting</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-setup-prompting.html">AI-Partnered Coding Mastery</a></li><li class="breadcrumb-item"><a href="./ai-visualization.html">Automated Visual Refinement</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">AI Coding Workflow: Prompting</h1>
+<h1 class="title">Automated Visual Refinement: Prompting for Executive Visuals</h1>
+<p class="subtitle lead">Iterate on a chart without letting the assistant invent the story</p>
 </div>
 
 
@@ -291,158 +314,135 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>An AI coding tool can only make decisions from the context you provide. A strong prompt is a compact project brief: it identifies the data, the decision, the expected output, the tools, and the constraints.</p>
-<section id="the-anatomy-of-a-strong-r-prompt" class="level2">
-<h2 class="anchored" data-anchor-id="the-anatomy-of-a-strong-r-prompt">The anatomy of a strong R prompt</h2>
-<section id="state-the-business-goal" class="level3">
-<h3 class="anchored" data-anchor-id="state-the-business-goal">1. State the business goal</h3>
-<p>Start with the decision or question, not with a function name.</p>
-<p>Weak: “Group this data.”</p>
-<p>Strong: “The sales director wants to compare quarterly revenue and order count across regions to decide where to focus coaching.”</p>
-<p>The business goal gives the assistant a reason to choose an aggregation level and output format.</p>
+<p>An AI assistant can make a ggplot2 draft more readable, but “prettier” is not a specification. Visual refinement should preserve the analytical meaning while improving hierarchy, labeling, scale interpretation, and audience fit.</p>
+<section id="start-with-a-chart-brief" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-a-chart-brief">Start with a chart brief</h2>
+<p>Before prompting, write a brief:</p>
+<pre class="text"><code>Audience: regional sales director
+Decision: choose where to investigate missed target attainment
+Population: completed orders, January–June 2026
+Grain: one row per region-month before aggregation
+Metric: attainment = sum(sales_usd) / sum(target_usd)
+Chart: ordered horizontal bars, one bar per region
+Must show: percent scale, target reference at 100%, data period, source note
+Must not imply: that attainment explains why performance changed</code></pre>
+<p>This prevents the assistant from deciding that a pie chart, a 3-D effect, or a dramatic color scale is an appropriate answer.</p>
 </section>
-<section id="describe-the-data-contract" class="level3">
-<h3 class="anchored" data-anchor-id="describe-the-data-contract">2. Describe the data contract</h3>
-<p>List the data frame name, column names, types, units, and a few example values. State whether each row is a transaction, customer, store-month, or another unit.</p>
-<p>For example:</p>
-<ul>
-<li>Data frame: transactions</li>
-<li>One row: one completed order</li>
-<li>Columns: order_id, order_date, region, customer_id, units, revenue, returned</li>
-<li>order_date: Date</li>
-<li>units: nonnegative integer</li>
-<li>revenue: dollars before returns</li>
-<li>returned: logical flag</li>
-</ul>
-<p>This prevents the assistant from inventing column names or treating a transaction total as a customer-level measure.</p>
+<section id="iterative-styling-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="iterative-styling-sequence">Iterative styling sequence</h2>
+<p>Ask for one controlled change per turn and run the result after each change.</p>
+<section id="format-currency-and-percentages" class="level3">
+<h3 class="anchored" data-anchor-id="format-currency-and-percentages">1. Format currency and percentages</h3>
+<pre class="text"><code>Keep the data and geometry unchanged. Format revenue with scales::dollar_format()
+and attainment with scales::percent_format(accuracy = 1%). Explain which field
+is being formatted and confirm that formatting does not change the underlying values.</code></pre>
 </section>
-<section id="define-the-business-terms" class="level3">
-<h3 class="anchored" data-anchor-id="define-the-business-terms">3. Define the business terms</h3>
-<p>Words such as revenue, customer, growth, active, and best can have multiple meanings. Define them before asking for code.</p>
-<p>Specify:</p>
-<ul>
-<li>the reporting period;</li>
-<li>whether returns, discounts, taxes, and shipping are included;</li>
-<li>whether counts mean rows or unique identifiers;</li>
-<li>the denominator for rates and percentages; and</li>
-<li>how missing values should be handled.</li>
-</ul>
+<section id="re-order-factor-bars" class="level3">
+<h3 class="anchored" data-anchor-id="re-order-factor-bars">2. Re-order factor bars</h3>
+<pre class="text"><code>Re-order the region factor by attainment so the lowest region appears first in
+a horizontal bar chart. Use reorder() or forcats::fct_reorder(), retain the
+original region labels, and explain whether the ordering is based on weighted
+attainment or an average of region-level ratios.</code></pre>
 </section>
-<section id="name-the-desired-packages" class="level3">
-<h3 class="anchored" data-anchor-id="name-the-desired-packages">4. Name the desired packages</h3>
-<p>If the assignment uses the tidyverse, say so. If the deliverable must use dplyr and ggplot2, say so. If the code should use only installed packages, say so.</p>
-<p>For a Quarto or Shinylive lesson, include constraints such as:</p>
-<ul>
-<li>use R;</li>
-<li>use dplyr for wrangling and ggplot2 for plots;</li>
-<li>write a complete self-contained example;</li>
-<li>include comments and a plain-English explanation; and</li>
-<li>do not use packages beyond shiny, dplyr, and ggplot2.</li>
-</ul>
+<section id="add-context-without-adding-claims" class="level3">
+<h3 class="anchored" data-anchor-id="add-context-without-adding-claims">3. Add context without adding claims</h3>
+<pre class="text"><code>Add a subtitle stating the period, population, and metric denominator. Add a
+caption for the data source and a note that attainment is descriptive. Do not
+change the title into a causal or predictive claim.</code></pre>
 </section>
-<section id="specify-the-output" class="level3">
-<h3 class="anchored" data-anchor-id="specify-the-output">5. Specify the output</h3>
-<p>Describe the final artifact precisely:</p>
+<section id="apply-professional-styling" class="level3">
+<h3 class="anchored" data-anchor-id="apply-professional-styling">4. Apply professional styling</h3>
+<pre class="text"><code>Use a minimal theme, one accent color for the focal comparison, a neutral color
+for context, readable text, and a target reference line at 100%. Remove minor
+grid lines only if the values remain easy to compare. Return the code and list
+each visual decision in plain English.</code></pre>
+</section>
+</section>
+<section id="review-the-revised-chart" class="level2">
+<h2 class="anchored" data-anchor-id="review-the-revised-chart">Review the revised chart</h2>
+<p>Use this checklist after every AI-generated revision:</p>
 <ul>
-<li>one row per region;</li>
-<li>columns for revenue, order count, and year-over-year growth;</li>
-<li>sorted from largest to smallest growth;</li>
-<li>a table and one chart; and</li>
-<li>a three-sentence stakeholder interpretation.</li>
+<li>Is the population and period unchanged?</li>
+<li>Does the axis label include the unit and denominator?</li>
+<li>Does the scale preserve meaningful differences?</li>
+<li>Are categories ordered by the stated metric, not alphabetically by accident?</li>
+<li>Does color encode a meaningful variable, or merely attract attention?</li>
+<li>Is the reference line defined and on the same scale as the bars?</li>
+<li>Does the title describe the evidence without implying causality?</li>
+<li>Can a reader identify the source, exclusions, and missing-data rule?</li>
 </ul>
 </section>
-<section id="ask-for-assumptions-and-checks" class="level3">
-<h3 class="anchored" data-anchor-id="ask-for-assumptions-and-checks">6. Ask for assumptions and checks</h3>
-<p>Ask the assistant to list assumptions, identify possible edge cases, and suggest validation checks. This turns a one-shot answer into a reviewable draft.</p>
+<section id="prompting-for-an-executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="prompting-for-an-executive-summary">Prompting for an executive summary</h2>
+<p>Do not ask: “What does this chart say?” Ask:</p>
+<pre class="text"><code>Here is the verified summary table and the final ggplot code. Draft two candidate
+three-sentence executive takeaways. Sentence 1 must state the comparison and
+period. Sentence 2 must describe the business implication without causal language.
+Sentence 3 must name one limitation or next check. Do not introduce any number
+not present in the table. Label each candidate so I can select and edit it.</code></pre>
+<p>The analyst must still select the wording. A well-written sentence can be wrong if the chart uses the wrong denominator.</p>
 </section>
-</section>
-<section id="bad-prompt-versus-good-prompt" class="level2">
-<h2 class="anchored" data-anchor-id="bad-prompt-versus-good-prompt">Bad prompt versus good prompt</h2>
-<section id="bad-prompt" class="level3">
-<h3 class="anchored" data-anchor-id="bad-prompt">Bad prompt</h3>
-<blockquote class="blockquote">
-<p>Analyze my sales data in R and make a chart.</p>
-</blockquote>
-<p>This prompt does not define the data, the period, the comparison, the package constraints, or the intended decision. A plausible response could still answer the wrong question.</p>
-</section>
-<section id="good-prompt" class="level3">
-<h3 class="anchored" data-anchor-id="good-prompt">Good prompt</h3>
-<blockquote class="blockquote">
-<p>I am preparing a regional sales review in R. The data frame is called transactions, with one row per completed order. It contains order_id, order_date, region, customer_id, units, revenue, returned, and order_year. order_date is a Date; revenue is in US dollars before returns; returned is TRUE for a fully returned order. Use dplyr and ggplot2. Keep orders from 2025 and 2026, exclude fully returned orders, calculate total net revenue and unique customer count by region and year, and calculate 2026 year-over-year revenue growth. Return a table with one row per region, sorted by growth, and a bar chart. Explain the pipeline, state assumptions, and include checks for missing regions, duplicate order IDs, and zero 2025 revenue.</p>
-</blockquote>
-<p>The good prompt supplies a data contract, business definitions, packages, filters, metrics, output, and quality checks. Those details make the generated code easier to review.</p>
-</section>
-</section>
-<section id="prompt-patterns-worth-reusing" class="level2">
-<h2 class="anchored" data-anchor-id="prompt-patterns-worth-reusing">Prompt patterns worth reusing</h2>
-<section id="ask-for-a-plan-before-code" class="level3">
-<h3 class="anchored" data-anchor-id="ask-for-a-plan-before-code">Ask for a plan before code</h3>
-<blockquote class="blockquote">
-<p>First restate the business question and propose the data transformations. Do not write code until you identify the observation unit, grouping level, measures, and assumptions.</p>
-</blockquote>
-</section>
-<section id="ask-for-a-minimal-reproducible-example" class="level3">
-<h3 class="anchored" data-anchor-id="ask-for-a-minimal-reproducible-example">Ask for a minimal reproducible example</h3>
-<blockquote class="blockquote">
-<p>If the real data are unavailable, create a small simulated data frame with the same column names and types. Make the example reproducible with a fixed random seed.</p>
-</blockquote>
-</section>
-<section id="ask-for-two-explanations" class="level3">
-<h3 class="anchored" data-anchor-id="ask-for-two-explanations">Ask for two explanations</h3>
-<blockquote class="blockquote">
-<p>After the code, explain each transformation twice: first in R terms and then in plain language for a nontechnical stakeholder.</p>
-</blockquote>
-</section>
-<section id="ask-for-a-validation-section" class="level3">
-<h3 class="anchored" data-anchor-id="ask-for-a-validation-section">Ask for a validation section</h3>
-<blockquote class="blockquote">
-<p>Add checks for row counts, missing values, duplicate keys, and the expected range of each calculated measure. Explain what a suspicious result would mean.</p>
-</blockquote>
-</section>
-<section id="ask-for-a-constrained-revision" class="level3">
-<h3 class="anchored" data-anchor-id="ask-for-a-constrained-revision">Ask for a constrained revision</h3>
-<blockquote class="blockquote">
-<p>Keep the existing output and variable names. Change only the calculation of net revenue and explain the change.</p>
-</blockquote>
-<p>Narrow revision prompts reduce accidental changes elsewhere in the analysis.</p>
-</section>
-</section>
-<section id="a-prompt-is-a-specification-not-a-command-to-trust" class="level2">
-<h2 class="anchored" data-anchor-id="a-prompt-is-a-specification-not-a-command-to-trust">A prompt is a specification, not a command to trust</h2>
-<p>A detailed prompt improves the first draft, but it does not guarantee correctness. Read the response as a proposed implementation of your specification. Compare every filter, join, calculation, and chart with the business definitions you supplied.</p>
-<p>A useful habit is to keep three columns in your notes:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Prompt requirement</th>
-<th>Code evidence</th>
-<th>Test</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Exclude returned orders</td>
-<td>A filter on returned</td>
-<td>Compare before and after row counts</td>
-</tr>
-<tr class="even">
-<td>Count unique customers</td>
-<td>distinct customer_id</td>
-<td>Compare with raw row count</td>
-</tr>
-<tr class="odd">
-<td>Rank by growth</td>
-<td>descending growth column</td>
-<td>Inspect the first and last rows</td>
-</tr>
-</tbody>
-</table>
-<p>This turns prompt quality into a practical review process.</p>
+<section id="live-lab-one-change-at-a-time" class="level2">
+<h2 class="anchored" data-anchor-id="live-lab-one-change-at-a-time">Live lab: one change at a time</h2>
+<p>The application begins with a basic chart. Use the controls to apply the kinds of revisions you might request from an AI assistant, then describe which change improved communication and which assumption still needs verification.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+
+attainment &lt;- data.frame(
+  region = c("North", "South", "East", "West"),
+  sales = c(420000, 385000, 455000, 310000),
+  target = c(400000, 400000, 430000, 350000)
+)
+
+attainment$rate &lt;- attainment$sales / attainment$target
+
+ui &lt;- fluidPage(
+  titlePanel("Executive visual refinement"),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxInput("polished", "Apply polished styling", value = FALSE),
+      checkboxInput("ordered", "Order bars by attainment", value = FALSE),
+      helpText("Treat each checkbox as a separate prompt and inspect the result.")
+    ),
+    mainPanel(plotOutput("plot", height = "450px"))
+  )
+)
+
+server &lt;- function(input, output, session) {
+  output$plot &lt;- renderPlot({
+    data &lt;- attainment
+    if (isTRUE(input$ordered)) data$region &lt;- reorder(data$region, data$rate)
+
+    p &lt;- ggplot(data, aes(x = region, y = rate)) +
+      geom_col(fill = "#176B87")
+
+    if (isTRUE(input$polished)) {
+      p &lt;- p +
+        geom_hline(yintercept = 1, linetype = "dashed", color = "#555555") +
+        scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+        labs(
+          title = "West is furthest below sales target",
+          subtitle = "Attainment equals sales divided by target; January-June 2026",
+          x = NULL,
+          y = "Target attainment",
+          caption = "Dashed line indicates 100% attainment"
+        ) +
+        theme_minimal(base_size = 12) +
+        theme(panel.grid.minor = element_blank())
+    } else {
+      p &lt;- p + labs(x = "Region", y = "rate")
+    }
+    p
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 
 
 </section>

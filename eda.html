@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project 1: Regional Growth – Intro to R for Business Analytics</title>
+<title>Exploratory Data Analysis Workflows – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -46,6 +81,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-bcb91d9711d77f3a7927b302eb48b284.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
+<link href="site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -86,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-project-regional-growth.html">Project 1: Regional Growth</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./eda.html">Exploratory Data Analysis Workflows</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -123,13 +163,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -137,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -145,14 +191,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -161,12 +207,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -174,14 +226,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -190,36 +248,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,8 +261,43 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -243,23 +312,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#project-brief" id="toc-project-brief" class="nav-link active" data-scroll-target="#project-brief">Project brief</a></li>
-  <li><a href="#business-question" id="toc-business-question" class="nav-link" data-scroll-target="#business-question">Business question</a></li>
-  <li><a href="#data-contract" id="toc-data-contract" class="nav-link" data-scroll-target="#data-contract">Data contract</a></li>
-  <li><a href="#exact-prompt-to-use" id="toc-exact-prompt-to-use" class="nav-link" data-scroll-target="#exact-prompt-to-use">Exact prompt to use</a></li>
-  <li><a href="#what-to-inspect-in-the-response" id="toc-what-to-inspect-in-the-response" class="nav-link" data-scroll-target="#what-to-inspect-in-the-response">What to inspect in the response</a></li>
-  <li><a href="#testing-protocol" id="toc-testing-protocol" class="nav-link" data-scroll-target="#testing-protocol">Testing protocol</a></li>
-  <li><a href="#deliverable" id="toc-deliverable" class="nav-link" data-scroll-target="#deliverable">Deliverable</a></li>
-  <li><a href="#extension-add-decision-context" id="toc-extension-add-decision-context" class="nav-link" data-scroll-target="#extension-add-decision-context">Extension: add decision context</a></li>
+  <li><a href="#the-standard-eda-pipeline" id="toc-the-standard-eda-pipeline" class="nav-link active" data-scroll-target="#the-standard-eda-pipeline">The standard EDA pipeline</a>
+  <ul class="collapse">
+  <li><a href="#establish-the-data-contract" id="toc-establish-the-data-contract" class="nav-link" data-scroll-target="#establish-the-data-contract">1. Establish the data contract</a></li>
+  <li><a href="#check-distributions" id="toc-check-distributions" class="nav-link" data-scroll-target="#check-distributions">2. Check distributions</a></li>
+  <li><a href="#audit-missing-values" id="toc-audit-missing-values" class="nav-link" data-scroll-target="#audit-missing-values">3. Audit missing values</a></li>
+  <li><a href="#identify-outliers" id="toc-identify-outliers" class="nav-link" data-scroll-target="#identify-outliers">4. Identify outliers</a></li>
+  <li><a href="#screen-multi-variable-relationships" id="toc-screen-multi-variable-relationships" class="nav-link" data-scroll-target="#screen-multi-variable-relationships">5. Screen multi-variable relationships</a></li>
+  </ul></li>
+  <li><a href="#eda-as-a-series-of-falsification-tests" id="toc-eda-as-a-series-of-falsification-tests" class="nav-link" data-scroll-target="#eda-as-a-series-of-falsification-tests">EDA as a series of falsification tests</a></li>
+  <li><a href="#ai-assisted-eda-without-automated-storytelling" id="toc-ai-assisted-eda-without-automated-storytelling" class="nav-link" data-scroll-target="#ai-assisted-eda-without-automated-storytelling">AI-assisted EDA without automated storytelling</a></li>
+  <li><a href="#live-lab-eda-triage" id="toc-live-lab-eda-triage" class="nav-link" data-scroll-target="#live-lab-eda-triage">Live lab: EDA triage</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-getting-started.html">The AI Coding Workflow</a></li><li class="breadcrumb-item"><a href="./ai-project-regional-growth.html">Project 1: Regional Growth</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./eda.html">Exploratory Data Analysis Workflows</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Project 1: Regional Growth</h1>
+<h1 class="title">Exploratory Data Analysis Workflows</h1>
+<p class="subtitle lead">Find structure, anomalies, and questions before making a claim</p>
 </div>
 
 
@@ -276,76 +349,179 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="project-brief" class="level2">
-<h2 class="anchored" data-anchor-id="project-brief">Project brief</h2>
-<p>You are a junior analyst on a finance team. The finance manager wants a concise explanation of how regional performance changed from 2025 to 2026.</p>
-<p>This is the first project because the core calculation is familiar but full of choices: what one row represents, how returns affect revenue, how to compare years, and what to do when the prior-year denominator is zero.</p>
+<p>Exploratory data analysis (EDA) is a disciplined search for what the data can and cannot support. It is not a hunt for a flattering chart. The output of EDA is a map of distributions, missingness, unusual observations, and relationships that deserve either explanation or a formal test.</p>
+<section id="the-standard-eda-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="the-standard-eda-pipeline">The standard EDA pipeline</h2>
+<section id="establish-the-data-contract" class="level3">
+<h3 class="anchored" data-anchor-id="establish-the-data-contract">1. Establish the data contract</h3>
+<p>Write down the row grain, population, time window, keys, units, and expected ranges. Run <code>glimpse()</code>, <code>summary()</code>, and a duplicate-key check before plotting.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(transactions)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">customers =</span> <span class="fu">n_distinct</span>(customer_id),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">first_date =</span> <span class="fu">min</span>(order_date, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_date =</span> <span class="fu">max</span>(order_date, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="business-question" class="level2">
-<h2 class="anchored" data-anchor-id="business-question">Business question</h2>
-<blockquote class="blockquote">
-<p>Which regions grew the most in net revenue from 2025 to 2026, and what should the finance manager know before using the ranking?</p>
-</blockquote>
+<section id="check-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="check-distributions">2. Check distributions</h3>
+<p>For numeric fields, inspect center, spread, range, and shape. A mean alone can hide a long tail or a small number of extreme values.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_order =</span> <span class="fu">mean</span>(order_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_order =</span> <span class="fu">median</span>(order_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">p90_order =</span> <span class="fu">quantile</span>(order_value, <span class="fl">0.90</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(order_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">maximum =</span> <span class="fu">max</span>(order_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use a histogram or density plot to see the shape. When a variable is strongly skewed, consider whether a median, percentile, log scale, or segmented view better represents the decision.</p>
 </section>
-<section id="data-contract" class="level2">
-<h2 class="anchored" data-anchor-id="data-contract">Data contract</h2>
-<p>Ask the AI assistant to create a reproducible hypothetical data frame called sales with:</p>
-<ul>
-<li>region: character label;</li>
-<li>month: integer from 1 through 12;</li>
-<li>year: integer;</li>
-<li>revenue: numeric dollars before returns; and</li>
-<li>returned_revenue: numeric dollars returned.</li>
-</ul>
-<p>Each row represents one region-month. Net revenue means revenue minus returned revenue.</p>
+<section id="audit-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="audit-missing-values">3. Audit missing values</h3>
+<p>Missingness is a property of the data-generating process. Create a field-level audit and compare missingness across relevant groups.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>missing_audit <span class="ot">&lt;-</span> transactions <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"field"</span>, <span class="at">values_to =</span> <span class="st">"missing_rows"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">missing_rate =</span> missing_rows <span class="sc">/</span> <span class="fu">nrow</span>(transactions))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ask whether values are missing completely at random, only for certain channels, or because a process changed. Do not replace missing values with zero without an explicit business definition.</p>
 </section>
-<section id="exact-prompt-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="exact-prompt-to-use">Exact prompt to use</h2>
-<blockquote class="blockquote">
-<p>I am a junior business analyst working in R. Create a small reproducible hypothetical data frame named sales. Each row must represent one region-month. Include region as a character, month as an integer from 1 to 12, year as an integer, revenue as numeric dollars before returns, and returned_revenue as numeric dollars returned. Define net_revenue as revenue minus returned_revenue. Use dplyr and tidyr to keep 2025 and 2026, summarize total net revenue by region and year, reshape the result so each region has one row, and calculate year-over-year growth as (2026 net revenue minus 2025 net revenue) divided by 2025 net revenue. Return one row per region sorted by growth descending. Make the reporting period explicit, identify regions with zero or missing 2025 revenue, check for missing region values, and explain every transformation in plain English for a finance manager. Do not claim that growth proves a cause.</p>
-</blockquote>
+<section id="identify-outliers" class="level3">
+<h3 class="anchored" data-anchor-id="identify-outliers">4. Identify outliers</h3>
+<p>An outlier is an observation that is unusual relative to a chosen reference, not automatically an error. Use multiple views and investigate the source record.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>limits <span class="ot">&lt;-</span> <span class="fu">quantile</span>(transactions<span class="sc">$</span>order_value, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>iqr_value <span class="ot">&lt;-</span> limits[[<span class="dv">2</span>]] <span class="sc">-</span> limits[[<span class="dv">1</span>]]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    order_value <span class="sc">&lt;</span> limits[[<span class="dv">1</span>]] <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr_value <span class="sc">|</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      order_value <span class="sc">&gt;</span> limits[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr_value</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Document whether the outlier is a data error, a legitimate high-value event, or a separate business process. Winsorizing or deleting it changes the question and must be disclosed.</p>
 </section>
-<section id="what-to-inspect-in-the-response" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-inspect-in-the-response">What to inspect in the response</h2>
-<p>Before running the code, locate:</p>
-<ol type="1">
-<li>The line that defines the row unit.</li>
-<li>The calculation of net revenue.</li>
-<li>The filter for comparison years.</li>
-<li>The grouping level before summarising.</li>
-<li>The reshaping step that puts years side by side.</li>
-<li>The denominator used for growth.</li>
-<li>The treatment of missing and zero prior-year revenue.</li>
-<li>The order of the final ranking.</li>
-</ol>
-<p>A frequent mistake is to calculate growth before aggregating to the region-year level. That produces a different metric: average monthly growth rather than annual regional growth.</p>
+<section id="screen-multi-variable-relationships" class="level3">
+<h3 class="anchored" data-anchor-id="screen-multi-variable-relationships">5. Screen multi-variable relationships</h3>
+<p>Compare numeric measures with scatter plots and grouped summaries. Compare a numeric measure across categories with boxplots or distribution summaries. For time, inspect both level and change.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(channel) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">orders =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_value =</span> <span class="fu">median</span>(order_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cancellation_rate =</span> <span class="fu">mean</span>(cancelled, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Treat relationships as hypotheses. A strong association can be caused by seasonality, selection, a common driver, or a data-collection rule.</p>
 </section>
-<section id="testing-protocol" class="level2">
-<h2 class="anchored" data-anchor-id="testing-protocol">Testing protocol</h2>
-<p>Use a tiny hand-check. If a region has 2025 net revenue of 100 and 2026 net revenue of 120, its growth should be 0.20, or 20 percent. If a region has no 2025 revenue, it should not receive an ordinary percentage-growth ranking without an explicit policy.</p>
-<p>Check the generated output with:</p>
-<ul>
-<li>the number of regions;</li>
-<li>the number of region-year combinations;</li>
-<li>the smallest and largest growth values;</li>
-<li>any missing growth values; and</li>
-<li>the raw totals for one selected region.</li>
-</ul>
 </section>
-<section id="deliverable" class="level2">
-<h2 class="anchored" data-anchor-id="deliverable">Deliverable</h2>
-<p>Prepare a short finance memo with:</p>
-<ul>
-<li>the top-ranked region and its growth rate;</li>
-<li>the definition of net revenue;</li>
-<li>the comparison period;</li>
-<li>any region excluded or flagged because of missing or zero prior-year revenue; and</li>
-<li>one limitation of ranking regions by percentage growth alone.</li>
-</ul>
+<section id="eda-as-a-series-of-falsification-tests" class="level2">
+<h2 class="anchored" data-anchor-id="eda-as-a-series-of-falsification-tests">EDA as a series of falsification tests</h2>
+<p>For each apparent insight, write a competing explanation and a test.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Observation</th>
+<th>Competing explanation</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Revenue is higher in one region</td>
+<td>The region has more customers or a longer observation window</td>
+<td>Compare revenue per customer over the same period</td>
+</tr>
+<tr class="even">
+<td>Average order value increased</td>
+<td>A few unusually large orders shifted the mean</td>
+<td>Compare median, percentiles, and trimmed summaries</td>
+</tr>
+<tr class="odd">
+<td>Churn is higher for one segment</td>
+<td>That segment has more missing activity records</td>
+<td>Audit missingness and denominator definitions</td>
+</tr>
+<tr class="even">
+<td>Delivery time rose in June</td>
+<td>June contains more long-distance shipments</td>
+<td>Stratify by route, distance, and carrier</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="extension-add-decision-context" class="level2">
-<h2 class="anchored" data-anchor-id="extension-add-decision-context">Extension: add decision context</h2>
-<p>Ask the AI assistant to add a second ranking based on absolute dollar change. Compare it with percentage growth. Explain why a small region can have the highest percentage growth while a large region contributes the largest dollar increase.</p>
+<section id="ai-assisted-eda-without-automated-storytelling" class="level2">
+<h2 class="anchored" data-anchor-id="ai-assisted-eda-without-automated-storytelling">AI-assisted EDA without automated storytelling</h2>
+<p>Ask an AI assistant to propose an EDA plan, not to declare the conclusion. Supply the schema, row grain, data-quality constraints, and decision context. Require it to return: checks, code, expected output shape, and questions that remain unresolved. Then run the checks and write the interpretation yourself.</p>
+</section>
+<section id="live-lab-eda-triage" class="level2">
+<h2 class="anchored" data-anchor-id="live-lab-eda-triage">Live lab: EDA triage</h2>
+<p>The synthetic dataset contains a missing value and a high-value order. Use the controls to inspect the distribution and compare the mean with the median before deciding how to describe “typical” order value.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+library(dplyr)
+
+orders &lt;- data.frame(
+  order_id = 1:12,
+  channel = c("Web", "Web", "Store", "Store", "Partner", "Web", "Store", "Partner", "Web", "Store", "Partner", "Web"),
+  order_value = c(85, 92, 110, 130, 1250, 74, 98, 150, NA, 105, 180, 88),
+  delivery_days = c(2, 3, 1, 2, 8, 2, 1, 6, 3, 2, 5, 2),
+  cancelled = c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
+)
+
+ui &lt;- fluidPage(
+  titlePanel("EDA triage lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("channel", "Channel", choices = c("All", sort(unique(orders$channel)))),
+      checkboxInput("log", "Use a log y-axis", value = FALSE)
+    ),
+    mainPanel(
+      tableOutput("metrics"),
+      plotOutput("distribution", height = "400px")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  filtered &lt;- reactive({
+    if (input$channel == "All") orders else orders |&gt; filter(channel == input$channel)
+  })
+
+  output$metrics &lt;- renderTable({
+    filtered() |&gt;
+      summarize(
+        rows = n(),
+        observed_values = sum(!is.na(order_value)),
+        missing_values = sum(is.na(order_value)),
+        mean_value = mean(order_value, na.rm = TRUE),
+        median_value = median(order_value, na.rm = TRUE),
+        p90_value = as.numeric(quantile(order_value, 0.90, na.rm = TRUE))
+      )
+  })
+
+  output$distribution &lt;- renderPlot({
+    p &lt;- ggplot(filtered(), aes(x = order_value)) +
+      geom_histogram(bins = 8, na.rm = TRUE, fill = "#176B87", color = "white") +
+      labs(title = "Order-value distribution", x = "Order value", y = "Orders") +
+      theme_minimal(base_size = 12)
+    if (isTRUE(input$log)) p &lt;- p + scale_x_log10()
+    p
+  })
+}
+
+shinyApp(ui, server)</code></pre>
 
 
 </section>

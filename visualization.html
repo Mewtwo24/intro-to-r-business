@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Visualization with ggplot2 – Intro to R for Business Analytics</title>
+<title>Visual Analytics with ggplot2 – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -126,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-basics.html">The R Foundation</a></li><li class="breadcrumb-item"><a href="./visualization.html">Visualization</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./visualization.html">Visualization</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Course Overview</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -163,13 +163,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Syllabus and Policies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sources &amp; Links</span></a>
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule and Milestones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI Partnership Framework and Ethics</span></a>
   </div>
 </li>
       </ul>
@@ -177,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">The R Foundation</span></a>
+ <span class="menu-text">The R Foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -185,14 +191,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./r-basics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Basics</span></a>
+  <a href="./r-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Core: Syntax, Types, and Structures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Wrangling</span></a>
+  <a href="./wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Wrangling with dplyr and tidyr</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -201,12 +207,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Visualization</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis Workflows</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">The AI Coding Workflow</span></a>
+ <span class="menu-text">AI-Partnered Coding Mastery</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -214,14 +226,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started</span></a>
+  <a href="./ai-setup-prompting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up and Prompting Modern AI Agents</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai-prompting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prompting</span></a>
+  <a href="./ai-socratic-tutor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Self-Directed Learner: Socratic Tutor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automated Visual Refinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -230,36 +248,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Debugging</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-exercises.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Practice Exercises</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-regional-growth.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 1: Regional Growth</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-customer-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 2: Customer Value</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ai-project-store-operations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Project 3: Store Operations</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Playground</span></a>
+ <span class="menu-text">Guided Business Projects</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -267,8 +261,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./project-sales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 1: Regional Sales and Attainment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-churn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 2: Customer Retention and Churn Economics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project-logistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project 3: Supply Chain Logistics and Bottlenecks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Interactive Lab &amp; Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sandbox.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sandbox</span></a>
+ <span class="menu-text">Open Analytical Sandbox</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography and External Readings</span></a>
   </div>
 </li>
       </ul>
@@ -283,19 +312,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-scatter-plot" id="toc-a-scatter-plot" class="nav-link active" data-scroll-target="#a-scatter-plot">A scatter plot</a></li>
-  <li><a href="#a-bar-chart" id="toc-a-bar-chart" class="nav-link" data-scroll-target="#a-bar-chart">A bar chart</a></li>
-  <li><a href="#build-both-charts-interactively" id="toc-build-both-charts-interactively" class="nav-link" data-scroll-target="#build-both-charts-interactively">Build both charts interactively</a></li>
-  <li><a href="#a-visualization-review-checklist" id="toc-a-visualization-review-checklist" class="nav-link" data-scroll-target="#a-visualization-review-checklist">A visualization review checklist</a></li>
+  <li><a href="#the-layers-of-the-grammar" id="toc-the-layers-of-the-grammar" class="nav-link active" data-scroll-target="#the-layers-of-the-grammar">The layers of the grammar</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">1. Data</a></li>
+  <li><a href="#aesthetics" id="toc-aesthetics" class="nav-link" data-scroll-target="#aesthetics">2. Aesthetics</a></li>
+  <li><a href="#geometries" id="toc-geometries" class="nav-link" data-scroll-target="#geometries">3. Geometries</a></li>
+  <li><a href="#facets" id="toc-facets" class="nav-link" data-scroll-target="#facets">4. Facets</a></li>
+  <li><a href="#statistical-transformations" id="toc-statistical-transformations" class="nav-link" data-scroll-target="#statistical-transformations">5. Statistical transformations</a></li>
+  <li><a href="#coordinates" id="toc-coordinates" class="nav-link" data-scroll-target="#coordinates">6. Coordinates</a></li>
+  <li><a href="#themes-and-labels" id="toc-themes-and-labels" class="nav-link" data-scroll-target="#themes-and-labels">7. Themes and labels</a></li>
+  </ul></li>
+  <li><a href="#before-and-after-an-executive-sales-chart" id="toc-before-and-after-an-executive-sales-chart" class="nav-link" data-scroll-target="#before-and-after-an-executive-sales-chart">Before and after: an executive sales chart</a>
+  <ul class="collapse">
+  <li><a href="#before" id="toc-before" class="nav-link" data-scroll-target="#before">Before</a></li>
+  <li><a href="#after" id="toc-after" class="nav-link" data-scroll-target="#after">After</a></li>
+  </ul></li>
+  <li><a href="#choosing-a-chart-for-a-question" id="toc-choosing-a-chart-for-a-question" class="nav-link" data-scroll-target="#choosing-a-chart-for-a-question">Choosing a chart for a question</a></li>
+  <li><a href="#live-lab-default-versus-publication-ready" id="toc-live-lab-default-versus-publication-ready" class="nav-link" data-scroll-target="#live-lab-default-versus-publication-ready">Live lab: default versus publication-ready</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-basics.html">The R Foundation</a></li><li class="breadcrumb-item"><a href="./visualization.html">Visualization</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./visualization.html">Visualization</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Visualization with ggplot2</h1>
+<h1 class="title">Visual Analytics with ggplot2</h1>
+<p class="subtitle lead">Build charts as arguments: data, encoding, comparison, and context</p>
 </div>
 
 
@@ -312,51 +355,147 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>A good visualization makes a comparison easier to see. It does not replace a definition, a data check, or a well-formed question. Before you choose a chart, identify the variables, the comparison, and the audience.</p>
-<p>The ggplot2 package builds plots by combining layers. A typical plot specifies:</p>
-<ul>
-<li>the dataset;</li>
-<li>an aesthetic mapping, such as x, y, color, or fill;</li>
-<li>one or more geometric layers, such as points or bars; and</li>
-<li>labels or a theme that make the result interpretable.</li>
-</ul>
-<section id="a-scatter-plot" class="level2">
-<h2 class="anchored" data-anchor-id="a-scatter-plot">A scatter plot</h2>
-<p>A scatter plot is useful when you want to examine the relationship between two numeric variables. In the mtcars data, we can compare vehicle weight with miles per gallon.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<p><code>ggplot2</code> implements the Grammar of Graphics. A plot is not a single picture produced by a magic command; it is a set of explicit decisions about data, visual mappings, geometries, statistical transformations, coordinates, facets, and themes. Making those decisions explicit is what lets an analyst review an AI-generated chart.</p>
+<section id="the-layers-of-the-grammar" class="level2">
+<h2 class="anchored" data-anchor-id="the-layers-of-the-grammar">The layers of the grammar</h2>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">1. Data</h3>
+<p>Start with a rectangular table and state its grain. A chart of transactions and a chart of customer summaries answer different questions even if they use the same columns.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Weight, in thousands of pounds"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Miles per gallon"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Each row becomes one point. The mapping in aes() connects columns to visual properties. A trend that appears in a plot is a pattern to investigate, not automatically evidence of causation.</p>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="a-bar-chart" class="level2">
-<h2 class="anchored" data-anchor-id="a-bar-chart">A bar chart</h2>
-<p>A bar chart is useful for comparing values across discrete categories. First calculate a summary at the level you want to display; then map the category and measure to the chart.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>average_mpg_by_cyl <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  mpg <span class="sc">~</span> cyl,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mtcars,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">FUN =</span> mean</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(average_mpg_by_cyl, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cyl), <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of cylinders"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average miles per gallon"</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>A common mistake is to use a bar chart when the x-axis is continuous or to compare totals that have different exposure levels. Always ask whether the denominator and aggregation level make the comparison fair.</p>
+<section id="aesthetics" class="level3">
+<h3 class="anchored" data-anchor-id="aesthetics">2. Aesthetics</h3>
+<p><code>aes()</code> maps variables to visual properties such as x-position, y-position, color, fill, size, or shape.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg, <span class="at">color =</span> <span class="fu">factor</span>(cyl)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Mapping a variable inside <code>aes()</code> creates a data-driven legend. Setting a constant outside <code>aes()</code> applies the same value to every observation.</p>
 </section>
-<section id="build-both-charts-interactively" class="level2">
-<h2 class="anchored" data-anchor-id="build-both-charts-interactively">Build both charts interactively</h2>
-<p>The live application below creates the scatter plot and bar chart. Try changing the x-axis, adding a color mapping, or changing the summary statistic. Notice how a small code change changes the business story the chart can tell.</p>
+<section id="geometries" class="level3">
+<h3 class="anchored" data-anchor-id="geometries">3. Geometries</h3>
+<p>Geometries choose how observations become marks: <code>geom_point()</code> for individual observations, <code>geom_col()</code> for precomputed bar heights, <code>geom_bar()</code> for counts, and <code>geom_line()</code> for ordered sequences.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use <code>geom_col()</code> when your data already contains the metric to display. Use <code>geom_bar()</code> when you want ggplot2 to count rows or calculate a statistic.</p>
+</section>
+<section id="facets" class="level3">
+<h3 class="anchored" data-anchor-id="facets">4. Facets</h3>
+<p>Facets split a chart into comparable panels. They are useful when a single encoding would create too much visual overlap.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="fu">factor</span>(cyl))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Facets are not a substitute for a definition of the comparison. Check whether panel scales should be fixed or allowed to vary.</p>
+</section>
+<section id="statistical-transformations" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-transformations">5. Statistical transformations</h3>
+<p>Some geoms calculate summaries. A histogram bins observations, a boxplot calculates quartiles, and <code>stat_summary()</code> can show a mean or interval. Be explicit when a statistical transformation changes the unit of analysis.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cyl), <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"col"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This chart shows mean MPG by cylinder group, not the individual vehicle values. Label it accordingly.</p>
+</section>
+<section id="coordinates" class="level3">
+<h3 class="anchored" data-anchor-id="coordinates">6. Coordinates</h3>
+<p>Coordinates control the spatial system. <code>coord_flip()</code> is useful for long category labels, while <code>coord_cartesian()</code> zooms without dropping observations from statistical calculations.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cyl), <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Do not use <code>scale_y_continuous(limits = ...)</code> to zoom a distribution unless you intend to remove observations before the statistic is calculated.</p>
+</section>
+<section id="themes-and-labels" class="level3">
+<h3 class="anchored" data-anchor-id="themes-and-labels">7. Themes and labels</h3>
+<p>Themes control non-data ink. Labels provide the context the audience needs to interpret the data encoding.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fuel efficiency declines as vehicle weight increases"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Motor Trend car data; each point represents one model"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Weight (1,000 lb)"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Miles per gallon"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Cylinders"</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="before-and-after-an-executive-sales-chart" class="level2">
+<h2 class="anchored" data-anchor-id="before-and-after-an-executive-sales-chart">Before and after: an executive sales chart</h2>
+<p>The default chart may be technically correct but still hard to read. The polished version defines a business title, formats currency, removes unnecessary decoration, and uses a meaningful ordering.</p>
+<section id="before" class="level3">
+<h3 class="anchored" data-anchor-id="before">Before</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(store_sales, <span class="fu">aes</span>(store, revenue)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="after" class="level3">
+<h3 class="anchored" data-anchor-id="after">After</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>store_sales <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">store =</span> <span class="fu">reorder</span>(store, revenue)) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(store, revenue)) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#176B87"</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_dollar</span>(<span class="at">scale =</span> <span class="fl">1e-3</span>, <span class="at">suffix =</span> <span class="st">"K"</span>)) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Downtown leads store revenue"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Net revenue, January–June 2026; stores ordered low to high"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Revenue (thousands of dollars)"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: internal transaction extract"</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">30</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The code does not make the business claim by itself. The title is a claim that must be supported by the filtered population, period, currency definition, and aggregation.</p>
+</section>
+</section>
+<section id="choosing-a-chart-for-a-question" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-a-chart-for-a-question">Choosing a chart for a question</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Useful geometry</th>
+<th>Review concern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>How are two numeric measures related?</td>
+<td>Scatter plot with optional trend line</td>
+<td>Association is not causation; check overplotting and outliers</td>
+</tr>
+<tr class="even">
+<td>How do categories compare?</td>
+<td>Ordered bar chart</td>
+<td>Use a common baseline and label the unit</td>
+</tr>
+<tr class="odd">
+<td>How does a measure change over time?</td>
+<td>Line chart</td>
+<td>Sort dates and state the period definition</td>
+</tr>
+<tr class="even">
+<td>How does a distribution differ by group?</td>
+<td>Boxplot, violin, or histogram</td>
+<td>Show sample size and preserve the scale</td>
+</tr>
+<tr class="odd">
+<td>Which part contributes to a total?</td>
+<td>Stacked bar or dot plot</td>
+<td>Avoid hard-to-compare segments when ranking matters</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="live-lab-default-versus-publication-ready" class="level2">
+<h2 class="anchored" data-anchor-id="live-lab-default-versus-publication-ready">Live lab: default versus publication-ready</h2>
+<p>Use the selector to switch between a default scatter plot and a deliberately styled executive version. Ask an AI assistant to suggest one change at a time, then verify whether the change improves the intended comparison.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -366,59 +505,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 library(shiny)
 library(ggplot2)
 
-car_data &lt;- mtcars
-car_data$model &lt;- rownames(mtcars)
-car_data$transmission &lt;- ifelse(car_data$am == 1, "Manual", "Automatic")
-
-average_mpg_by_cyl &lt;- aggregate(
-  mpg ~ cyl,
-  data = car_data,
-  FUN = mean
+sales &lt;- data.frame(
+  store = c("Airport", "Downtown", "Lakeside", "Market", "Northside", "Riverside"),
+  revenue = c(118000, 184000, 97000, 151000, 132000, 109000),
+  margin = c(0.21, 0.24, 0.18, 0.22, 0.20, 0.19),
+  transactions = c(3900, 5200, 3100, 4600, 4200, 3500)
 )
 
-scatter_plot &lt;- ggplot(car_data, aes(x = wt, y = mpg, color = transmission)) +
-  geom_point(size = 3) +
-  labs(
-    title = "Vehicle weight and fuel efficiency",
-    x = "Weight, in thousands of pounds",
-    y = "Miles per gallon",
-    color = "Transmission"
-  ) +
-  theme_minimal()
-
-bar_plot &lt;- ggplot(average_mpg_by_cyl, aes(x = factor(cyl), y = mpg)) +
-  geom_col(fill = "steelblue") +
-  labs(
-    title = "Average fuel efficiency by cylinder count",
-    x = "Cylinders",
-    y = "Average miles per gallon"
-  ) +
-  theme_minimal()
-
 ui &lt;- fluidPage(
-  h3("Two views of the mtcars data"),
-  plotOutput("scatter"),
-  plotOutput("bars")
+  titlePanel("Visual refinement lab"),
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("style", "Chart style", choices = c("Default", "Executive"), inline = TRUE),
+      helpText("Describe one visual difference and one business implication.")
+    ),
+    mainPanel(plotOutput("chart", height = "480px"))
+  )
 )
 
 server &lt;- function(input, output, session) {
-  output$scatter &lt;- renderPlot(scatter_plot)
-  output$bars &lt;- renderPlot(bar_plot)
+  output$chart &lt;- renderPlot({
+    p &lt;- ggplot(sales, aes(x = transactions, y = revenue, label = store)) +
+      geom_point(size = 3, color = "#176B87")
+
+    if (input$style == "Executive") {
+      p &lt;- p +
+        geom_text(nudge_y = 5000, size = 3) +
+        scale_y_continuous(labels = scales::label_dollar()) +
+        labs(
+          title = "Higher transaction volume is associated with higher revenue",
+          subtitle = "Six stores; net revenue and completed transactions",
+          x = "Completed transactions",
+          y = "Net revenue"
+        ) +
+        theme_minimal(base_size = 12) +
+        theme(panel.grid.minor = element_blank())
+    }
+
+    p
+  })
 }
 
 shinyApp(ui, server)</code></pre>
-</section>
-<section id="a-visualization-review-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="a-visualization-review-checklist">A visualization review checklist</h2>
-<p>Before sharing a chart, verify:</p>
-<ol type="1">
-<li>Does the chart match the type of variable and comparison?</li>
-<li>Are the title, axes, units, and legend understandable without narration?</li>
-<li>Does the chart use an appropriate denominator?</li>
-<li>Are unusual values visible and explainable?</li>
-<li>Could a different scale or aggregation change the conclusion?</li>
-</ol>
-<p>An AI tool can generate attractive plotting code quickly. Your job is to check whether the chart represents the data and the decision honestly.</p>
 
 
 </section>
