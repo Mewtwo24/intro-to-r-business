@@ -1,148 +1,28 @@
 ---
 title: "Visual Analytics with ggplot2"
-subtitle: "Build charts as arguments: data, encoding, comparison, and context"
+subtitle: "Build a visual argument one grammar layer at a time"
 engine: knitr
 ---
 
-`ggplot2` implements the Grammar of Graphics. A plot is not a single picture produced by a magic command; it is a set of explicit decisions about data, visual mappings, geometries, statistical transformations, coordinates, facets, and themes. Making those decisions explicit is what lets an analyst review an AI-generated chart.
+`ggplot2` turns a table into a visual argument by layering data, mappings, geometries, scales, labels, and themes. Each step below adds one decision. Ask an AI assistant for the smallest change, run the result immediately, and review whether the new layer improves the business comparison or merely adds decoration.
 
-## The layers of the grammar
+The examples use `mtcars`, a built-in dataset with one row per car model. The business translation is deliberately simple: treat `mpg` as an efficiency measure, `wt` as vehicle weight, and `cyl` as a category.
 
-### 1. Data
+::: {.grid}
 
-Start with a rectangular table and state its grain. A chart of transactions and a chart of customer summaries answer different questions even if they use the same columns.
+::: {.g-col-12 .g-col-md-6}
+### Step 1: Build the base canvas with `ggplot()`
 
-```r
-library(ggplot2)
+**The Goal:** Define the data and map variables to positions before choosing a geometry. The base canvas establishes the coordinate system and tells the reader what each position means.
 
-ggplot(data = mtcars)
-```
+**The AI Prompt:**
 
-### 2. Aesthetics
+> Create a ggplot2 base canvas using `mtcars`, with vehicle weight `wt` on the x-axis and miles per gallon `mpg` on the y-axis. Do not add a geometry yet. Explain what the x and y positions represent and what one row means.
 
-`aes()` maps variables to visual properties such as x-position, y-position, color, fill, size, or shape.
+**What to look for:** Look for `ggplot(mtcars, aes(x = wt, y = mpg))`. The data and aesthetics belong in the base plot. Without a geometry, the viewer should show the axes but no marks.
+:::
 
-```r
-ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl)))
-```
-
-Mapping a variable inside `aes()` creates a data-driven legend. Setting a constant outside `aes()` applies the same value to every observation.
-
-### 3. Geometries
-
-Geometries choose how observations become marks: `geom_point()` for individual observations, `geom_col()` for precomputed bar heights, `geom_bar()` for counts, and `geom_line()` for ordered sequences.
-
-```r
-ggplot(mtcars, aes(wt, mpg)) +
-  geom_point()
-```
-
-Use `geom_col()` when your data already contains the metric to display. Use `geom_bar()` when you want ggplot2 to count rows or calculate a statistic.
-
-### 4. Facets
-
-Facets split a chart into comparable panels. They are useful when a single encoding would create too much visual overlap.
-
-```r
-ggplot(mtcars, aes(wt, mpg)) +
-  geom_point() +
-  facet_wrap(~ factor(cyl))
-```
-
-Facets are not a substitute for a definition of the comparison. Check whether panel scales should be fixed or allowed to vary.
-
-### 5. Statistical transformations
-
-Some geoms calculate summaries. A histogram bins observations, a boxplot calculates quartiles, and `stat_summary()` can show a mean or interval. Be explicit when a statistical transformation changes the unit of analysis.
-
-```r
-ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
-  stat_summary(fun = mean, geom = "col")
-```
-
-This chart shows mean MPG by cylinder group, not the individual vehicle values. Label it accordingly.
-
-### 6. Coordinates
-
-Coordinates control the spatial system. `coord_flip()` is useful for long category labels, while `coord_cartesian()` zooms without dropping observations from statistical calculations.
-
-```r
-ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
-  geom_boxplot() +
-  coord_flip()
-```
-
-Do not use `scale_y_continuous(limits = ...)` to zoom a distribution unless you intend to remove observations before the statistic is calculated.
-
-### 7. Themes and labels
-
-Themes control non-data ink. Labels provide the context the audience needs to interpret the data encoding.
-
-```r
-ggplot(mtcars, aes(wt, mpg)) +
-  geom_point() +
-  labs(
-    title = "Fuel efficiency declines as vehicle weight increases",
-    subtitle = "Motor Trend car data; each point represents one model",
-    x = "Weight (1,000 lb)",
-    y = "Miles per gallon",
-    color = "Cylinders"
-  ) +
-  theme_minimal()
-```
-
-## Before and after: an executive sales chart
-
-The default chart may be technically correct but still hard to read. The polished version defines a business title, formats currency, removes unnecessary decoration, and uses a meaningful ordering.
-
-### Before
-
-```r
-ggplot(store_sales, aes(store, revenue)) +
-  geom_col()
-```
-
-### After
-
-```r
-library(dplyr)
-library(scales)
-
-store_sales |>
-  mutate(store = reorder(store, revenue)) |>
-  ggplot(aes(store, revenue)) +
-  geom_col(fill = "#176B87", width = 0.7) +
-  scale_y_continuous(labels = label_dollar(scale = 1e-3, suffix = "K")) +
-  labs(
-    title = "Downtown leads store revenue",
-    subtitle = "Net revenue, January–June 2026; stores ordered low to high",
-    x = NULL,
-    y = "Revenue (thousands of dollars)",
-    caption = "Source: internal transaction extract"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    panel.grid.minor = element_blank(),
-    axis.text.x = element_text(angle = 30, hjust = 1)
-  )
-```
-
-The code does not make the business claim by itself. The title is a claim that must be supported by the filtered population, period, currency definition, and aggregation.
-
-## Choosing a chart for a question
-
-| Question | Useful geometry | Review concern |
-|---|---|---|
-| How are two numeric measures related? | Scatter plot with optional trend line | Association is not causation; check overplotting and outliers |
-| How do categories compare? | Ordered bar chart | Use a common baseline and label the unit |
-| How does a measure change over time? | Line chart | Sort dates and state the period definition |
-| How does a distribution differ by group? | Boxplot, violin, or histogram | Show sample size and preserve the scale |
-| Which part contributes to a total? | Stacked bar or dot plot | Avoid hard-to-compare segments when ranking matters |
-
-## Live lab: default versus publication-ready
-
-Use the selector to switch between a default scatter plot and a deliberately styled executive version. Ask an AI assistant to suggest one change at a time, then verify whether the change improves the intended comparison.
-
+::: {.g-col-12 .g-col-md-6}
 ```{shinylive-r}
 #| standalone: true
 #| components: [editor, viewer]
@@ -150,46 +30,181 @@ Use the selector to switch between a default scatter plot and a deliberately sty
 library(shiny)
 library(ggplot2)
 
-sales <- data.frame(
-  store = c("Airport", "Downtown", "Lakeside", "Market", "Northside", "Riverside"),
-  revenue = c(118000, 184000, 97000, 151000, 132000, 109000),
-  margin = c(0.21, 0.24, 0.18, 0.22, 0.20, 0.19),
-  transactions = c(3900, 5200, 3100, 4600, 4200, 3500)
+ui <- fluidPage(
+  titlePanel("ggplot base canvas"),
+  mainPanel(plotOutput("canvas", height = "420px"))
 )
 
+server <- function(input, output, session) {
+  output$canvas <- renderPlot({
+    ggplot(mtcars, aes(x = wt, y = mpg)) +
+      geom_blank()
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+:::
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+### Step 2: Add a geometry with `geom_point()`
+
+**The Goal:** Convert rows into visible marks. `geom_point()` creates one point per observation, which is useful for examining a relationship between two numeric variables.
+
+**The AI Prompt:**
+
+> Add `geom_point()` to a ggplot2 canvas that maps `wt` to x and `mpg` to y using `mtcars`. Add a title that describes the observed relationship without claiming causality. Explain what one point represents.
+
+**What to look for:** Look for `+ geom_point()` and a title that says association, pattern, or relationship rather than “weight causes low MPG.” Check for unusual points that an AI-generated story might ignore.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+
 ui <- fluidPage(
-  titlePanel("Visual refinement lab"),
+  titlePanel("geom_point() lab"),
+  mainPanel(plotOutput("scatter", height = "420px"))
+)
+
+server <- function(input, output, session) {
+  output$scatter <- renderPlot({
+    ggplot(mtcars, aes(x = wt, y = mpg)) +
+      geom_point(size = 3, color = "#176B87") +
+      labs(
+        title = "Heavier vehicles tend to have lower fuel efficiency",
+        x = "Weight (1,000 lb)",
+        y = "Miles per gallon"
+      )
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+:::
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+### Step 3: Color by a meaningful variable
+
+**The Goal:** Add a categorical variable to reveal whether the relationship differs by group. Mapping color inside `aes()` creates a legend and lets the data drive the visual encoding.
+
+**The AI Prompt:**
+
+> Add cylinder count as a color mapping to the `mtcars` scatter plot. Treat `cyl` as a categorical variable, create a clear legend label, and explain whether color changes the data or only changes how the data is displayed.
+
+**What to look for:** Look for `color = factor(cyl)` inside `aes()`, not a hard-coded color outside it. Check that the legend is understandable and that the grouping does not imply a causal mechanism.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+
+ui <- fluidPage(
+  titlePanel("Color mapping lab"),
   sidebarLayout(
     sidebarPanel(
-      radioButtons("style", "Chart style", choices = c("Default", "Executive"), inline = TRUE),
-      helpText("Describe one visual difference and one business implication.")
+      checkboxInput("trend", "Add a linear trend for exploration", value = FALSE),
+      helpText("A trend line describes association; it does not prove cause.")
     ),
-    mainPanel(plotOutput("chart", height = "480px"))
+    mainPanel(plotOutput("colored", height = "420px"))
   )
 )
 
 server <- function(input, output, session) {
-  output$chart <- renderPlot({
-    p <- ggplot(sales, aes(x = transactions, y = revenue, label = store)) +
-      geom_point(size = 3, color = "#176B87")
-
-    if (input$style == "Executive") {
-      p <- p +
-        geom_text(nudge_y = 5000, size = 3) +
-        scale_y_continuous(labels = scales::label_dollar()) +
-        labs(
-          title = "Higher transaction volume is associated with higher revenue",
-          subtitle = "Six stores; net revenue and completed transactions",
-          x = "Completed transactions",
-          y = "Net revenue"
-        ) +
-        theme_minimal(base_size = 12) +
-        theme(panel.grid.minor = element_blank())
-    }
-
+  output$colored <- renderPlot({
+    p <- ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+      geom_point(size = 3) +
+      labs(color = "Cylinders", x = "Weight (1,000 lb)", y = "Miles per gallon")
+    if (isTRUE(input$trend)) p <- p + geom_smooth(method = "lm", se = FALSE, color = "#555555")
     p
   })
 }
 
 shinyApp(ui, server)
 ```
+:::
+
+:::
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+### Step 4: Add professional labels and themes
+
+**The Goal:** Make the chart usable for a stakeholder. A publication-ready chart states the comparison, period or population, units, source, and any important limitation. Themes should support reading, not distract from the evidence.
+
+**The AI Prompt:**
+
+> Refine this ggplot2 scatter plot for a business audience. Use a minimal theme, readable labels, a descriptive title, a subtitle naming the dataset and unit, and a caption stating that the relationship is descriptive. Do not change the data, scale, or analytical claim.
+
+**What to look for:** Look for `labs()`, `theme_minimal()`, clear units, and a restrained design. Check that the title does not overclaim and that the formatting does not hide observations or truncate the comparison.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+
+ui <- fluidPage(
+  titlePanel("Professional styling lab"),
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("version", "Version", choices = c("Draft", "Executive"), inline = TRUE),
+      helpText("Compare the chart before and after the communication layer.")
+    ),
+    mainPanel(plotOutput("styled", height = "450px"))
+  )
+)
+
+server <- function(input, output, session) {
+  output$styled <- renderPlot({
+    p <- ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+      geom_point(size = 3)
+
+    if (input$version == "Executive") {
+      p <- p +
+        labs(
+          title = "Vehicle weight is associated with lower fuel efficiency",
+          subtitle = "Motor Trend car data; one point per vehicle model",
+          x = "Weight (1,000 lb)",
+          y = "Miles per gallon",
+          color = "Cylinders",
+          caption = "Descriptive association; not evidence of causality"
+        ) +
+        theme_minimal(base_size = 12) +
+        theme(panel.grid.minor = element_blank(), legend.position = "bottom")
+    } else {
+      p <- p + labs(x = "wt", y = "mpg", color = "cyl")
+    }
+    p
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+:::
+
+## Visualization review card
+
+Ask your AI assistant to critique the final chart using four questions: What is the data grain? What does each position and color encode? Which visual claim is supported? Which claim would require additional evidence? Then write the stakeholder takeaway in plain English without mentioning `ggplot()` or `geom_point()`.

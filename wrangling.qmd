@@ -1,264 +1,225 @@
 ---
-title: "Data Wrangling with dplyr and tidyr"
-subtitle: "Turn raw tables into transparent, testable business measures"
+title: "Data Wrangling with dplyr"
+subtitle: "Four transformations, four immediate tests, and one business question at a time"
 engine: knitr
 ---
 
-Wrangling is the controlled movement from a source table to an analysis-ready table. A good pipeline makes its assumptions visible: which rows are included, which fields are derived, what the row grain is, and how multiple tables are related. The tidyverse expresses these decisions as a readable sequence.
+Data wrangling is how an analyst turns a raw table into evidence for a decision. In each step below, the left column defines one verb and gives you a schema-first prompt. The right column is a runnable app with a small `mtcars` example. Paste an AI-generated alternative into the marked transformation and compare the output with the stated goal.
 
-## A pipeline is a transformation contract
+The pipe `|>` reads from top to bottom. At every step, ask two questions: **What is the current row grain?** and **How many rows should remain?**
 
-The pipe `|>` passes the object on the left into the first argument of the function on the right. The older `%>%` operator from magrittr is also common in existing code. Use either consistently, and read the pipeline from top to bottom.
+::: {.grid}
 
-```r
-library(dplyr)
+::: {.g-col-12 .g-col-md-6}
+### Step 1: `select()` the analysis view
 
-mtcars |>
-  filter(cyl >= 6) |>
-  select(mpg, cyl, hp, wt) |>
-  arrange(desc(mpg))
-```
+**The Goal:** Keep only the columns needed for a question. `select()` changes the table's width but not its number of rows.
 
-At each line, ask: “What is the row grain now?” and “How many rows and columns should I expect?” Insert `count()` or `glimpse()` checks while developing.
+**The AI Prompt:**
 
-## The core verbs
+> Using `mtcars`, write a dplyr pipeline that keeps only `mpg`, `cyl`, `hp`, and `wt`. Explain why selecting named columns is safer than selecting column positions. State the expected output dimensions.
 
-### `filter()`: choose rows
+**What to look for:** Look for `select(mpg, cyl, hp, wt)` and no row filter. The output should have 32 rows and 4 columns. A generated pipeline that uses `filter()` here has changed the task.
+:::
 
-`filter()` keeps observations whose conditions are `TRUE`.
-
-```r
-mtcars |>
-  filter(cyl == 6, mpg > 20)
-```
-
-Use `&` for “and,” `|` for “or,” and `%in%` for membership in a set. A condition involving `NA` does not keep the row, so decide whether missing values should be excluded or reported separately.
-
-### `select()`: choose columns
-
-`select()` defines the analysis view without changing the underlying data.
-
-```r
-mtcars |>
-  select(mpg, cyl, hp, wt)
-```
-
-Use `starts_with()`, `contains()`, and `where()` for systematic selection. Avoid selecting columns by position in production code; names communicate intent and survive schema changes better.
-
-### `mutate()`: create or modify columns
-
-`mutate()` preserves the row count and adds derived fields.
-
-```r
-mtcars |>
-  mutate(
-    power_to_weight = hp / wt,
-    efficiency_band = if_else(mpg >= 20, "Higher", "Lower")
-  )
-```
-
-Check units and denominators. A ratio is not automatically an average, and a per-unit measure can be misleading when the denominator is small.
-
-### `summarize()`: collapse rows
-
-`summary()` computes one or more values from the current group. Without `group_by()`, it returns one row for the entire table.
-
-```r
-mtcars |>
-  summarize(
-    vehicles = n(),
-    average_mpg = mean(mpg),
-    median_hp = median(hp)
-  )
-```
-
-If missing values are possible, make the rule explicit and report the usable count. `n()` counts rows; `n_distinct(customer_id)` counts unique entities.
-
-### `group_by()`: set the level of analysis
-
-`group_by()` changes the context in which `summarize()` and some `mutate()` operations evaluate.
-
-```r
-mtcars |>
-  group_by(cyl) |>
-  summarize(
-    vehicles = n(),
-    average_mpg = mean(mpg),
-    .groups = "drop"
-  ) |>
-  arrange(desc(average_mpg))
-```
-
-The `.groups = "drop"` choice prevents an invisible grouping state from leaking into later calculations. Treat grouping as part of the metric definition: “average MPG by cylinder count” is different from “average MPG across all vehicles.”
-
-### `arrange()`: order rows
-
-`arrange()` sorts a table for inspection or presentation.
-
-```r
-mtcars |>
-  arrange(desc(mpg), wt)
-```
-
-Sorting does not change the values or ranking definition. If ties matter, add a stable secondary key.
-
-## Joins: combine tables without losing control
-
-Joins match rows through keys. Before joining, document whether the key is unique in each table.
-
-```r
-library(tibble)
-
-vehicles <- rownames_to_column(mtcars, var = "model") |>
-  as_tibble()
-
-classification <- tibble(
-  model = c("Mazda RX4", "Duster 360", "Honda Civic"),
-  market = c("Sport", "Performance", "Compact")
-)
-
-vehicles |>
-  left_join(classification, by = "model")
-```
-
-`left_join(x, y)` preserves every row of `x` and appends matching fields from `y`. Use it when `x` is the analysis population and `y` is a lookup table. `inner_join()` keeps only matched rows and is appropriate when unmatched records should not enter the analysis, but it can silently shrink the population.
-
-Always audit joins:
-
-```r
-vehicles |> count(model) |> filter(n > 1)
-classification |> count(model) |> filter(n > 1)
-
-before <- nrow(vehicles)
-after <- vehicles |> left_join(classification, by = "model") |> nrow()
-c(before = before, after = after)
-```
-
-Unexpected row multiplication usually means the supposed key is not unique. An AI assistant will often write a join that runs while ignoring this grain problem.
-
-## Reshaping with tidyr
-
-Analytical tables often alternate between wide and long forms.
-
-### `pivot_longer()`
-
-Use `pivot_longer()` when multiple columns represent values of the same variable.
-
-```r
-library(tidyr)
-
-wide <- tibble(
-  model = c("Mazda RX4", "Honda Civic"),
-  mpg_2025 = c(21, 30),
-  mpg_2026 = c(22, 31)
-)
-
-wide |>
-  pivot_longer(
-    cols = starts_with("mpg_"),
-    names_to = "year",
-    names_prefix = "mpg_",
-    values_to = "mpg"
-  )
-```
-
-Long form is usually easier for `ggplot2`, grouped summaries, and time-series operations.
-
-### `pivot_wider()`
-
-Use `pivot_wider()` when values in a column should become separate fields.
-
-```r
-long <- tibble(
-  model = c("Mazda RX4", "Mazda RX4", "Honda Civic", "Honda Civic"),
-  year = c("2025", "2026", "2025", "2026"),
-  mpg = c(21, 22, 30, 31)
-)
-
-long |>
-  pivot_wider(names_from = year, values_from = mpg)
-```
-
-If more than one value exists for a model-year combination, `pivot_wider()` will warn or create list-columns. That is a signal to investigate the grain, not a reason to suppress the warning.
-
-## A complete transformation trace
-
-```r
-library(dplyr)
-
-mtcars_summary <- mtcars |>
-  as_tibble(rownames = "model") |>
-  mutate(
-    transmission = if_else(am == 1, "Manual", "Automatic"),
-    weight_1000lb = wt
-  ) |>
-  group_by(transmission) |>
-  summarize(
-    vehicles = n(),
-    average_mpg = mean(mpg),
-    average_weight = mean(weight_1000lb),
-    .groups = "drop"
-  ) |>
-  arrange(desc(average_mpg))
-```
-
-The output has one row per transmission type. That sentence is part of the analysis, not a comment added after the fact.
-
-## Live lab: wrangle `airquality`
-
-Use the month selector to compare ozone and solar radiation. Notice that the means use `na.rm = TRUE`; your written interpretation should also report that the available observations differ by variable.
-
+::: {.g-col-12 .g-col-md-6}
 ```{shinylive-r}
 #| standalone: true
 #| components: [editor, viewer]
 
 library(shiny)
 library(dplyr)
-library(tidyr)
 
-air <- airquality |>
-  mutate(Month = as.integer(Month), Day = as.integer(Day))
+selected_cars <- mtcars |>
+  select(mpg, cyl, hp, wt)
 
 ui <- fluidPage(
-  titlePanel("Air-quality wrangling lab"),
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("month", "Month", choices = sort(unique(air$Month)), selected = 5),
-      helpText("Change the month and inspect how missing values affect usable counts.")
-    ),
-    mainPanel(
-      h4("Summary by measure"),
-      tableOutput("summary"),
-      h4("First observations"),
-      tableOutput("preview")
-    )
+  titlePanel("select() lab"),
+  mainPanel(
+    verbatimTextOutput("dimensions"),
+    tableOutput("preview")
   )
 )
 
 server <- function(input, output, session) {
-  selected <- reactive({
-    air |>
-      filter(Month == as.integer(input$month))
+  output$dimensions <- renderPrint({
+    list(rows = nrow(selected_cars), columns = ncol(selected_cars), names = names(selected_cars))
   })
+  output$preview <- renderTable(head(selected_cars, 8), rownames = TRUE)
+}
 
-  output$summary <- renderTable({
-    selected() |>
-      summarize(
-        days = n(),
-        ozone_observed = sum(!is.na(Ozone)),
-        mean_ozone = mean(Ozone, na.rm = TRUE),
-        solar_observed = sum(!is.na(Solar.R)),
-        mean_solar = mean(Solar.R, na.rm = TRUE)
-      ) |>
-      pivot_longer(everything(), names_to = "measure", values_to = "value")
-  })
+shinyApp(ui, server)
+```
+:::
 
-  output$preview <- renderTable({
-    selected() |>
-      select(Day, Ozone, Solar.R, Wind, Temp) |>
-      head(8)
+:::
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+### Step 2: `filter()` the population
+
+**The Goal:** Keep only observations that meet a business condition. Exact matches use `==`; membership uses `%in%`; multiple conditions can be combined with commas or `&`.
+
+**The AI Prompt:**
+
+> Using `mtcars`, filter to cars with at least 6 cylinders and more than 20 miles per gallon. Return the code, expected row count, and a check that confirms every remaining row meets both conditions. Do not use `=` for comparison.
+
+**What to look for:** Look for `filter(cyl >= 6, mpg > 20)` or an equivalent `&` expression. Check the returned rows manually. An AI assistant may accidentally use `=` or filter the wrong variable.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+
+filtered_cars <- mtcars |>
+  filter(cyl >= 6, mpg > 20)
+
+ui <- fluidPage(
+  titlePanel("filter() lab"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("minimum_mpg", "Minimum MPG", min = 10, max = 35, value = 20),
+      checkboxInput("six_cylinders", "Require at least 6 cylinders", value = TRUE)
+    ),
+    mainPanel(tableOutput("results"), verbatimTextOutput("check"))
+  )
+)
+
+server <- function(input, output, session) {
+  output$results <- renderTable({
+    if (isTRUE(input$six_cylinders)) {
+      mtcars |> filter(cyl >= 6, mpg > input$minimum_mpg)
+    } else {
+      mtcars |> filter(mpg > input$minimum_mpg)
+    }
+  }, rownames = TRUE)
+
+  output$check <- renderPrint({
+    filtered_cars |> summarize(rows = n(), all_mpg_above_20 = all(mpg > 20), all_cyl_at_least_6 = all(cyl >= 6))
   })
 }
 
 shinyApp(ui, server)
 ```
+:::
+
+:::
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+### Step 3: `mutate()` a business measure
+
+**The Goal:** Add a derived column while preserving the row count. `mutate()` is where definitions such as power-to-weight, margin rate, or attainment become executable.
+
+**The AI Prompt:**
+
+> Using `mtcars`, add a column called `power_to_weight` equal to `hp / wt` and a label called `efficiency_band` that is `High` when `mpg >= 25` and `Typical` otherwise. Explain the units and confirm that `mutate()` does not change the number of rows.
+
+**What to look for:** Look for the correct denominator and a new column. Check that `nrow()` is unchanged. Ask the AI whether the label threshold is a business assumption or a fact supplied by the data.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+
+cars_with_metrics <- mtcars |>
+  mutate(
+    power_to_weight = hp / wt,
+    efficiency_band = if_else(mpg >= 25, "High", "Typical")
+  )
+
+ui <- fluidPage(
+  titlePanel("mutate() lab"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("minimum_power", "Minimum power-to-weight", min = 20, max = 250, value = 80),
+      helpText("The derived measure is horsepower per 1,000 pounds.")
+    ),
+    mainPanel(tableOutput("results"), verbatimTextOutput("row_check"))
+  )
+)
+
+server <- function(input, output, session) {
+  output$results <- renderTable({
+    cars_with_metrics |>
+      filter(power_to_weight >= input$minimum_power) |>
+      select(mpg, hp, wt, power_to_weight, efficiency_band) |>
+      head(10)
+  })
+  output$row_check <- renderPrint({
+    list(before = nrow(mtcars), after_mutate = nrow(cars_with_metrics))
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+:::
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+### Step 4: `summarize()` a grouped metric
+
+**The Goal:** Collapse many rows into a smaller table of business measures. `summarize()` produces one row per current group, so `group_by()` defines the level of analysis.
+
+**The AI Prompt:**
+
+> Using `mtcars`, group by `cyl` and summarize vehicle count, average MPG, and median horsepower. Drop the grouping after the summary and arrange the result by descending average MPG. State that the output is one row per cylinder group.
+
+**What to look for:** Look for `group_by(cyl)` before `summarize()` and `.groups = "drop"` afterward. Check that the output has one row for each observed cylinder count. An AI draft that summarizes before grouping answers a different question.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+
+summary_by_cyl <- mtcars |>
+  group_by(cyl) |>
+  summarize(
+    vehicles = n(),
+    average_mpg = mean(mpg),
+    median_hp = median(hp),
+    .groups = "drop"
+  ) |>
+  arrange(desc(average_mpg))
+
+ui <- fluidPage(
+  titlePanel("summarize() lab"),
+  mainPanel(
+    tableOutput("summary"),
+    verbatimTextOutput("grain")
+  )
+)
+
+server <- function(input, output, session) {
+  output$summary <- renderTable(summary_by_cyl)
+  output$grain <- renderPrint({
+    list(output_rows = nrow(summary_by_cyl), groups = sort(unique(mtcars$cyl)), total_vehicles = sum(summary_by_cyl$vehicles))
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+:::
+
+## Wrangling review card
+
+Before moving on, ask an AI assistant to review your four pipelines for row counts, grouping level, denominators, and missing values. Require it to identify one plausible logic error even if every app runs successfully. That is the difference between syntax completion and business analytics.
