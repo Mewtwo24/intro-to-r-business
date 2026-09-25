@@ -2,75 +2,20 @@
   {
     "objectID": "wrangling.html",
     "href": "wrangling.html",
-    "title": "Data Wrangling with dplyr and tidyr",
+    "title": "Data Wrangling with dplyr",
     "section": "",
-    "text": "Wrangling is the controlled movement from a source table to an analysis-ready table. A good pipeline makes its assumptions visible: which rows are included, which fields are derived, what the row grain is, and how multiple tables are related. The tidyverse expresses these decisions as a readable sequence.",
+    "text": "Data wrangling is how an analyst turns a raw table into evidence for a decision. In each step below, the left column defines one verb and gives you a schema-first prompt. The right column is a runnable app with a small mtcars example. Paste an AI-generated alternative into the marked transformation and compare the output with the stated goal.\nThe pipe |&gt; reads from top to bottom. At every step, ask two questions: What is the current row grain? and How many rows should remain?",
     "crumbs": [
       "The R Foundations",
       "Data Wrangling with dplyr and tidyr"
     ]
   },
   {
-    "objectID": "wrangling.html#a-pipeline-is-a-transformation-contract",
-    "href": "wrangling.html#a-pipeline-is-a-transformation-contract",
-    "title": "Data Wrangling with dplyr and tidyr",
-    "section": "A pipeline is a transformation contract",
-    "text": "A pipeline is a transformation contract\nThe pipe |&gt; passes the object on the left into the first argument of the function on the right. The older %&gt;% operator from magrittr is also common in existing code. Use either consistently, and read the pipeline from top to bottom.\nlibrary(dplyr)\n\nmtcars |&gt;\n  filter(cyl &gt;= 6) |&gt;\n  select(mpg, cyl, hp, wt) |&gt;\n  arrange(desc(mpg))\nAt each line, ask: “What is the row grain now?” and “How many rows and columns should I expect?” Insert count() or glimpse() checks while developing.",
-    "crumbs": [
-      "The R Foundations",
-      "Data Wrangling with dplyr and tidyr"
-    ]
-  },
-  {
-    "objectID": "wrangling.html#the-core-verbs",
-    "href": "wrangling.html#the-core-verbs",
-    "title": "Data Wrangling with dplyr and tidyr",
-    "section": "The core verbs",
-    "text": "The core verbs\n\nfilter(): choose rows\nfilter() keeps observations whose conditions are TRUE.\nmtcars |&gt;\n  filter(cyl == 6, mpg &gt; 20)\nUse & for “and,” | for “or,” and %in% for membership in a set. A condition involving NA does not keep the row, so decide whether missing values should be excluded or reported separately.\n\n\nselect(): choose columns\nselect() defines the analysis view without changing the underlying data.\nmtcars |&gt;\n  select(mpg, cyl, hp, wt)\nUse starts_with(), contains(), and where() for systematic selection. Avoid selecting columns by position in production code; names communicate intent and survive schema changes better.\n\n\nmutate(): create or modify columns\nmutate() preserves the row count and adds derived fields.\nmtcars |&gt;\n  mutate(\n    power_to_weight = hp / wt,\n    efficiency_band = if_else(mpg &gt;= 20, \"Higher\", \"Lower\")\n  )\nCheck units and denominators. A ratio is not automatically an average, and a per-unit measure can be misleading when the denominator is small.\n\n\nsummarize(): collapse rows\nsummary() computes one or more values from the current group. Without group_by(), it returns one row for the entire table.\nmtcars |&gt;\n  summarize(\n    vehicles = n(),\n    average_mpg = mean(mpg),\n    median_hp = median(hp)\n  )\nIf missing values are possible, make the rule explicit and report the usable count. n() counts rows; n_distinct(customer_id) counts unique entities.\n\n\ngroup_by(): set the level of analysis\ngroup_by() changes the context in which summarize() and some mutate() operations evaluate.\nmtcars |&gt;\n  group_by(cyl) |&gt;\n  summarize(\n    vehicles = n(),\n    average_mpg = mean(mpg),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(average_mpg))\nThe .groups = \"drop\" choice prevents an invisible grouping state from leaking into later calculations. Treat grouping as part of the metric definition: “average MPG by cylinder count” is different from “average MPG across all vehicles.”\n\n\narrange(): order rows\narrange() sorts a table for inspection or presentation.\nmtcars |&gt;\n  arrange(desc(mpg), wt)\nSorting does not change the values or ranking definition. If ties matter, add a stable secondary key.",
-    "crumbs": [
-      "The R Foundations",
-      "Data Wrangling with dplyr and tidyr"
-    ]
-  },
-  {
-    "objectID": "wrangling.html#joins-combine-tables-without-losing-control",
-    "href": "wrangling.html#joins-combine-tables-without-losing-control",
-    "title": "Data Wrangling with dplyr and tidyr",
-    "section": "Joins: combine tables without losing control",
-    "text": "Joins: combine tables without losing control\nJoins match rows through keys. Before joining, document whether the key is unique in each table.\nlibrary(tibble)\n\nvehicles &lt;- rownames_to_column(mtcars, var = \"model\") |&gt;\n  as_tibble()\n\nclassification &lt;- tibble(\n  model = c(\"Mazda RX4\", \"Duster 360\", \"Honda Civic\"),\n  market = c(\"Sport\", \"Performance\", \"Compact\")\n)\n\nvehicles |&gt;\n  left_join(classification, by = \"model\")\nleft_join(x, y) preserves every row of x and appends matching fields from y. Use it when x is the analysis population and y is a lookup table. inner_join() keeps only matched rows and is appropriate when unmatched records should not enter the analysis, but it can silently shrink the population.\nAlways audit joins:\nvehicles |&gt; count(model) |&gt; filter(n &gt; 1)\nclassification |&gt; count(model) |&gt; filter(n &gt; 1)\n\nbefore &lt;- nrow(vehicles)\nafter &lt;- vehicles |&gt; left_join(classification, by = \"model\") |&gt; nrow()\nc(before = before, after = after)\nUnexpected row multiplication usually means the supposed key is not unique. An AI assistant will often write a join that runs while ignoring this grain problem.",
-    "crumbs": [
-      "The R Foundations",
-      "Data Wrangling with dplyr and tidyr"
-    ]
-  },
-  {
-    "objectID": "wrangling.html#reshaping-with-tidyr",
-    "href": "wrangling.html#reshaping-with-tidyr",
-    "title": "Data Wrangling with dplyr and tidyr",
-    "section": "Reshaping with tidyr",
-    "text": "Reshaping with tidyr\nAnalytical tables often alternate between wide and long forms.\n\npivot_longer()\nUse pivot_longer() when multiple columns represent values of the same variable.\nlibrary(tidyr)\n\nwide &lt;- tibble(\n  model = c(\"Mazda RX4\", \"Honda Civic\"),\n  mpg_2025 = c(21, 30),\n  mpg_2026 = c(22, 31)\n)\n\nwide |&gt;\n  pivot_longer(\n    cols = starts_with(\"mpg_\"),\n    names_to = \"year\",\n    names_prefix = \"mpg_\",\n    values_to = \"mpg\"\n  )\nLong form is usually easier for ggplot2, grouped summaries, and time-series operations.\n\n\npivot_wider()\nUse pivot_wider() when values in a column should become separate fields.\nlong &lt;- tibble(\n  model = c(\"Mazda RX4\", \"Mazda RX4\", \"Honda Civic\", \"Honda Civic\"),\n  year = c(\"2025\", \"2026\", \"2025\", \"2026\"),\n  mpg = c(21, 22, 30, 31)\n)\n\nlong |&gt;\n  pivot_wider(names_from = year, values_from = mpg)\nIf more than one value exists for a model-year combination, pivot_wider() will warn or create list-columns. That is a signal to investigate the grain, not a reason to suppress the warning.",
-    "crumbs": [
-      "The R Foundations",
-      "Data Wrangling with dplyr and tidyr"
-    ]
-  },
-  {
-    "objectID": "wrangling.html#a-complete-transformation-trace",
-    "href": "wrangling.html#a-complete-transformation-trace",
-    "title": "Data Wrangling with dplyr and tidyr",
-    "section": "A complete transformation trace",
-    "text": "A complete transformation trace\nlibrary(dplyr)\n\nmtcars_summary &lt;- mtcars |&gt;\n  as_tibble(rownames = \"model\") |&gt;\n  mutate(\n    transmission = if_else(am == 1, \"Manual\", \"Automatic\"),\n    weight_1000lb = wt\n  ) |&gt;\n  group_by(transmission) |&gt;\n  summarize(\n    vehicles = n(),\n    average_mpg = mean(mpg),\n    average_weight = mean(weight_1000lb),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(average_mpg))\nThe output has one row per transmission type. That sentence is part of the analysis, not a comment added after the fact.",
-    "crumbs": [
-      "The R Foundations",
-      "Data Wrangling with dplyr and tidyr"
-    ]
-  },
-  {
-    "objectID": "wrangling.html#live-lab-wrangle-airquality",
-    "href": "wrangling.html#live-lab-wrangle-airquality",
-    "title": "Data Wrangling with dplyr and tidyr",
-    "section": "Live lab: wrangle airquality",
-    "text": "Live lab: wrangle airquality\nUse the month selector to compare ozone and solar radiation. Notice that the means use na.rm = TRUE; your written interpretation should also report that the available observations differ by variable.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\nlibrary(dplyr)\nlibrary(tidyr)\n\nair &lt;- airquality |&gt;\n  mutate(Month = as.integer(Month), Day = as.integer(Day))\n\nui &lt;- fluidPage(\n  titlePanel(\"Air-quality wrangling lab\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"month\", \"Month\", choices = sort(unique(air$Month)), selected = 5),\n      helpText(\"Change the month and inspect how missing values affect usable counts.\")\n    ),\n    mainPanel(\n      h4(\"Summary by measure\"),\n      tableOutput(\"summary\"),\n      h4(\"First observations\"),\n      tableOutput(\"preview\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  selected &lt;- reactive({\n    air |&gt;\n      filter(Month == as.integer(input$month))\n  })\n\n  output$summary &lt;- renderTable({\n    selected() |&gt;\n      summarize(\n        days = n(),\n        ozone_observed = sum(!is.na(Ozone)),\n        mean_ozone = mean(Ozone, na.rm = TRUE),\n        solar_observed = sum(!is.na(Solar.R)),\n        mean_solar = mean(Solar.R, na.rm = TRUE)\n      ) |&gt;\n      pivot_longer(everything(), names_to = \"measure\", values_to = \"value\")\n  })\n\n  output$preview &lt;- renderTable({\n    selected() |&gt;\n      select(Day, Ozone, Solar.R, Wind, Temp) |&gt;\n      head(8)\n  })\n}\n\nshinyApp(ui, server)",
+    "objectID": "wrangling.html#wrangling-review-card",
+    "href": "wrangling.html#wrangling-review-card",
+    "title": "Data Wrangling with dplyr",
+    "section": "Wrangling review card",
+    "text": "Wrangling review card\nBefore moving on, ask an AI assistant to review your four pipelines for row counts, grouping level, denominators, and missing values. Require it to identify one plausible logic error even if every app runs successfully. That is the difference between syntax completion and business analytics.",
     "crumbs": [
       "The R Foundations",
       "Data Wrangling with dplyr and tidyr"
@@ -939,95 +884,29 @@
     "href": "r-core.html",
     "title": "R Core: Syntax, Types, and Structures",
     "section": "",
-    "text": "R is a language for describing objects and transformations. In business analytics, the important question is not whether you can memorize every function. It is whether you can look at a script and explain what each object represents, what shape it has, and how a transformation changes the evidence available for a decision.",
+    "text": "This tutorial is designed as a sequence of short experiments. Read the left column, copy the AI prompt into your approved assistant, paste the returned code into the editor on the right, and run it. The goal is not to memorize syntax. The goal is to predict what the code should do and then review whether it actually does it.",
     "crumbs": [
       "The R Foundations",
       "R Core: Syntax, Types, and Structures"
     ]
   },
   {
-    "objectID": "r-core.html#names-and-assignment",
-    "href": "r-core.html#names-and-assignment",
+    "objectID": "r-core.html#how-to-use-each-step",
+    "href": "r-core.html#how-to-use-each-step",
     "title": "R Core: Syntax, Types, and Structures",
-    "section": "1. Names and assignment",
-    "text": "1. Names and assignment\nUse &lt;- to assign a value to a name. Read the statement as “store the value on the right under the name on the left.” Names should describe business meaning rather than implementation details.\nunit_price &lt;- 42.50\nunits_sold &lt;- 18\nrevenue &lt;- unit_price * units_sold\nrevenue\nR is case-sensitive: revenue and Revenue are different names. Avoid names that shadow common functions such as mean, data, or c. Use snake_case consistently, and keep a clear distinction between raw fields (units_sold) and derived metrics (revenue).",
+    "section": "How to use each step",
+    "text": "How to use each step\nEach live panel is a complete small Shiny app. The setup creates a tiny business example; the marked transformation is the part you can replace with an AI-generated draft. After running it, compare the output with your prediction and record one thing you would verify in a real dataset.\n\n\nStep 1: Assignment and data types\nThe Goal: Store business values under meaningful names and distinguish numeric, character, and logical data. Assignment uses &lt;-; it does not mean that the two sides are mathematically equal.\nThe AI Prompt:\n\nCreate a short R example for a business analyst that assigns a numeric revenue value, a character region, and a logical target_met flag. Use typeof() and class() to inspect each object. Explain the output without changing the data.\n\nWhat to look for: Look for clear names, &lt;-, and values that match the intended type. An AI draft should not turn revenue into a character string or use a text value such as \"yes\" where a logical flag is required.\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\n\nrevenue &lt;- 125000\nregion &lt;- \"North\"\ntarget_met &lt;- TRUE\n\nui &lt;- fluidPage(\n  titlePanel(\"Assignment and types\"),\n  mainPanel(verbatimTextOutput(\"details\"))\n)\n\nserver &lt;- function(input, output, session) {\n  output$details &lt;- renderPrint({\n    list(\n      revenue = revenue,\n      revenue_type = typeof(revenue),\n      region = region,\n      region_type = typeof(region),\n      target_met = target_met,\n      target_type = typeof(target_met)\n    )\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\nStep 2: Vectors and indexing\nThe Goal: Represent a set of related values and select observations with positions, names, or logical conditions. R vectors are one-dimensional and usually contain one basic type.\nThe AI Prompt:\n\nGenerate an R vector of regional sales with named elements for North, South, East, and West. Show how to select West by name and how to filter regions whose sales exceed 100000. Explain why logical indexing is useful in business analysis.\n\nWhat to look for: Look for c(), names attached with North =, and a logical condition such as sales &gt; 100000. Check that the filter returns the values and labels you expect.\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\n\nregional_sales &lt;- c(North = 118000, South = 92000, East = 131000, West = 104000)\n\nui &lt;- fluidPage(\n  titlePanel(\"Vector indexing\"),\n  sidebarLayout(\n    sidebarPanel(numericInput(\"cutoff\", \"Sales cutoff\", value = 100000, min = 0)),\n    mainPanel(tableOutput(\"selected\"), verbatimTextOutput(\"named\"))\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$selected &lt;- renderTable({\n    regional_sales[regional_sales &gt; input$cutoff]\n  }, rownames = TRUE)\n\n  output$named &lt;- renderPrint({\n    regional_sales[\"West\"]\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\nStep 3: Data frames and missing values\nThe Goal: Work with rectangular business data while treating NA as unknown rather than zero. A data frame has rows and columns; the row grain must be stated before you summarize it.\nThe AI Prompt:\n\nCreate a three-row R data frame called orders with order_id, region, and revenue. Include one missing revenue value. Show how to count missing values and how to calculate a mean only after reporting the number of observed values. Explain why replacing NA with zero would be a business decision.\n\nWhat to look for: Look for is.na(), sum(!is.na(revenue)), and an explicit na.rm = TRUE. A generated answer should not silently convert an unknown order to zero.\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\n\norders &lt;- data.frame(\n  order_id = c(\"A01\", \"A02\", \"A03\", \"A04\"),\n  region = c(\"North\", \"North\", \"West\", \"West\"),\n  revenue = c(80, NA, 45, 220)\n)\n\nui &lt;- fluidPage(\n  titlePanel(\"Data frames and missingness\"),\n  sidebarLayout(\n    sidebarPanel(checkboxInput(\"show_missing\", \"Show missing rows\", value = TRUE)),\n    mainPanel(verbatimTextOutput(\"metrics\"), tableOutput(\"table\"))\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$metrics &lt;- renderPrint({\n    list(\n      rows = nrow(orders),\n      missing_revenue = sum(is.na(orders$revenue)),\n      observed_revenue = sum(!is.na(orders$revenue)),\n      mean_observed_revenue = mean(orders$revenue, na.rm = TRUE)\n    )\n  })\n\n  output$table &lt;- renderTable({\n    if (isTRUE(input$show_missing)) orders else orders[!is.na(orders$revenue), ]\n  })\n}\n\nshinyApp(ui, server)\n\n\n\n\nStep 4: Functions and conditions\nThe Goal: Package a repeatable business rule into a function and handle edge cases such as a zero target. Functions make an AI-generated rule easier to test on several inputs.\nThe AI Prompt:\n\nWrite an R function called attainment that returns actual divided by target. If target is zero, return NA instead of Inf. Test it with two vectors and explain the difference between a vectorized condition and a single if statement.\n\nWhat to look for: Look for an explicit zero-target rule and a vectorized result. Test both ordinary and edge-case inputs; do not accept a function merely because it returns a number for the happy path.\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\n\nattainment &lt;- function(actual, target) {\n  ifelse(target == 0, NA_real_, actual / target)\n}\n\ntest_cases &lt;- data.frame(\n  actual = c(90, 110, 50),\n  target = c(100, 100, 0)\n)\n\ntest_cases$attainment &lt;- attainment(test_cases$actual, test_cases$target)\n\nui &lt;- fluidPage(\n  titlePanel(\"Function and edge-case lab\"),\n  mainPanel(\n    tableOutput(\"results\"),\n    verbatimTextOutput(\"check\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$results &lt;- renderTable(test_cases)\n  output$check &lt;- renderPrint({\n    list(zero_target_result = test_cases$attainment[3], all_finite = all(is.finite(test_cases$attainment[-3])))\n  })\n}\n\nshinyApp(ui, server)",
     "crumbs": [
       "The R Foundations",
       "R Core: Syntax, Types, and Structures"
     ]
   },
   {
-    "objectID": "r-core.html#atomic-data-types",
-    "href": "r-core.html#atomic-data-types",
+    "objectID": "r-core.html#r-core-review-card",
+    "href": "r-core.html#r-core-review-card",
     "title": "R Core: Syntax, Types, and Structures",
-    "section": "2. Atomic data types",
-    "text": "2. Atomic data types\nThe most common atomic types are numeric, character, logical, and date-like values. Use typeof() for the underlying storage type and class() for the object’s higher-level behavior.\n\n\n\n\n\n\n\n\nType\nExample\nBusiness use\n\n\n\n\nNumeric\n1250.50, 3L\nRevenue, quantity, score, count\n\n\nCharacter\n\"North\"\nLabels, codes, free text\n\n\nLogical\nTRUE, FALSE\nFlags and conditions\n\n\nMissing\nNA\nUnknown or unrecorded value\n\n\nFactor\nfactor(c(\"Web\", \"Store\"))\nA categorical variable with known levels\n\n\nDate\nas.Date(\"2026-01-15\")\nTime windows and ordering\n\n\n\nR will often coerce values to a common type when you combine them. c(1, \"2\") becomes a character vector because a character value cannot be stored as numeric without loss of information. Do not let automatic coercion decide the meaning of a field silently; inspect it.\ntypeof(42.5)\ntypeof(\"42.5\")\nis.numeric(42.5)\nis.character(\"42.5\")\nas.numeric(\"42.5\")",
-    "crumbs": [
-      "The R Foundations",
-      "R Core: Syntax, Types, and Structures"
-    ]
-  },
-  {
-    "objectID": "r-core.html#vectors-and-indexing",
-    "href": "r-core.html#vectors-and-indexing",
-    "title": "R Core: Syntax, Types, and Structures",
-    "section": "3. Vectors and indexing",
-    "text": "3. Vectors and indexing\nMost R objects begin as vectors: ordered collections of values of one type. The c() function combines values, and square brackets select positions or names.\nregions &lt;- c(\"North\", \"South\", \"West\")\ntargets &lt;- c(North = 100000, South = 85000, West = 92000)\n\nregions[1]\ntargets[\"West\"]\ntargets[targets &gt; 90000]\nlength(targets)\nIndexing begins at 1. Logical indexing is especially useful for business filters, but remember that NA in a logical condition can produce an NA result rather than TRUE or FALSE.\nmargin &lt;- c(0.32, NA, 0.18, 0.41)\nmargin &gt; 0.25\nmargin[!is.na(margin) & margin &gt; 0.25]",
-    "crumbs": [
-      "The R Foundations",
-      "R Core: Syntax, Types, and Structures"
-    ]
-  },
-  {
-    "objectID": "r-core.html#data-frames-and-tibbles",
-    "href": "r-core.html#data-frames-and-tibbles",
-    "title": "R Core: Syntax, Types, and Structures",
-    "section": "4. Data frames and tibbles",
-    "text": "4. Data frames and tibbles\nA data frame is a rectangular object: each column is a vector, and all columns have the same number of rows. A row is an observation at a particular grain. Before writing a summary, state the grain in plain English: “one row per order,” “one row per customer-month,” or “one row per store-quarter.”\norders &lt;- data.frame(\n  order_id = c(\"A01\", \"A02\", \"A03\"),\n  region = c(\"North\", \"North\", \"West\"),\n  units = c(2, 5, 1),\n  revenue = c(80, 250, 45)\n)\n\nnrow(orders)\nncol(orders)\nnames(orders)\norders$revenue\norders[orders$units &gt;= 2, ]\nThe tidyverse uses tibbles, which print more safely in a console and preserve useful metadata. tibble::as_tibble(orders) converts a data frame. In a table, orders$revenue extracts a vector; orders[\"revenue\"] extracts a one-column table. This distinction matters when a function expects a vector.",
-    "crumbs": [
-      "The R Foundations",
-      "R Core: Syntax, Types, and Structures"
-    ]
-  },
-  {
-    "objectID": "r-core.html#missing-values-and-comparisons",
-    "href": "r-core.html#missing-values-and-comparisons",
-    "title": "R Core: Syntax, Types, and Structures",
-    "section": "5. Missing values and comparisons",
-    "text": "5. Missing values and comparisons\nNA means “unknown,” not zero, not false, and not “not applicable” unless your data dictionary explicitly says so. Most arithmetic involving NA returns NA. Functions such as sum() and mean() can remove missing values with na.rm = TRUE, but you must report how many values were removed.\nscores &lt;- c(0.80, 0.72, NA, 0.91)\nmean(scores)\nmean(scores, na.rm = TRUE)\nsum(is.na(scores))\nUse is.na(x) to test for missingness. Do not use x == NA; the result of that comparison is NA, not a usable logical answer.",
-    "crumbs": [
-      "The R Foundations",
-      "R Core: Syntax, Types, and Structures"
-    ]
-  },
-  {
-    "objectID": "r-core.html#functions-and-control-flow",
-    "href": "r-core.html#functions-and-control-flow",
-    "title": "R Core: Syntax, Types, and Structures",
-    "section": "6. Functions and control flow",
-    "text": "6. Functions and control flow\nFunctions package a repeatable transformation. Name the inputs and make the return value clear. A function is a useful unit for both human review and AI-assisted testing.\nattainment &lt;- function(actual, target) {\n  ifelse(target == 0, NA_real_, actual / target)\n}\n\nattainment(c(90, 110), c(100, 100))\nUse if when you need one branch of code to run and ifelse() or dplyr::if_else() when you need a vectorized result. for loops are valid, but vectorized functions, summarise(), and mutate() usually express business transformations more clearly.",
-    "crumbs": [
-      "The R Foundations",
-      "R Core: Syntax, Types, and Structures"
-    ]
-  },
-  {
-    "objectID": "r-core.html#a-repeatable-inspection-checklist",
-    "href": "r-core.html#a-repeatable-inspection-checklist",
-    "title": "R Core: Syntax, Types, and Structures",
-    "section": "7. A repeatable inspection checklist",
-    "text": "7. A repeatable inspection checklist\nBefore trusting an object, inspect:\nclass(orders)\nstr(orders)\nhead(orders)\nsummary(orders)\nAsk four questions: What is the object’s type? What is its row grain? Which columns can be missing? What should happen if the object is empty? These questions are the foundation for directing an AI assistant.",
-    "crumbs": [
-      "The R Foundations",
-      "R Core: Syntax, Types, and Structures"
-    ]
-  },
-  {
-    "objectID": "r-core.html#live-lab-read-the-object-before-changing-it",
-    "href": "r-core.html#live-lab-read-the-object-before-changing-it",
-    "title": "R Core: Syntax, Types, and Structures",
-    "section": "Live lab: read the object before changing it",
-    "text": "Live lab: read the object before changing it\nRun the application, inspect the structure output, and change the minimum-revenue filter. The exercise is deliberately small: your goal is to predict the result before you click Run.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\n\norders &lt;- data.frame(\n  order_id = c(\"A01\", \"A02\", \"A03\", \"A04\"),\n  region = c(\"North\", \"North\", \"West\", \"West\"),\n  units = c(2, 5, 1, 4),\n  revenue = c(80, 250, 45, 220),\n  repeat_customer = c(TRUE, FALSE, TRUE, FALSE)\n)\n\nui &lt;- fluidPage(\n  titlePanel(\"R core inspection lab\"),\n  sidebarLayout(\n    sidebarPanel(\n      numericInput(\"minimum\", \"Minimum revenue\", value = 100, min = 0),\n      helpText(\"Change the threshold, then explain which rows remain.\")\n    ),\n    mainPanel(\n      h4(\"Object structure\"),\n      verbatimTextOutput(\"structure\"),\n      h4(\"Filtered orders\"),\n      tableOutput(\"selected\")\n    )\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$structure &lt;- renderPrint({\n    str(orders)\n  })\n\n  output$selected &lt;- renderTable({\n    orders[orders$revenue &gt;= input$minimum, ]\n  })\n}\n\nshinyApp(ui, server)",
+    "section": "R core review card",
+    "text": "R core review card\nBefore moving to data wrangling, explain each live example in plain English. State the object type, row or vector grain, missing-value behavior, and expected output. Then ask your AI assistant to review your explanation, not to replace it.",
     "crumbs": [
       "The R Foundations",
       "R Core: Syntax, Types, and Structures"
@@ -1049,51 +928,18 @@
     "href": "visualization.html",
     "title": "Visual Analytics with ggplot2",
     "section": "",
-    "text": "ggplot2 implements the Grammar of Graphics. A plot is not a single picture produced by a magic command; it is a set of explicit decisions about data, visual mappings, geometries, statistical transformations, coordinates, facets, and themes. Making those decisions explicit is what lets an analyst review an AI-generated chart.",
+    "text": "ggplot2 turns a table into a visual argument by layering data, mappings, geometries, scales, labels, and themes. Each step below adds one decision. Ask an AI assistant for the smallest change, run the result immediately, and review whether the new layer improves the business comparison or merely adds decoration.\nThe examples use mtcars, a built-in dataset with one row per car model. The business translation is deliberately simple: treat mpg as an efficiency measure, wt as vehicle weight, and cyl as a category.",
     "crumbs": [
       "The R Foundations",
       "Visualization"
     ]
   },
   {
-    "objectID": "visualization.html#the-layers-of-the-grammar",
-    "href": "visualization.html#the-layers-of-the-grammar",
+    "objectID": "visualization.html#visualization-review-card",
+    "href": "visualization.html#visualization-review-card",
     "title": "Visual Analytics with ggplot2",
-    "section": "The layers of the grammar",
-    "text": "The layers of the grammar\n\n1. Data\nStart with a rectangular table and state its grain. A chart of transactions and a chart of customer summaries answer different questions even if they use the same columns.\nlibrary(ggplot2)\n\nggplot(data = mtcars)\n\n\n2. Aesthetics\naes() maps variables to visual properties such as x-position, y-position, color, fill, size, or shape.\nggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl)))\nMapping a variable inside aes() creates a data-driven legend. Setting a constant outside aes() applies the same value to every observation.\n\n\n3. Geometries\nGeometries choose how observations become marks: geom_point() for individual observations, geom_col() for precomputed bar heights, geom_bar() for counts, and geom_line() for ordered sequences.\nggplot(mtcars, aes(wt, mpg)) +\n  geom_point()\nUse geom_col() when your data already contains the metric to display. Use geom_bar() when you want ggplot2 to count rows or calculate a statistic.\n\n\n4. Facets\nFacets split a chart into comparable panels. They are useful when a single encoding would create too much visual overlap.\nggplot(mtcars, aes(wt, mpg)) +\n  geom_point() +\n  facet_wrap(~ factor(cyl))\nFacets are not a substitute for a definition of the comparison. Check whether panel scales should be fixed or allowed to vary.\n\n\n5. Statistical transformations\nSome geoms calculate summaries. A histogram bins observations, a boxplot calculates quartiles, and stat_summary() can show a mean or interval. Be explicit when a statistical transformation changes the unit of analysis.\nggplot(mtcars, aes(x = factor(cyl), y = mpg)) +\n  stat_summary(fun = mean, geom = \"col\")\nThis chart shows mean MPG by cylinder group, not the individual vehicle values. Label it accordingly.\n\n\n6. Coordinates\nCoordinates control the spatial system. coord_flip() is useful for long category labels, while coord_cartesian() zooms without dropping observations from statistical calculations.\nggplot(mtcars, aes(x = factor(cyl), y = mpg)) +\n  geom_boxplot() +\n  coord_flip()\nDo not use scale_y_continuous(limits = ...) to zoom a distribution unless you intend to remove observations before the statistic is calculated.\n\n\n7. Themes and labels\nThemes control non-data ink. Labels provide the context the audience needs to interpret the data encoding.\nggplot(mtcars, aes(wt, mpg)) +\n  geom_point() +\n  labs(\n    title = \"Fuel efficiency declines as vehicle weight increases\",\n    subtitle = \"Motor Trend car data; each point represents one model\",\n    x = \"Weight (1,000 lb)\",\n    y = \"Miles per gallon\",\n    color = \"Cylinders\"\n  ) +\n  theme_minimal()",
-    "crumbs": [
-      "The R Foundations",
-      "Visualization"
-    ]
-  },
-  {
-    "objectID": "visualization.html#before-and-after-an-executive-sales-chart",
-    "href": "visualization.html#before-and-after-an-executive-sales-chart",
-    "title": "Visual Analytics with ggplot2",
-    "section": "Before and after: an executive sales chart",
-    "text": "Before and after: an executive sales chart\nThe default chart may be technically correct but still hard to read. The polished version defines a business title, formats currency, removes unnecessary decoration, and uses a meaningful ordering.\n\nBefore\nggplot(store_sales, aes(store, revenue)) +\n  geom_col()\n\n\nAfter\nlibrary(dplyr)\nlibrary(scales)\n\nstore_sales |&gt;\n  mutate(store = reorder(store, revenue)) |&gt;\n  ggplot(aes(store, revenue)) +\n  geom_col(fill = \"#176B87\", width = 0.7) +\n  scale_y_continuous(labels = label_dollar(scale = 1e-3, suffix = \"K\")) +\n  labs(\n    title = \"Downtown leads store revenue\",\n    subtitle = \"Net revenue, January–June 2026; stores ordered low to high\",\n    x = NULL,\n    y = \"Revenue (thousands of dollars)\",\n    caption = \"Source: internal transaction extract\"\n  ) +\n  theme_minimal(base_size = 12) +\n  theme(\n    panel.grid.minor = element_blank(),\n    axis.text.x = element_text(angle = 30, hjust = 1)\n  )\nThe code does not make the business claim by itself. The title is a claim that must be supported by the filtered population, period, currency definition, and aggregation.",
-    "crumbs": [
-      "The R Foundations",
-      "Visualization"
-    ]
-  },
-  {
-    "objectID": "visualization.html#choosing-a-chart-for-a-question",
-    "href": "visualization.html#choosing-a-chart-for-a-question",
-    "title": "Visual Analytics with ggplot2",
-    "section": "Choosing a chart for a question",
-    "text": "Choosing a chart for a question\n\n\n\n\n\n\n\n\nQuestion\nUseful geometry\nReview concern\n\n\n\n\nHow are two numeric measures related?\nScatter plot with optional trend line\nAssociation is not causation; check overplotting and outliers\n\n\nHow do categories compare?\nOrdered bar chart\nUse a common baseline and label the unit\n\n\nHow does a measure change over time?\nLine chart\nSort dates and state the period definition\n\n\nHow does a distribution differ by group?\nBoxplot, violin, or histogram\nShow sample size and preserve the scale\n\n\nWhich part contributes to a total?\nStacked bar or dot plot\nAvoid hard-to-compare segments when ranking matters",
-    "crumbs": [
-      "The R Foundations",
-      "Visualization"
-    ]
-  },
-  {
-    "objectID": "visualization.html#live-lab-default-versus-publication-ready",
-    "href": "visualization.html#live-lab-default-versus-publication-ready",
-    "title": "Visual Analytics with ggplot2",
-    "section": "Live lab: default versus publication-ready",
-    "text": "Live lab: default versus publication-ready\nUse the selector to switch between a default scatter plot and a deliberately styled executive version. Ask an AI assistant to suggest one change at a time, then verify whether the change improves the intended comparison.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\nlibrary(ggplot2)\n\nsales &lt;- data.frame(\n  store = c(\"Airport\", \"Downtown\", \"Lakeside\", \"Market\", \"Northside\", \"Riverside\"),\n  revenue = c(118000, 184000, 97000, 151000, 132000, 109000),\n  margin = c(0.21, 0.24, 0.18, 0.22, 0.20, 0.19),\n  transactions = c(3900, 5200, 3100, 4600, 4200, 3500)\n)\n\nui &lt;- fluidPage(\n  titlePanel(\"Visual refinement lab\"),\n  sidebarLayout(\n    sidebarPanel(\n      radioButtons(\"style\", \"Chart style\", choices = c(\"Default\", \"Executive\"), inline = TRUE),\n      helpText(\"Describe one visual difference and one business implication.\")\n    ),\n    mainPanel(plotOutput(\"chart\", height = \"480px\"))\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$chart &lt;- renderPlot({\n    p &lt;- ggplot(sales, aes(x = transactions, y = revenue, label = store)) +\n      geom_point(size = 3, color = \"#176B87\")\n\n    if (input$style == \"Executive\") {\n      p &lt;- p +\n        geom_text(nudge_y = 5000, size = 3) +\n        scale_y_continuous(labels = scales::label_dollar()) +\n        labs(\n          title = \"Higher transaction volume is associated with higher revenue\",\n          subtitle = \"Six stores; net revenue and completed transactions\",\n          x = \"Completed transactions\",\n          y = \"Net revenue\"\n        ) +\n        theme_minimal(base_size = 12) +\n        theme(panel.grid.minor = element_blank())\n    }\n\n    p\n  })\n}\n\nshinyApp(ui, server)",
+    "section": "Visualization review card",
+    "text": "Visualization review card\nAsk your AI assistant to critique the final chart using four questions: What is the data grain? What does each position and color encode? Which visual claim is supported? Which claim would require additional evidence? Then write the stakeholder takeaway in plain English without mentioning ggplot() or geom_point().",
     "crumbs": [
       "The R Foundations",
       "Visualization"

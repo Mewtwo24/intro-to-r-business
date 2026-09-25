@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling with dplyr and tidyr – Intro to R for Business Analytics</title>
+<title>Data Wrangling with dplyr – Intro to R for Business Analytics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,41 +25,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -312,24 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-pipeline-is-a-transformation-contract" id="toc-a-pipeline-is-a-transformation-contract" class="nav-link active" data-scroll-target="#a-pipeline-is-a-transformation-contract">A pipeline is a transformation contract</a></li>
-  <li><a href="#the-core-verbs" id="toc-the-core-verbs" class="nav-link" data-scroll-target="#the-core-verbs">The core verbs</a>
-  <ul class="collapse">
-  <li><a href="#filter-choose-rows" id="toc-filter-choose-rows" class="nav-link" data-scroll-target="#filter-choose-rows"><code>filter()</code>: choose rows</a></li>
-  <li><a href="#select-choose-columns" id="toc-select-choose-columns" class="nav-link" data-scroll-target="#select-choose-columns"><code>select()</code>: choose columns</a></li>
-  <li><a href="#mutate-create-or-modify-columns" id="toc-mutate-create-or-modify-columns" class="nav-link" data-scroll-target="#mutate-create-or-modify-columns"><code>mutate()</code>: create or modify columns</a></li>
-  <li><a href="#summarize-collapse-rows" id="toc-summarize-collapse-rows" class="nav-link" data-scroll-target="#summarize-collapse-rows"><code>summarize()</code>: collapse rows</a></li>
-  <li><a href="#group_by-set-the-level-of-analysis" id="toc-group_by-set-the-level-of-analysis" class="nav-link" data-scroll-target="#group_by-set-the-level-of-analysis"><code>group_by()</code>: set the level of analysis</a></li>
-  <li><a href="#arrange-order-rows" id="toc-arrange-order-rows" class="nav-link" data-scroll-target="#arrange-order-rows"><code>arrange()</code>: order rows</a></li>
-  </ul></li>
-  <li><a href="#joins-combine-tables-without-losing-control" id="toc-joins-combine-tables-without-losing-control" class="nav-link" data-scroll-target="#joins-combine-tables-without-losing-control">Joins: combine tables without losing control</a></li>
-  <li><a href="#reshaping-with-tidyr" id="toc-reshaping-with-tidyr" class="nav-link" data-scroll-target="#reshaping-with-tidyr">Reshaping with tidyr</a>
-  <ul class="collapse">
-  <li><a href="#pivot_longer" id="toc-pivot_longer" class="nav-link" data-scroll-target="#pivot_longer"><code>pivot_longer()</code></a></li>
-  <li><a href="#pivot_wider" id="toc-pivot_wider" class="nav-link" data-scroll-target="#pivot_wider"><code>pivot_wider()</code></a></li>
-  </ul></li>
-  <li><a href="#a-complete-transformation-trace" id="toc-a-complete-transformation-trace" class="nav-link" data-scroll-target="#a-complete-transformation-trace">A complete transformation trace</a></li>
-  <li><a href="#live-lab-wrangle-airquality" id="toc-live-lab-wrangle-airquality" class="nav-link" data-scroll-target="#live-lab-wrangle-airquality">Live lab: wrangle <code>airquality</code></a></li>
+  <li><a href="#wrangling-review-card" id="toc-wrangling-review-card" class="nav-link active" data-scroll-target="#wrangling-review-card">Wrangling review card</a></li>
   </ul>
 </nav>
     </div>
@@ -338,8 +286,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./r-core.html">The R Foundations</a></li><li class="breadcrumb-item"><a href="./wrangling.html">Data Wrangling with dplyr and tidyr</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Data Wrangling with dplyr and tidyr</h1>
-<p class="subtitle lead">Turn raw tables into transparent, testable business measures</p>
+<h1 class="title">Data Wrangling with dplyr</h1>
+<p class="subtitle lead">Four transformations, four immediate tests, and one business question at a time</p>
 </div>
 
 
@@ -356,161 +304,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Wrangling is the controlled movement from a source table to an analysis-ready table. A good pipeline makes its assumptions visible: which rows are included, which fields are derived, what the row grain is, and how multiple tables are related. The tidyverse expresses these decisions as a readable sequence.</p>
-<section id="a-pipeline-is-a-transformation-contract" class="level2">
-<h2 class="anchored" data-anchor-id="a-pipeline-is-a-transformation-contract">A pipeline is a transformation contract</h2>
-<p>The pipe <code>|&gt;</code> passes the object on the left into the first argument of the function on the right. The older <code>%&gt;%</code> operator from magrittr is also common in existing code. Use either consistently, and read the pipeline from top to bottom.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cyl <span class="sc">&gt;=</span> <span class="dv">6</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mpg, cyl, hp, wt) <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mpg))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>At each line, ask: “What is the row grain now?” and “How many rows and columns should I expect?” Insert <code>count()</code> or <code>glimpse()</code> checks while developing.</p>
+<p>Data wrangling is how an analyst turns a raw table into evidence for a decision. In each step below, the left column defines one verb and gives you a schema-first prompt. The right column is a runnable app with a small <code>mtcars</code> example. Paste an AI-generated alternative into the marked transformation and compare the output with the stated goal.</p>
+<p>The pipe <code>|&gt;</code> reads from top to bottom. At every step, ask two questions: <strong>What is the current row grain?</strong> and <strong>How many rows should remain?</strong></p>
+<div class="grid">
+<section id="step-1-select-the-analysis-view" class="level3 g-col-12 g-col-md-6">
+<h3 class="anchored" data-anchor-id="step-1-select-the-analysis-view">Step 1: <code>select()</code> the analysis view</h3>
+<p><strong>The Goal:</strong> Keep only the columns needed for a question. <code>select()</code> changes the table’s width but not its number of rows.</p>
+<p><strong>The AI Prompt:</strong></p>
+<blockquote class="blockquote">
+<p>Using <code>mtcars</code>, write a dplyr pipeline that keeps only <code>mpg</code>, <code>cyl</code>, <code>hp</code>, and <code>wt</code>. Explain why selecting named columns is safer than selecting column positions. State the expected output dimensions.</p>
+</blockquote>
+<p><strong>What to look for:</strong> Look for <code>select(mpg, cyl, hp, wt)</code> and no row filter. The output should have 32 rows and 4 columns. A generated pipeline that uses <code>filter()</code> here has changed the task.</p>
 </section>
-<section id="the-core-verbs" class="level2">
-<h2 class="anchored" data-anchor-id="the-core-verbs">The core verbs</h2>
-<section id="filter-choose-rows" class="level3">
-<h3 class="anchored" data-anchor-id="filter-choose-rows"><code>filter()</code>: choose rows</h3>
-<p><code>filter()</code> keeps observations whose conditions are <code>TRUE</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cyl <span class="sc">==</span> <span class="dv">6</span>, mpg <span class="sc">&gt;</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Use <code>&amp;</code> for “and,” <code>|</code> for “or,” and <code>%in%</code> for membership in a set. A condition involving <code>NA</code> does not keep the row, so decide whether missing values should be excluded or reported separately.</p>
-</section>
-<section id="select-choose-columns" class="level3">
-<h3 class="anchored" data-anchor-id="select-choose-columns"><code>select()</code>: choose columns</h3>
-<p><code>select()</code> defines the analysis view without changing the underlying data.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mpg, cyl, hp, wt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Use <code>starts_with()</code>, <code>contains()</code>, and <code>where()</code> for systematic selection. Avoid selecting columns by position in production code; names communicate intent and survive schema changes better.</p>
-</section>
-<section id="mutate-create-or-modify-columns" class="level3">
-<h3 class="anchored" data-anchor-id="mutate-create-or-modify-columns"><code>mutate()</code>: create or modify columns</h3>
-<p><code>mutate()</code> preserves the row count and adds derived fields.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">power_to_weight =</span> hp <span class="sc">/</span> wt,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">efficiency_band =</span> <span class="fu">if_else</span>(mpg <span class="sc">&gt;=</span> <span class="dv">20</span>, <span class="st">"Higher"</span>, <span class="st">"Lower"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Check units and denominators. A ratio is not automatically an average, and a per-unit measure can be misleading when the denominator is small.</p>
-</section>
-<section id="summarize-collapse-rows" class="level3">
-<h3 class="anchored" data-anchor-id="summarize-collapse-rows"><code>summarize()</code>: collapse rows</h3>
-<p><code>summary()</code> computes one or more values from the current group. Without <code>group_by()</code>, it returns one row for the entire table.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">vehicles =</span> <span class="fu">n</span>(),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_mpg =</span> <span class="fu">mean</span>(mpg),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_hp =</span> <span class="fu">median</span>(hp)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If missing values are possible, make the rule explicit and report the usable count. <code>n()</code> counts rows; <code>n_distinct(customer_id)</code> counts unique entities.</p>
-</section>
-<section id="group_by-set-the-level-of-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="group_by-set-the-level-of-analysis"><code>group_by()</code>: set the level of analysis</h3>
-<p><code>group_by()</code> changes the context in which <code>summarize()</code> and some <code>mutate()</code> operations evaluate.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cyl) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">vehicles =</span> <span class="fu">n</span>(),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_mpg =</span> <span class="fu">mean</span>(mpg),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_mpg))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>.groups = "drop"</code> choice prevents an invisible grouping state from leaking into later calculations. Treat grouping as part of the metric definition: “average MPG by cylinder count” is different from “average MPG across all vehicles.”</p>
-</section>
-<section id="arrange-order-rows" class="level3">
-<h3 class="anchored" data-anchor-id="arrange-order-rows"><code>arrange()</code>: order rows</h3>
-<p><code>arrange()</code> sorts a table for inspection or presentation.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mpg), wt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Sorting does not change the values or ranking definition. If ties matter, add a stable secondary key.</p>
-</section>
-</section>
-<section id="joins-combine-tables-without-losing-control" class="level2">
-<h2 class="anchored" data-anchor-id="joins-combine-tables-without-losing-control">Joins: combine tables without losing control</h2>
-<p>Joins match rows through keys. Before joining, document whether the key is unique in each table.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>vehicles <span class="ot">&lt;-</span> <span class="fu">rownames_to_column</span>(mtcars, <span class="at">var =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>classification <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Mazda RX4"</span>, <span class="st">"Duster 360"</span>, <span class="st">"Honda Civic"</span>),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">market =</span> <span class="fu">c</span>(<span class="st">"Sport"</span>, <span class="st">"Performance"</span>, <span class="st">"Compact"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>vehicles <span class="sc">|&gt;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(classification, <span class="at">by =</span> <span class="st">"model"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>left_join(x, y)</code> preserves every row of <code>x</code> and appends matching fields from <code>y</code>. Use it when <code>x</code> is the analysis population and <code>y</code> is a lookup table. <code>inner_join()</code> keeps only matched rows and is appropriate when unmatched records should not enter the analysis, but it can silently shrink the population.</p>
-<p>Always audit joins:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vehicles <span class="sc">|&gt;</span> <span class="fu">count</span>(model) <span class="sc">|&gt;</span> <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>classification <span class="sc">|&gt;</span> <span class="fu">count</span>(model) <span class="sc">|&gt;</span> <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>before <span class="ot">&lt;-</span> <span class="fu">nrow</span>(vehicles)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> vehicles <span class="sc">|&gt;</span> <span class="fu">left_join</span>(classification, <span class="at">by =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">before =</span> before, <span class="at">after =</span> after)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unexpected row multiplication usually means the supposed key is not unique. An AI assistant will often write a join that runs while ignoring this grain problem.</p>
-</section>
-<section id="reshaping-with-tidyr" class="level2">
-<h2 class="anchored" data-anchor-id="reshaping-with-tidyr">Reshaping with tidyr</h2>
-<p>Analytical tables often alternate between wide and long forms.</p>
-<section id="pivot_longer" class="level3">
-<h3 class="anchored" data-anchor-id="pivot_longer"><code>pivot_longer()</code></h3>
-<p>Use <code>pivot_longer()</code> when multiple columns represent values of the same variable.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>wide <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Mazda RX4"</span>, <span class="st">"Honda Civic"</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mpg_2025 =</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">30</span>),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mpg_2026 =</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">31</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>wide <span class="sc">|&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"mpg_"</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"mpg_"</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"mpg"</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Long form is usually easier for <code>ggplot2</code>, grouped summaries, and time-series operations.</p>
-</section>
-<section id="pivot_wider" class="level3">
-<h3 class="anchored" data-anchor-id="pivot_wider"><code>pivot_wider()</code></h3>
-<p>Use <code>pivot_wider()</code> when values in a column should become separate fields.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Mazda RX4"</span>, <span class="st">"Mazda RX4"</span>, <span class="st">"Honda Civic"</span>, <span class="st">"Honda Civic"</span>),</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="st">"2025"</span>, <span class="st">"2026"</span>, <span class="st">"2025"</span>, <span class="st">"2026"</span>),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mpg =</span> <span class="fu">c</span>(<span class="dv">21</span>, <span class="dv">22</span>, <span class="dv">30</span>, <span class="dv">31</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>long <span class="sc">|&gt;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If more than one value exists for a model-year combination, <code>pivot_wider()</code> will warn or create list-columns. That is a signal to investigate the grain, not a reason to suppress the warning.</p>
-</section>
-</section>
-<section id="a-complete-transformation-trace" class="level2">
-<h2 class="anchored" data-anchor-id="a-complete-transformation-trace">A complete transformation trace</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mtcars_summary <span class="ot">&lt;-</span> mtcars <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">transmission =</span> <span class="fu">if_else</span>(am <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Manual"</span>, <span class="st">"Automatic"</span>),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight_1000lb =</span> wt</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(transmission) <span class="sc">|&gt;</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">vehicles =</span> <span class="fu">n</span>(),</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_mpg =</span> <span class="fu">mean</span>(mpg),</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">average_weight =</span> <span class="fu">mean</span>(weight_1000lb),</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_mpg))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The output has one row per transmission type. That sentence is part of the analysis, not a comment added after the fact.</p>
-</section>
-<section id="live-lab-wrangle-airquality" class="level2">
-<h2 class="anchored" data-anchor-id="live-lab-wrangle-airquality">Live lab: wrangle <code>airquality</code></h2>
-<p>Use the month selector to compare ozone and solar radiation. Notice that the means use <code>na.rm = TRUE</code>; your written interpretation should also report that the available observations differ by variable.</p>
+<div class="g-col-12 g-col-md-6">
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -519,53 +325,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 library(shiny)
 library(dplyr)
-library(tidyr)
 
-air &lt;- airquality |&gt;
-  mutate(Month = as.integer(Month), Day = as.integer(Day))
+selected_cars &lt;- mtcars |&gt;
+  select(mpg, cyl, hp, wt)
 
 ui &lt;- fluidPage(
-  titlePanel("Air-quality wrangling lab"),
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("month", "Month", choices = sort(unique(air$Month)), selected = 5),
-      helpText("Change the month and inspect how missing values affect usable counts.")
-    ),
-    mainPanel(
-      h4("Summary by measure"),
-      tableOutput("summary"),
-      h4("First observations"),
-      tableOutput("preview")
-    )
+  titlePanel("select() lab"),
+  mainPanel(
+    verbatimTextOutput("dimensions"),
+    tableOutput("preview")
   )
 )
 
 server &lt;- function(input, output, session) {
-  selected &lt;- reactive({
-    air |&gt;
-      filter(Month == as.integer(input$month))
+  output$dimensions &lt;- renderPrint({
+    list(rows = nrow(selected_cars), columns = ncol(selected_cars), names = names(selected_cars))
   })
+  output$preview &lt;- renderTable(head(selected_cars, 8), rownames = TRUE)
+}
 
-  output$summary &lt;- renderTable({
-    selected() |&gt;
-      summarize(
-        days = n(),
-        ozone_observed = sum(!is.na(Ozone)),
-        mean_ozone = mean(Ozone, na.rm = TRUE),
-        solar_observed = sum(!is.na(Solar.R)),
-        mean_solar = mean(Solar.R, na.rm = TRUE)
-      ) |&gt;
-      pivot_longer(everything(), names_to = "measure", values_to = "value")
-  })
+shinyApp(ui, server)</code></pre>
+</div>
+</div>
+<div class="grid">
+<section id="step-2-filter-the-population" class="level3 g-col-12 g-col-md-6">
+<h3 class="anchored" data-anchor-id="step-2-filter-the-population">Step 2: <code>filter()</code> the population</h3>
+<p><strong>The Goal:</strong> Keep only observations that meet a business condition. Exact matches use <code>==</code>; membership uses <code>%in%</code>; multiple conditions can be combined with commas or <code>&amp;</code>.</p>
+<p><strong>The AI Prompt:</strong></p>
+<blockquote class="blockquote">
+<p>Using <code>mtcars</code>, filter to cars with at least 6 cylinders and more than 20 miles per gallon. Return the code, expected row count, and a check that confirms every remaining row meets both conditions. Do not use <code>=</code> for comparison.</p>
+</blockquote>
+<p><strong>What to look for:</strong> Look for <code>filter(cyl &gt;= 6, mpg &gt; 20)</code> or an equivalent <code>&amp;</code> expression. Check the returned rows manually. An AI assistant may accidentally use <code>=</code> or filter the wrong variable.</p>
+</section>
+<div class="g-col-12 g-col-md-6">
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [editor, viewer]
 
-  output$preview &lt;- renderTable({
-    selected() |&gt;
-      select(Day, Ozone, Solar.R, Wind, Temp) |&gt;
-      head(8)
+library(shiny)
+library(dplyr)
+
+filtered_cars &lt;- mtcars |&gt;
+  filter(cyl &gt;= 6, mpg &gt; 20)
+
+ui &lt;- fluidPage(
+  titlePanel("filter() lab"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("minimum_mpg", "Minimum MPG", min = 10, max = 35, value = 20),
+      checkboxInput("six_cylinders", "Require at least 6 cylinders", value = TRUE)
+    ),
+    mainPanel(tableOutput("results"), verbatimTextOutput("check"))
+  )
+)
+
+server &lt;- function(input, output, session) {
+  output$results &lt;- renderTable({
+    if (isTRUE(input$six_cylinders)) {
+      mtcars |&gt; filter(cyl &gt;= 6, mpg &gt; input$minimum_mpg)
+    } else {
+      mtcars |&gt; filter(mpg &gt; input$minimum_mpg)
+    }
+  }, rownames = TRUE)
+
+  output$check &lt;- renderPrint({
+    filtered_cars |&gt; summarize(rows = n(), all_mpg_above_20 = all(mpg &gt; 20), all_cyl_at_least_6 = all(cyl &gt;= 6))
   })
 }
 
 shinyApp(ui, server)</code></pre>
+</div>
+</div>
+<div class="grid">
+<section id="step-3-mutate-a-business-measure" class="level3 g-col-12 g-col-md-6">
+<h3 class="anchored" data-anchor-id="step-3-mutate-a-business-measure">Step 3: <code>mutate()</code> a business measure</h3>
+<p><strong>The Goal:</strong> Add a derived column while preserving the row count. <code>mutate()</code> is where definitions such as power-to-weight, margin rate, or attainment become executable.</p>
+<p><strong>The AI Prompt:</strong></p>
+<blockquote class="blockquote">
+<p>Using <code>mtcars</code>, add a column called <code>power_to_weight</code> equal to <code>hp / wt</code> and a label called <code>efficiency_band</code> that is <code>High</code> when <code>mpg &gt;= 25</code> and <code>Typical</code> otherwise. Explain the units and confirm that <code>mutate()</code> does not change the number of rows.</p>
+</blockquote>
+<p><strong>What to look for:</strong> Look for the correct denominator and a new column. Check that <code>nrow()</code> is unchanged. Ask the AI whether the label threshold is a business assumption or a fact supplied by the data.</p>
+</section>
+<div class="g-col-12 g-col-md-6">
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+
+cars_with_metrics &lt;- mtcars |&gt;
+  mutate(
+    power_to_weight = hp / wt,
+    efficiency_band = if_else(mpg &gt;= 25, "High", "Typical")
+  )
+
+ui &lt;- fluidPage(
+  titlePanel("mutate() lab"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("minimum_power", "Minimum power-to-weight", min = 20, max = 250, value = 80),
+      helpText("The derived measure is horsepower per 1,000 pounds.")
+    ),
+    mainPanel(tableOutput("results"), verbatimTextOutput("row_check"))
+  )
+)
+
+server &lt;- function(input, output, session) {
+  output$results &lt;- renderTable({
+    cars_with_metrics |&gt;
+      filter(power_to_weight &gt;= input$minimum_power) |&gt;
+      select(mpg, hp, wt, power_to_weight, efficiency_band) |&gt;
+      head(10)
+  })
+  output$row_check &lt;- renderPrint({
+    list(before = nrow(mtcars), after_mutate = nrow(cars_with_metrics))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</div>
+</div>
+<div class="grid">
+<section id="step-4-summarize-a-grouped-metric" class="level3 g-col-12 g-col-md-6">
+<h3 class="anchored" data-anchor-id="step-4-summarize-a-grouped-metric">Step 4: <code>summarize()</code> a grouped metric</h3>
+<p><strong>The Goal:</strong> Collapse many rows into a smaller table of business measures. <code>summarize()</code> produces one row per current group, so <code>group_by()</code> defines the level of analysis.</p>
+<p><strong>The AI Prompt:</strong></p>
+<blockquote class="blockquote">
+<p>Using <code>mtcars</code>, group by <code>cyl</code> and summarize vehicle count, average MPG, and median horsepower. Drop the grouping after the summary and arrange the result by descending average MPG. State that the output is one row per cylinder group.</p>
+</blockquote>
+<p><strong>What to look for:</strong> Look for <code>group_by(cyl)</code> before <code>summarize()</code> and <code>.groups = "drop"</code> afterward. Check that the output has one row for each observed cylinder count. An AI draft that summarizes before grouping answers a different question.</p>
+</section>
+<div class="g-col-12 g-col-md-6">
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+
+summary_by_cyl &lt;- mtcars |&gt;
+  group_by(cyl) |&gt;
+  summarize(
+    vehicles = n(),
+    average_mpg = mean(mpg),
+    median_hp = median(hp),
+    .groups = "drop"
+  ) |&gt;
+  arrange(desc(average_mpg))
+
+ui &lt;- fluidPage(
+  titlePanel("summarize() lab"),
+  mainPanel(
+    tableOutput("summary"),
+    verbatimTextOutput("grain")
+  )
+)
+
+server &lt;- function(input, output, session) {
+  output$summary &lt;- renderTable(summary_by_cyl)
+  output$grain &lt;- renderPrint({
+    list(output_rows = nrow(summary_by_cyl), groups = sort(unique(mtcars$cyl)), total_vehicles = sum(summary_by_cyl$vehicles))
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</div>
+</div>
+<section id="wrangling-review-card" class="level2">
+<h2 class="anchored" data-anchor-id="wrangling-review-card">Wrangling review card</h2>
+<p>Before moving on, ask an AI assistant to review your four pipelines for row counts, grouping level, denominators, and missing values. Require it to identify one plausible logic error even if every app runs successfully. That is the difference between syntax completion and business analytics.</p>
 
 
 </section>
