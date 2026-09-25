@@ -1,0 +1,169 @@
+---
+title: "Exploratory Data Analysis Workflows"
+subtitle: "Find structure, anomalies, and questions before making a claim"
+engine: knitr
+---
+
+Exploratory data analysis (EDA) is a disciplined search for what the data can and cannot support. It is not a hunt for a flattering chart. The output of EDA is a map of distributions, missingness, unusual observations, and relationships that deserve either explanation or a formal test.
+
+## The standard EDA pipeline
+
+### 1. Establish the data contract
+
+Write down the row grain, population, time window, keys, units, and expected ranges. Run `glimpse()`, `summary()`, and a duplicate-key check before plotting.
+
+```r
+library(dplyr)
+
+glimpse(transactions)
+transactions |>
+  summarize(
+    rows = n(),
+    customers = n_distinct(customer_id),
+    first_date = min(order_date, na.rm = TRUE),
+    last_date = max(order_date, na.rm = TRUE)
+  )
+```
+
+### 2. Check distributions
+
+For numeric fields, inspect center, spread, range, and shape. A mean alone can hide a long tail or a small number of extreme values.
+
+```r
+transactions |>
+  summarize(
+    average_order = mean(order_value, na.rm = TRUE),
+    median_order = median(order_value, na.rm = TRUE),
+    p90_order = quantile(order_value, 0.90, na.rm = TRUE),
+    minimum = min(order_value, na.rm = TRUE),
+    maximum = max(order_value, na.rm = TRUE)
+  )
+```
+
+Use a histogram or density plot to see the shape. When a variable is strongly skewed, consider whether a median, percentile, log scale, or segmented view better represents the decision.
+
+### 3. Audit missing values
+
+Missingness is a property of the data-generating process. Create a field-level audit and compare missingness across relevant groups.
+
+```r
+missing_audit <- transactions |>
+  summarize(across(everything(), ~ sum(is.na(.x)))) |>
+  tidyr::pivot_longer(everything(), names_to = "field", values_to = "missing_rows") |>
+  mutate(missing_rate = missing_rows / nrow(transactions))
+```
+
+Ask whether values are missing completely at random, only for certain channels, or because a process changed. Do not replace missing values with zero without an explicit business definition.
+
+### 4. Identify outliers
+
+An outlier is an observation that is unusual relative to a chosen reference, not automatically an error. Use multiple views and investigate the source record.
+
+```r
+limits <- quantile(transactions$order_value, c(0.25, 0.75), na.rm = TRUE)
+iqr_value <- limits[[2]] - limits[[1]]
+
+transactions |>
+  filter(
+    order_value < limits[[1]] - 1.5 * iqr_value |
+      order_value > limits[[2]] + 1.5 * iqr_value
+  )
+```
+
+Document whether the outlier is a data error, a legitimate high-value event, or a separate business process. Winsorizing or deleting it changes the question and must be disclosed.
+
+### 5. Screen multi-variable relationships
+
+Compare numeric measures with scatter plots and grouped summaries. Compare a numeric measure across categories with boxplots or distribution summaries. For time, inspect both level and change.
+
+```r
+transactions |>
+  group_by(channel) |>
+  summarize(
+    orders = n(),
+    median_value = median(order_value, na.rm = TRUE),
+    cancellation_rate = mean(cancelled, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+Treat relationships as hypotheses. A strong association can be caused by seasonality, selection, a common driver, or a data-collection rule.
+
+## EDA as a series of falsification tests
+
+For each apparent insight, write a competing explanation and a test.
+
+| Observation | Competing explanation | Test |
+|---|---|---|
+| Revenue is higher in one region | The region has more customers or a longer observation window | Compare revenue per customer over the same period |
+| Average order value increased | A few unusually large orders shifted the mean | Compare median, percentiles, and trimmed summaries |
+| Churn is higher for one segment | That segment has more missing activity records | Audit missingness and denominator definitions |
+| Delivery time rose in June | June contains more long-distance shipments | Stratify by route, distance, and carrier |
+
+## AI-assisted EDA without automated storytelling
+
+Ask an AI assistant to propose an EDA plan, not to declare the conclusion. Supply the schema, row grain, data-quality constraints, and decision context. Require it to return: checks, code, expected output shape, and questions that remain unresolved. Then run the checks and write the interpretation yourself.
+
+## Live lab: EDA triage
+
+The synthetic dataset contains a missing value and a high-value order. Use the controls to inspect the distribution and compare the mean with the median before deciding how to describe “typical” order value.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+library(dplyr)
+
+orders <- data.frame(
+  order_id = 1:12,
+  channel = c("Web", "Web", "Store", "Store", "Partner", "Web", "Store", "Partner", "Web", "Store", "Partner", "Web"),
+  order_value = c(85, 92, 110, 130, 1250, 74, 98, 150, NA, 105, 180, 88),
+  delivery_days = c(2, 3, 1, 2, 8, 2, 1, 6, 3, 2, 5, 2),
+  cancelled = c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
+)
+
+ui <- fluidPage(
+  titlePanel("EDA triage lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("channel", "Channel", choices = c("All", sort(unique(orders$channel)))),
+      checkboxInput("log", "Use a log y-axis", value = FALSE)
+    ),
+    mainPanel(
+      tableOutput("metrics"),
+      plotOutput("distribution", height = "400px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  filtered <- reactive({
+    if (input$channel == "All") orders else orders |> filter(channel == input$channel)
+  })
+
+  output$metrics <- renderTable({
+    filtered() |>
+      summarize(
+        rows = n(),
+        observed_values = sum(!is.na(order_value)),
+        missing_values = sum(is.na(order_value)),
+        mean_value = mean(order_value, na.rm = TRUE),
+        median_value = median(order_value, na.rm = TRUE),
+        p90_value = as.numeric(quantile(order_value, 0.90, na.rm = TRUE))
+      )
+  })
+
+  output$distribution <- renderPlot({
+    p <- ggplot(filtered(), aes(x = order_value)) +
+      geom_histogram(bins = 8, na.rm = TRUE, fill = "#176B87", color = "white") +
+      labs(title = "Order-value distribution", x = "Order value", y = "Orders") +
+      theme_minimal(base_size = 12)
+    if (isTRUE(input$log)) p <- p + scale_x_log10()
+    p
+  })
+}
+
+shinyApp(ui, server)
+```

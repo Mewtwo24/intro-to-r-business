@@ -1,0 +1,102 @@
+---
+title: "AI Partnership Framework and Ethics"
+subtitle: "The analyst remains accountable when the first draft comes from an AI system"
+---
+
+## Course position
+
+AI coding assistants are powerful autocomplete systems, reasoning partners, and private tutors. They are not a source of authority about your data or your organization. In this course, an assistant may write a first draft, explain a function, propose a test, or help locate a bug. The student is still responsible for the definition of the metric, the validity of the computation, the protection of the data, and the accuracy of the stakeholder message.
+
+The governing principle is simple:
+
+> Delegate keystrokes, not accountability.
+
+## The AI Code Reviewer Standard
+
+Every AI-assisted submission must pass five gates.
+
+1. **Question gate.** State the decision the analysis is meant to support. A prompt that asks for “interesting insights” is not a business specification.
+2. **Schema gate.** Provide field names, types, units, grain, and permitted missingness. Do not upload confidential raw records merely to avoid describing the schema.
+3. **Computation gate.** Inspect the generated pipeline line by line. Confirm filters, joins, grouping levels, denominators, date windows, and NA behavior.
+4. **Evidence gate.** Run small tests that could falsify the result: row counts, duplicate checks, hand calculations, known totals, and edge cases.
+5. **Translation gate.** Explain the result in plain English, including uncertainty and a next action. A chart or a console table is not an executive conclusion.
+
+An AI-generated script that fails one of these gates is a draft, not an answer.
+
+## Responsible use policy
+
+### Allowed uses
+
+- Asking an assistant to explain R syntax, propose a tidyverse pipeline, or compare two chart designs.
+- Supplying a synthetic dataset or a schema-only description to obtain a reproducible example.
+- Pasting a complete error message and the smallest relevant code snippet for root-cause analysis.
+- Asking the assistant to generate tests, assumptions, and questions that you then verify independently.
+
+### Uses that require care
+
+- Copying organizational data into a tool that has not been approved for that data classification.
+- Accepting a statistical result because the code is polished or because the assistant sounds confident.
+- Presenting an AI-generated causal explanation when the analysis only shows association.
+- Using a generated chart without checking its denominator, time period, population, or excluded rows.
+
+### Not acceptable
+
+- Treating an AI response as a citation or as evidence that a number is correct.
+- Hiding AI assistance when a course, employer, or client requires disclosure.
+- Uploading personally identifiable, proprietary, regulated, or credential information into an unapproved service.
+- Submitting code that the analyst cannot explain or reproduce.
+
+## Hallucination patterns in business statistics
+
+AI systems often produce code that is syntactically valid and economically wrong. Watch for these patterns:
+
+| Risk | What the code may do | Verification question |
+|---|---|---|
+| Silent NA removal | `mean(x, na.rm = TRUE)` calculates a value on an unknown subset | How many observations were removed, and could missingness be systematic? |
+| Mean of ratios | Averages store-level conversion rates with equal weight | Should the result be a ratio of totals, weighted by opportunities or transactions? |
+| Wrong join grain | Joins a customer table to a transaction table and repeats customer attributes | What is the expected row count and key uniqueness before and after the join? |
+| Hidden grouping | Leaves a prior `group_by()` active while calculating a supposedly global metric | What is the grouping structure immediately before `summarize()`? |
+| Date ambiguity | Treats a fiscal quarter or local timestamp as a calendar date | Which timezone, fiscal calendar, and boundary convention apply? |
+| Directional claim | Describes correlation as a driver or cause | What design or evidence supports causality? |
+
+The correction is not “ask the AI to be more accurate.” The correction is to specify the denominator, grain, missingness rule, and acceptance test.
+
+## Schema-first prompting without raw data leakage
+
+Before asking for code, create a compact schema card. It can be generated locally with `glimpse()` and `str()` and then edited to remove sensitive values.
+
+```r
+glimpse(transactions)
+str(transactions)
+
+transactions |>
+  summarise(
+    rows = n(),
+    across(everything(), ~ sum(is.na(.x)))
+  )
+```
+
+Share information such as `customer_id: character, one row per transaction, not for modeling`, not the actual customer IDs. Include units (`revenue_usd`), allowed values (`channel` is one of store, web, partner), and key relationships (`customer_id` repeats in transactions; `product_id` is unique in products). A useful schema prompt also states the expected output grain and the business decision.
+
+## Plain-English translation requirement
+
+Every meaningful result ends with exactly three sentences:
+
+1. **Finding:** what changed or differs, with the population and time window.
+2. **Meaning:** why that pattern matters to the stakeholder, including the metric definition.
+3. **Action:** what to investigate or do next, plus the most important limitation.
+
+For example: “West-region revenue grew 12% from Q1 to Q2 across 184 completed orders. Growth came primarily from higher order volume, while average order value was broadly stable. Prioritize a review of West-region fulfillment capacity before expanding promotion spend, because cancelled orders were excluded from the current calculation.”
+
+## Grading and mastery
+
+| Criterion | Weight | Full-credit evidence |
+|---|---:|---|
+| Code accuracy and reproducibility | 40% | The script runs from a clean session, preserves the stated grain, handles edge cases, and includes checks |
+| Visual clarity and honesty | 25% | The graphic uses an appropriate geometry, readable scales, useful labels, and no misleading transformations |
+| Executive summary quality | 25% | The three-sentence summary states a supported finding, business meaning, action, and limitation |
+| AI process documentation | 10% | Prompts, revisions, rejected suggestions, and verification steps are recorded |
+
+## A review conversation
+
+When reviewing a classmate's AI-assisted work, ask: “What would have to be true for this number to be correct?” Then inspect the code for those conditions. Good review is specific, respectful, and evidence-based: point to a field, a line, a row count, or a chart scale. The aim is not to punish the use of AI; it is to make the analyst's reasoning visible.

@@ -1,0 +1,47 @@
+---
+title: "Schedule and Milestones"
+subtitle: "A six-module progression from R literacy to accountable AI partnership"
+---
+
+This course is organized as a sequence of technical and analytical habits. Each module introduces a small set of R ideas, applies them to a business question, and ends with an artifact that can be reviewed by another analyst. The order matters: students learn enough R to inspect an AI draft before they are asked to delegate larger pieces of work.
+
+## Course rhythm
+
+Each module follows the same weekly loop:
+
+1. **Read and annotate.** Read the assigned chapter and mark the assumptions you expect the code to make.
+2. **Run and observe.** Execute the examples in the live lab. Record the data shape, output type, and any warnings.
+3. **Delegate selectively.** Ask an AI assistant for a bounded draft with a stated schema and acceptance tests.
+4. **Review and revise.** Check the draft against the business question, edge cases, and a small hand-calculated example.
+5. **Translate.** End with a three-sentence executive takeaway: what changed, what it means, and what decision should follow.
+
+## Six-module progression
+
+| Module | Focus window | Primary deliverable | Mastery check |
+|---|---|---|---|
+| 1. R Core | Weeks 1–2 | A commented script that creates and inspects business vectors, data frames, and functions | Explain every object, type, and subset operation without running an AI rewrite |
+| 2. Wrangling | Weeks 3–4 | A reproducible tidyverse pipeline with a data contract and join audit | Demonstrate row counts before and after joins and explain the grouping level of every summary |
+| 3. Visual Analytics and EDA | Weeks 5–6 | An exploratory notebook with a chart sequence and a missing/outlier audit | Justify the chart geometry, transformations, scales, and audience-facing annotation |
+| 4. AI Partnership | Weeks 7–8 | A prompt log showing schema-first delegation, Socratic tutoring, and debugging iterations | Distinguish a syntactic fix from a business-logic fix and cite the evidence for acceptance |
+| 5. Guided Projects | Weeks 9–11 | One completed project specification with code, checks, visuals, and executive memo | Meet the project rubric without unexplained warnings, hidden filters, or unsupported claims |
+| 6. Capstone Review | Week 12 | A polished analytical brief and a reviewer checklist for the next analyst | Reproduce the result, defend the assumptions, and translate the output for a nontechnical stakeholder |
+
+## Milestone calendar
+
+| Milestone | Due point | Evidence to submit | Why it matters |
+|---|---|---|---|
+| M0: Environment check | Before Module 1 | A working R/Quarto setup and one successful Shinylive run | Removes tooling uncertainty before analytical work begins |
+| M1: Schema card | End of Module 1 | A table of field names, types, units, and allowed missingness | Makes the data contract visible to both humans and AI tools |
+| M2: Transformation trace | End of Module 2 | Before/after row counts and a plain-English pipeline trace | Exposes accidental row multiplication and silent filtering |
+| M3: Visual story | End of Module 3 | Two exploratory charts plus a chart-selection rationale | Separates visual decoration from communication design |
+| M4: AI review log | End of Module 4 | Prompts, returned code, errors, fixes, and acceptance tests | Assesses process quality rather than whether an AI happened to guess correctly |
+| M5: Project checkpoint | End of Module 5 | Completed Milestones 1–3 of a guided project | Creates an early opportunity to catch wrong metrics |
+| M6: Executive memo | End of Module 6 | Three-sentence takeaway plus limitations and next action | Connects technical evidence to a responsible business decision |
+
+## Recommended pacing
+
+The schedule is intentionally compatible with a 12-week term, but the labs can be completed asynchronously. A student who needs more practice should repeat a lab with a new prompt and a new acceptance test rather than skipping ahead. A student who moves quickly should extend the data dictionary, add a sensitivity analysis, or ask the AI tutor to critique the result without rewriting it.
+
+## What counts as complete?
+
+A milestone is complete when another person can reproduce the result and understand the reasoning. “The code ran” is necessary but insufficient. Your submission should identify the input rows, transformation decisions, output grain, checks performed, and business interpretation. When an AI assistant contributed code, retain the prompt and explain which parts you accepted, changed, or rejected.

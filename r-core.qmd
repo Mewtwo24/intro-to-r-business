@@ -1,0 +1,173 @@
+---
+title: "R Core: Syntax, Types, and Structures"
+subtitle: "The minimum language you need to read, direct, and verify analytical code"
+engine: knitr
+---
+
+R is a language for describing objects and transformations. In business analytics, the important question is not whether you can memorize every function. It is whether you can look at a script and explain what each object represents, what shape it has, and how a transformation changes the evidence available for a decision.
+
+## 1. Names and assignment
+
+Use `<-` to assign a value to a name. Read the statement as “store the value on the right under the name on the left.” Names should describe business meaning rather than implementation details.
+
+```r
+unit_price <- 42.50
+units_sold <- 18
+revenue <- unit_price * units_sold
+revenue
+```
+
+R is case-sensitive: `revenue` and `Revenue` are different names. Avoid names that shadow common functions such as `mean`, `data`, or `c`. Use `snake_case` consistently, and keep a clear distinction between raw fields (`units_sold`) and derived metrics (`revenue`).
+
+## 2. Atomic data types
+
+The most common atomic types are numeric, character, logical, and date-like values. Use `typeof()` for the underlying storage type and `class()` for the object’s higher-level behavior.
+
+| Type | Example | Business use |
+|---|---|---|
+| Numeric | `1250.50`, `3L` | Revenue, quantity, score, count |
+| Character | `"North"` | Labels, codes, free text |
+| Logical | `TRUE`, `FALSE` | Flags and conditions |
+| Missing | `NA` | Unknown or unrecorded value |
+| Factor | `factor(c("Web", "Store"))` | A categorical variable with known levels |
+| Date | `as.Date("2026-01-15")` | Time windows and ordering |
+
+R will often coerce values to a common type when you combine them. `c(1, "2")` becomes a character vector because a character value cannot be stored as numeric without loss of information. Do not let automatic coercion decide the meaning of a field silently; inspect it.
+
+```r
+typeof(42.5)
+typeof("42.5")
+is.numeric(42.5)
+is.character("42.5")
+as.numeric("42.5")
+```
+
+## 3. Vectors and indexing
+
+Most R objects begin as vectors: ordered collections of values of one type. The `c()` function combines values, and square brackets select positions or names.
+
+```r
+regions <- c("North", "South", "West")
+targets <- c(North = 100000, South = 85000, West = 92000)
+
+regions[1]
+targets["West"]
+targets[targets > 90000]
+length(targets)
+```
+
+Indexing begins at 1. Logical indexing is especially useful for business filters, but remember that `NA` in a logical condition can produce an `NA` result rather than `TRUE` or `FALSE`.
+
+```r
+margin <- c(0.32, NA, 0.18, 0.41)
+margin > 0.25
+margin[!is.na(margin) & margin > 0.25]
+```
+
+## 4. Data frames and tibbles
+
+A data frame is a rectangular object: each column is a vector, and all columns have the same number of rows. A row is an observation at a particular grain. Before writing a summary, state the grain in plain English: “one row per order,” “one row per customer-month,” or “one row per store-quarter.”
+
+```r
+orders <- data.frame(
+  order_id = c("A01", "A02", "A03"),
+  region = c("North", "North", "West"),
+  units = c(2, 5, 1),
+  revenue = c(80, 250, 45)
+)
+
+nrow(orders)
+ncol(orders)
+names(orders)
+orders$revenue
+orders[orders$units >= 2, ]
+```
+
+The tidyverse uses tibbles, which print more safely in a console and preserve useful metadata. `tibble::as_tibble(orders)` converts a data frame. In a table, `orders$revenue` extracts a vector; `orders["revenue"]` extracts a one-column table. This distinction matters when a function expects a vector.
+
+## 5. Missing values and comparisons
+
+`NA` means “unknown,” not zero, not false, and not “not applicable” unless your data dictionary explicitly says so. Most arithmetic involving `NA` returns `NA`. Functions such as `sum()` and `mean()` can remove missing values with `na.rm = TRUE`, but you must report how many values were removed.
+
+```r
+scores <- c(0.80, 0.72, NA, 0.91)
+mean(scores)
+mean(scores, na.rm = TRUE)
+sum(is.na(scores))
+```
+
+Use `is.na(x)` to test for missingness. Do not use `x == NA`; the result of that comparison is `NA`, not a usable logical answer.
+
+## 6. Functions and control flow
+
+Functions package a repeatable transformation. Name the inputs and make the return value clear. A function is a useful unit for both human review and AI-assisted testing.
+
+```r
+attainment <- function(actual, target) {
+  ifelse(target == 0, NA_real_, actual / target)
+}
+
+attainment(c(90, 110), c(100, 100))
+```
+
+Use `if` when you need one branch of code to run and `ifelse()` or `dplyr::if_else()` when you need a vectorized result. `for` loops are valid, but vectorized functions, `summarise()`, and `mutate()` usually express business transformations more clearly.
+
+## 7. A repeatable inspection checklist
+
+Before trusting an object, inspect:
+
+```r
+class(orders)
+str(orders)
+head(orders)
+summary(orders)
+```
+
+Ask four questions: What is the object’s type? What is its row grain? Which columns can be missing? What should happen if the object is empty? These questions are the foundation for directing an AI assistant.
+
+## Live lab: read the object before changing it
+
+Run the application, inspect the structure output, and change the minimum-revenue filter. The exercise is deliberately small: your goal is to predict the result before you click **Run**.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+
+orders <- data.frame(
+  order_id = c("A01", "A02", "A03", "A04"),
+  region = c("North", "North", "West", "West"),
+  units = c(2, 5, 1, 4),
+  revenue = c(80, 250, 45, 220),
+  repeat_customer = c(TRUE, FALSE, TRUE, FALSE)
+)
+
+ui <- fluidPage(
+  titlePanel("R core inspection lab"),
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("minimum", "Minimum revenue", value = 100, min = 0),
+      helpText("Change the threshold, then explain which rows remain.")
+    ),
+    mainPanel(
+      h4("Object structure"),
+      verbatimTextOutput("structure"),
+      h4("Filtered orders"),
+      tableOutput("selected")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$structure <- renderPrint({
+    str(orders)
+  })
+
+  output$selected <- renderTable({
+    orders[orders$revenue >= input$minimum, ]
+  })
+}
+
+shinyApp(ui, server)
+```

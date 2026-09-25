@@ -7,40 +7,48 @@ website:
     style: "docked"
     search: true
     contents:
-      - section: "Introduction"
+      - section: "Course Overview"
         contents:
-          - text: "Home"
+          - text: "Syllabus and Policies"
             href: index.qmd
-          - text: "Sources & Links"
-            href: resources.qmd
-      - section: "The R Foundation"
+          - text: "Schedule and Milestones"
+            href: schedule.qmd
+          - text: "AI Partnership Framework and Ethics"
+            href: ai-framework.qmd
+      - section: "The R Foundations"
         contents:
-          - text: "R Basics"
-            href: r-basics.qmd
-          - text: "Data Wrangling"
-            href: data-wrangling.qmd
+          - text: "R Core: Syntax, Types, and Structures"
+            href: r-core.qmd
+          - text: "Data Wrangling with dplyr and tidyr"
+            href: wrangling.qmd
           - text: "Visualization"
             href: visualization.qmd
-      - section: "The AI Coding Workflow"
+          - text: "Exploratory Data Analysis Workflows"
+            href: eda.qmd
+      - section: "AI-Partnered Coding Mastery"
         contents:
-          - text: "Getting Started"
-            href: ai-getting-started.qmd
-          - text: "Prompting"
-            href: ai-prompting.qmd
+          - text: "Setting Up and Prompting Modern AI Agents"
+            href: ai-setup-prompting.qmd
+          - text: "The Self-Directed Learner: Socratic Tutor"
+            href: ai-socratic-tutor.qmd
+          - text: "Automated Visual Refinement"
+            href: ai-visualization.qmd
           - text: "Debugging"
             href: ai-debugging.qmd
-          - text: "Practice Exercises"
-            href: ai-exercises.qmd
-          - text: "Project 1: Regional Growth"
-            href: ai-project-regional-growth.qmd
-          - text: "Project 2: Customer Value"
-            href: ai-project-customer-value.qmd
-          - text: "Project 3: Store Operations"
-            href: ai-project-store-operations.qmd
-      - section: "Playground"
+      - section: "Guided Business Projects"
         contents:
-          - text: "Sandbox"
+          - text: "Project 1: Regional Sales and Attainment"
+            href: project-sales.qmd
+          - text: "Project 2: Customer Retention and Churn Economics"
+            href: project-churn.qmd
+          - text: "Project 3: Supply Chain Logistics and Bottlenecks"
+            href: project-logistics.qmd
+      - section: "Interactive Lab & Resources"
+        contents:
+          - text: "Open Analytical Sandbox"
             href: sandbox.qmd
+          - text: "Bibliography and External Readings"
+            href: resources.qmd
   page-footer:
     center: "Intro to R for Business Analytics"
 

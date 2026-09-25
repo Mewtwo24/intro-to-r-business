@@ -1,0 +1,83 @@
+---
+title: "Setting Up and Prompting Modern AI Agents"
+subtitle: "Configure a useful assistant without surrendering control of your workspace"
+---
+
+An AI coding agent is most useful when it has enough context to be precise and not enough access to create avoidable risk. This chapter describes a tool-agnostic setup for ChatGPT/Codex, Claude, or GitHub Copilot. Product names and interface labels change; the durable ideas are account hygiene, scoped context, reproducible prompts, and reviewable outputs.
+
+## 1. Choose an approved assistant
+
+Use the assistant permitted by your course or organization. Common options include:
+
+- [ChatGPT and Codex](https://chatgpt.com/download/) for conversational analysis, code review, and repository-aware tasks.
+- [Claude](https://claude.ai/) for long-form explanation and code discussion.
+- [GitHub Copilot](https://github.com/features/copilot) for in-editor completion and chat.
+
+Read the current product documentation before installation. Do not install an extension or desktop application from an unverified mirror, and do not paste credentials, access tokens, or proprietary datasets into a tool whose data policy you have not checked.
+
+## 2. Account and privacy setup
+
+1. Create or sign into the account using the identity approved for coursework.
+2. Review data controls, retention settings, and workspace sharing before uploading any content.
+3. Turn on multi-factor authentication where available.
+4. Use a synthetic dataset or a schema card for practice. Replace customer IDs, emails, addresses, and transaction-level values with placeholders.
+5. Record which model or assistant produced a material code draft when your organization requires provenance.
+
+The goal is not to eliminate AI use. It is to make the boundary between the assistant and the organization's data explicit.
+
+## 3. Connect a local project safely
+
+For a local coding agent, start with a dedicated project directory containing the Quarto source, a README, and a `.gitignore`. Open only the directory needed for the task. Before allowing an agent to edit files:
+
+- confirm the current branch and working-tree status;
+- commit or copy any work you cannot easily reconstruct;
+- remove secrets and large raw extracts from the directory;
+- state which files are in scope and which must remain untouched;
+- ask the agent to show a plan or diff before broad changes.
+
+For browser-based chat, paste a small file or a representative schema rather than an entire repository. For editor assistants, keep the active file focused and use comments to state the business question, expected grain, and acceptance tests.
+
+## 4. The first prompt should establish a contract
+
+Use a prompt that gives the assistant a role, a question, a schema, constraints, and an output contract.
+
+```text
+You are a careful R business analyst and code reviewer.
+
+Business question: Which region improved sales attainment from Q1 to Q2?
+Data grain: one row per region-quarter.
+Fields: region (character), quarter (character), sales_usd (numeric), target_usd (numeric).
+Packages allowed: dplyr, tidyr, ggplot2, scales.
+Constraints: do not invent fields; handle zero targets explicitly; retain a row-count check.
+Return: (1) R code, (2) expected output grain, (3) three verification tests, and (4) one limitation.
+Do not claim causality.
+```
+
+If the tool returns code without the requested tests or output grain, the prompt was not fulfilled. Ask for a revision rather than silently filling the gaps yourself.
+
+## 5. Capture the conversation as analysis evidence
+
+Keep a small prompt log with the date, purpose, input schema, assistant output, revisions, errors, and acceptance decision. The log is not busywork. It lets you reconstruct why a line exists and helps a future analyst distinguish an intentional assumption from an AI default.
+
+| Log field | Example |
+|---|---|
+| Business question | Compare quarterly attainment by region |
+| Context supplied | Schema card and row grain; no raw customer data |
+| AI request | Generate a dplyr pipeline plus tests |
+| Review finding | AI used mean of regional ratios; changed to ratio of totals |
+| Evidence | Hand calculation for two regions and join-count check |
+| Decision | Accepted revised pipeline with explicit denominator |
+
+## 6. A disciplined prompt loop
+
+Use this sequence for almost any R task:
+
+1. **Specify.** Describe the decision, schema, grain, packages, and output.
+2. **Draft.** Ask for the smallest runnable code that answers one sub-question.
+3. **Explain.** Ask the assistant to annotate assumptions and expected output shape.
+4. **Run.** Execute the code in RStudio, Quarto, or the Shinylive sandbox.
+5. **Test.** Compare counts, totals, and edge cases to independent expectations.
+6. **Refine.** Return only the error or failing test with the relevant snippet.
+7. **Translate.** Write the stakeholder summary yourself, then ask the assistant to critique clarity without changing the claim.
+
+The assistant is a collaborator in the loop, not the owner of the loop.

@@ -1,0 +1,264 @@
+---
+title: "Data Wrangling with dplyr and tidyr"
+subtitle: "Turn raw tables into transparent, testable business measures"
+engine: knitr
+---
+
+Wrangling is the controlled movement from a source table to an analysis-ready table. A good pipeline makes its assumptions visible: which rows are included, which fields are derived, what the row grain is, and how multiple tables are related. The tidyverse expresses these decisions as a readable sequence.
+
+## A pipeline is a transformation contract
+
+The pipe `|>` passes the object on the left into the first argument of the function on the right. The older `%>%` operator from magrittr is also common in existing code. Use either consistently, and read the pipeline from top to bottom.
+
+```r
+library(dplyr)
+
+mtcars |>
+  filter(cyl >= 6) |>
+  select(mpg, cyl, hp, wt) |>
+  arrange(desc(mpg))
+```
+
+At each line, ask: “What is the row grain now?” and “How many rows and columns should I expect?” Insert `count()` or `glimpse()` checks while developing.
+
+## The core verbs
+
+### `filter()`: choose rows
+
+`filter()` keeps observations whose conditions are `TRUE`.
+
+```r
+mtcars |>
+  filter(cyl == 6, mpg > 20)
+```
+
+Use `&` for “and,” `|` for “or,” and `%in%` for membership in a set. A condition involving `NA` does not keep the row, so decide whether missing values should be excluded or reported separately.
+
+### `select()`: choose columns
+
+`select()` defines the analysis view without changing the underlying data.
+
+```r
+mtcars |>
+  select(mpg, cyl, hp, wt)
+```
+
+Use `starts_with()`, `contains()`, and `where()` for systematic selection. Avoid selecting columns by position in production code; names communicate intent and survive schema changes better.
+
+### `mutate()`: create or modify columns
+
+`mutate()` preserves the row count and adds derived fields.
+
+```r
+mtcars |>
+  mutate(
+    power_to_weight = hp / wt,
+    efficiency_band = if_else(mpg >= 20, "Higher", "Lower")
+  )
+```
+
+Check units and denominators. A ratio is not automatically an average, and a per-unit measure can be misleading when the denominator is small.
+
+### `summarize()`: collapse rows
+
+`summary()` computes one or more values from the current group. Without `group_by()`, it returns one row for the entire table.
+
+```r
+mtcars |>
+  summarize(
+    vehicles = n(),
+    average_mpg = mean(mpg),
+    median_hp = median(hp)
+  )
+```
+
+If missing values are possible, make the rule explicit and report the usable count. `n()` counts rows; `n_distinct(customer_id)` counts unique entities.
+
+### `group_by()`: set the level of analysis
+
+`group_by()` changes the context in which `summarize()` and some `mutate()` operations evaluate.
+
+```r
+mtcars |>
+  group_by(cyl) |>
+  summarize(
+    vehicles = n(),
+    average_mpg = mean(mpg),
+    .groups = "drop"
+  ) |>
+  arrange(desc(average_mpg))
+```
+
+The `.groups = "drop"` choice prevents an invisible grouping state from leaking into later calculations. Treat grouping as part of the metric definition: “average MPG by cylinder count” is different from “average MPG across all vehicles.”
+
+### `arrange()`: order rows
+
+`arrange()` sorts a table for inspection or presentation.
+
+```r
+mtcars |>
+  arrange(desc(mpg), wt)
+```
+
+Sorting does not change the values or ranking definition. If ties matter, add a stable secondary key.
+
+## Joins: combine tables without losing control
+
+Joins match rows through keys. Before joining, document whether the key is unique in each table.
+
+```r
+library(tibble)
+
+vehicles <- rownames_to_column(mtcars, var = "model") |>
+  as_tibble()
+
+classification <- tibble(
+  model = c("Mazda RX4", "Duster 360", "Honda Civic"),
+  market = c("Sport", "Performance", "Compact")
+)
+
+vehicles |>
+  left_join(classification, by = "model")
+```
+
+`left_join(x, y)` preserves every row of `x` and appends matching fields from `y`. Use it when `x` is the analysis population and `y` is a lookup table. `inner_join()` keeps only matched rows and is appropriate when unmatched records should not enter the analysis, but it can silently shrink the population.
+
+Always audit joins:
+
+```r
+vehicles |> count(model) |> filter(n > 1)
+classification |> count(model) |> filter(n > 1)
+
+before <- nrow(vehicles)
+after <- vehicles |> left_join(classification, by = "model") |> nrow()
+c(before = before, after = after)
+```
+
+Unexpected row multiplication usually means the supposed key is not unique. An AI assistant will often write a join that runs while ignoring this grain problem.
+
+## Reshaping with tidyr
+
+Analytical tables often alternate between wide and long forms.
+
+### `pivot_longer()`
+
+Use `pivot_longer()` when multiple columns represent values of the same variable.
+
+```r
+library(tidyr)
+
+wide <- tibble(
+  model = c("Mazda RX4", "Honda Civic"),
+  mpg_2025 = c(21, 30),
+  mpg_2026 = c(22, 31)
+)
+
+wide |>
+  pivot_longer(
+    cols = starts_with("mpg_"),
+    names_to = "year",
+    names_prefix = "mpg_",
+    values_to = "mpg"
+  )
+```
+
+Long form is usually easier for `ggplot2`, grouped summaries, and time-series operations.
+
+### `pivot_wider()`
+
+Use `pivot_wider()` when values in a column should become separate fields.
+
+```r
+long <- tibble(
+  model = c("Mazda RX4", "Mazda RX4", "Honda Civic", "Honda Civic"),
+  year = c("2025", "2026", "2025", "2026"),
+  mpg = c(21, 22, 30, 31)
+)
+
+long |>
+  pivot_wider(names_from = year, values_from = mpg)
+```
+
+If more than one value exists for a model-year combination, `pivot_wider()` will warn or create list-columns. That is a signal to investigate the grain, not a reason to suppress the warning.
+
+## A complete transformation trace
+
+```r
+library(dplyr)
+
+mtcars_summary <- mtcars |>
+  as_tibble(rownames = "model") |>
+  mutate(
+    transmission = if_else(am == 1, "Manual", "Automatic"),
+    weight_1000lb = wt
+  ) |>
+  group_by(transmission) |>
+  summarize(
+    vehicles = n(),
+    average_mpg = mean(mpg),
+    average_weight = mean(weight_1000lb),
+    .groups = "drop"
+  ) |>
+  arrange(desc(average_mpg))
+```
+
+The output has one row per transmission type. That sentence is part of the analysis, not a comment added after the fact.
+
+## Live lab: wrangle `airquality`
+
+Use the month selector to compare ozone and solar radiation. Notice that the means use `na.rm = TRUE`; your written interpretation should also report that the available observations differ by variable.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+library(tidyr)
+
+air <- airquality |>
+  mutate(Month = as.integer(Month), Day = as.integer(Day))
+
+ui <- fluidPage(
+  titlePanel("Air-quality wrangling lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("month", "Month", choices = sort(unique(air$Month)), selected = 5),
+      helpText("Change the month and inspect how missing values affect usable counts.")
+    ),
+    mainPanel(
+      h4("Summary by measure"),
+      tableOutput("summary"),
+      h4("First observations"),
+      tableOutput("preview")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  selected <- reactive({
+    air |>
+      filter(Month == as.integer(input$month))
+  })
+
+  output$summary <- renderTable({
+    selected() |>
+      summarize(
+        days = n(),
+        ozone_observed = sum(!is.na(Ozone)),
+        mean_ozone = mean(Ozone, na.rm = TRUE),
+        solar_observed = sum(!is.na(Solar.R)),
+        mean_solar = mean(Solar.R, na.rm = TRUE)
+      ) |>
+      pivot_longer(everything(), names_to = "measure", values_to = "value")
+  })
+
+  output$preview <- renderTable({
+    selected() |>
+      select(Day, Ozone, Solar.R, Wind, Temp) |>
+      head(8)
+  })
+}
+
+shinyApp(ui, server)
+```

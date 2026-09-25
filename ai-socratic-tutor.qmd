@@ -1,0 +1,91 @@
+---
+title: "The Self-Directed Learner: Using AI as a Socratic Tutor"
+subtitle: "Ask for questions that grow your reasoning before asking for a solution"
+---
+
+An AI assistant becomes a better teacher when you constrain it not to solve the problem immediately. Socratic tutoring keeps the student responsible for the next inference: identify the object, predict the output, choose the grouping level, or explain why a test would fail.
+
+## The tutoring contract
+
+Begin with a role instruction:
+
+```text
+Act as a patient R tutor. Do not write the final solution yet.
+Ask me one question at a time. Wait for my answer, correct misconceptions
+briefly, and use a small synthetic example when needed. Keep the focus on
+the business question and the row grain.
+```
+
+Then supply the smallest useful context: the code line, the schema, the error, or the expected output. Do not paste a whole project when one function is enough.
+
+## Prompt templates for productive struggle
+
+### Explain a line without replacing it
+
+```text
+Explain what line 4 of this pipe does using an analogy from retail inventory.
+First identify the input grain and output grain. Do not rewrite the code.
+Ask me one question that checks whether I understand the denominator.
+```
+
+### Discover grouping logic
+
+```text
+Do not write the solution yet. Ask me three guiding questions that help me
+write the group_by and summarize logic for one row per region-quarter.
+The fields are region, quarter, sales_usd, and target_usd. Include a question
+about whether I should average ratios or divide sums.
+```
+
+### Predict output before running
+
+```text
+Show me a four-row toy table and ask me to predict the result of this mutate
+and filter sequence. Do not evaluate it for me until I provide my prediction.
+Afterward, compare the prediction with the code's behavior and explain any
+difference in terms of vectorized operations and NA values.
+```
+
+### Review an explanation
+
+```text
+Here is my three-sentence executive summary and the code that produced it.
+Act as a skeptical stakeholder. Ask two questions that the summary does not
+answer, identify any claim not supported by the code, and suggest one clearer
+phrase. Do not change the underlying result.
+```
+
+## A five-turn tutoring protocol
+
+1. **Orient.** Ask the assistant to restate the business question and data grain.
+2. **Predict.** Write your expected output shape and one sample row.
+3. **Attempt.** Write or edit the smallest code you can.
+4. **Compare.** Run it and share the output or error, not a vague description.
+5. **Generalize.** Ask what would change if a field were missing, duplicated, or at a different grain.
+
+If the assistant gives the answer too early, say: “Stop. Replace the solution with one guiding question and wait.” The ability to control the tutoring mode is itself a technical skill.
+
+## Tutor mode versus code-review mode
+
+These modes have different jobs.
+
+| Mode | Ask for | Avoid |
+|---|---|---|
+| Tutor | Questions, analogies, predictions, hints, misconceptions | Full rewrites before an attempt |
+| Pair programmer | A bounded draft with assumptions and tests | Vague “make it better” requests |
+| Code reviewer | Risks, edge cases, tests, and unsupported claims | Treating style feedback as correctness evidence |
+| Editor | Labels, structure, and readability improvements | Letting wording change the result |
+
+Switch modes explicitly in the prompt. A single conversation can move from tutor to pair programmer, but the handoff should be visible.
+
+## Self-check rubric
+
+Before asking for a solution, can you answer these questions?
+
+- What does one row represent right now?
+- Which field is the denominator, and why?
+- What should happen to missing, duplicated, or zero-valued records?
+- What output shape would prove the code worked?
+- How would you explain the result without naming an R function?
+
+If not, ask the AI to tutor you through those questions. If yes, write the first draft and ask for a review.

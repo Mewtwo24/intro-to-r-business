@@ -1,72 +1,40 @@
 ---
-title: "Sources Used in This Course"
+title: "Bibliography and External Readings"
+subtitle: "Sources used to shape the technical, pedagogical, and ethical design of this course"
 ---
 
-This page is a working bibliography for the course. These are the sources we used to shape the examples, explanations, technical setup, and human-in-the-loop AI workflow. The business projects are original teaching scenarios designed for this site; they are not copied case studies.
+This page records the sources that informed the course architecture, explanations, examples, and tooling. The business scenarios and synthetic datasets in this site are original teaching materials; the links below provide the conceptual and technical foundations we used while building them.
 
-## R and data science foundations
+## R and tidyverse foundations
 
-### [R for Data Science, 2nd edition](https://r4ds.hadley.nz/)
+- **[R for Data Science, 2e](https://r4ds.hadley.nz/)** — Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. The primary curriculum model for workflow, transformation, visualization, exploration, and communication.
+- **[R Language Definition](https://cran.r-project.org/doc/manuals/r-release/R-lang.html)** — The official reference for R's evaluation model, objects, environments, functions, and control structures.
+- **[R Documentation](https://www.rdocumentation.org/)** — A searchable index used to check package functions and example signatures.
+- **[dplyr reference](https://dplyr.tidyverse.org/)** — Official documentation for filtering, selecting, mutating, grouping, summarizing, arranging, and joining data.
+- **[tidyr reference](https://tidyr.tidyverse.org/)** — Official documentation for tidy data and `pivot_longer()`/`pivot_wider()` reshaping.
+- **[ggplot2 reference](https://ggplot2.tidyverse.org/)** — Official documentation for the Grammar of Graphics, layers, scales, themes, and statistical transformations.
+- **[scales reference](https://scales.r-lib.org/)** — Documentation for readable currency, percentage, date, and number formatting.
 
-Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund’s open textbook informed the progression from data import and transformation to visualization and communication. Its emphasis on a repeatable data-science workflow shaped the organization of the R Foundation section.
+## Interactive publishing and reproducibility
 
-### [The R Project for Statistical Computing](https://www.r-project.org/)
+- **[Quarto documentation](https://quarto.org/docs/)** — Project configuration, websites, executable documents, publishing, and cross-format authoring.
+- **[Shinylive for R](https://posit-dev.github.io/r-shinylive/)** — Client-side WebAssembly execution for Shiny applications without a backend R server.
+- **[Shinylive Quarto extension](https://quarto-ext.github.io/shinylive/)** — The extension and filter used for the live `{shinylive-r}` blocks in this site.
+- **[GitHub Pages documentation](https://docs.github.com/en/pages)** — Hosting and deployment context for the published course site.
 
-The official R project site was used for language-level context, installation references, and the distinction between the R language and contributed packages.
+## AI-assisted programming and responsible use
 
-### [R Language Definition](https://cran.r-project.org/doc/manuals/r-release/R-lang.html)
+- **[OpenAI Codex documentation](https://developers.openai.com/codex)** — Product and workflow documentation consulted for repository-aware AI coding tasks.
+- **[GitHub Copilot documentation](https://docs.github.com/en/copilot)** — Reference for editor-based AI assistance, suggestions, and responsible use.
+- **[Anthropic Claude documentation](https://docs.anthropic.com/)** — Reference for conversational coding and context-window practices.
+- **[NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)** — A governance reference that informed the course emphasis on validity, transparency, privacy, and accountability.
+- **[NIST Generative AI Profile](https://www.nist.gov/itl/ai-risk-management-framework/ai-rmf-generative-ai-profile)** — A companion reference for risks specific to generative systems, including confabulation and human oversight.
 
-This official manual informed the explanations of objects, evaluation, vectors, indexing, functions, and control flow. It is a technical reference rather than a beginner tutorial.
+## Design references
 
-### [dplyr documentation](https://dplyr.tidyverse.org/)
+- **[EECS 280 course materials](https://eecs280staff.github.io/eecs280.org/)** — The course architecture was inspired by the public-facing structure of a rigorous programming course: clear prerequisites, milestones, project specifications, grading expectations, and reproducibility standards. This site does not reproduce EECS 280 assignments or proprietary materials.
+- **[Tidy Data](https://vita.had.co.nz/papers/tidy-data.html)** — Hadley Wickham's paper describing the principles behind tidy data and why consistent structure makes analysis easier to compose.
 
-The dplyr reference informed the descriptions of filter, select, mutate, summarise, group_by, arrange, and the behavior of grouped data.
+## How to cite this site
 
-### [ggplot2 documentation](https://ggplot2.tidyverse.org/)
-
-The ggplot2 reference informed the visualization chapter’s explanation of data, aesthetic mappings, geometric layers, scales, and labels.
-
-## Quarto and browser-based R
-
-### [Quarto documentation](https://quarto.org/docs/)
-
-Quarto’s project, website, executable-document, and sidebar documentation informed the site architecture and rendering workflow.
-
-### [Quarto website documentation](https://quarto.org/docs/websites/)
-
-The website guide informed the project configuration, sidebar organization, page navigation, and static-site workflow.
-
-### [Shinylive for R](https://github.com/posit-dev/r-shinylive)
-
-The R Shinylive package documentation informed the client-side execution model and the package requirements for browser-based Shiny applications.
-
-### [Shinylive Quarto extension](https://quarto-ext.github.io/shinylive/)
-
-The extension documentation informed the live code-block syntax used throughout the course:
-
-
-The live blocks use the shinylive-r code label with standalone set to true and editor/viewer components. They are complete Shiny applications so students can connect R code, data preparation, and output.
-
-## AI-assisted analysis and responsible use
-
-### [OpenAI Codex documentation](https://developers.openai.com/learn/codex)
-
-The Codex setup chapter uses the official OpenAI documentation for current product orientation and project-based coding workflows. Product labels, access, and permissions can change, so the official page is the source of truth for current setup details.
-
-### [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
-
-The NIST framework informed the course’s emphasis on context, evaluation, verification, validation, documentation, and human accountability when AI is used in an organizational workflow. The framework is voluntary and is not a substitute for an organization’s own policies.
-
-### [NIST AI Resource Center](https://airc.nist.gov/)
-
-The AI Resource Center informed the distinction between generating an AI-assisted draft and evaluating whether an AI-enabled workflow is trustworthy for its intended use.
-
-## Business-analytics inspiration
-
-The project scenarios use familiar business-analytics patterns: regional growth reporting, customer value segmentation, store performance, operational monitoring, and stakeholder communication. These patterns were informed by the kinds of transformations emphasized in R for Data Science and by the NIST focus on defining the business context before evaluating an AI system.
-
-The datasets in the projects are hypothetical. They are intentionally small enough for a student to inspect row by row and are not claims about any particular company, market, or benchmark.
-
-## How this bibliography should be read
-
-These sources were used during design and implementation. They are not a list of fallback tutorials or a ranking of “best” resources. When a page in this course explains a package or workflow, follow the linked primary documentation for the authoritative and current version.
+For a course project, cite the page and the underlying source that informed the method. For example: “The pipeline follows the tidy data and transformation conventions described in R4DS, with the business scenario and synthetic data supplied by *Intro to R for Business Analytics*.” Include the date accessed for web documentation when your institution requires it.

@@ -1,0 +1,147 @@
+---
+title: "Project 3: Supply Chain Logistics and Bottlenecks"
+subtitle: "Combine service-level metrics with volume before recommending an operational response"
+engine: knitr
+---
+
+## Business background and problem scenario
+
+You are supporting a distribution network that has missed delivery promises in several lanes. The operations director needs to know whether the bottleneck is concentrated in a carrier, a warehouse, or a route. The director also wants to avoid “fixing” the lane with the highest late rate if that lane has very little volume.
+
+The central question is: **Where is service risk concentrated when both late-delivery rate and shipment volume are considered?** The analysis should prioritize investigation; it should not claim that a carrier or warehouse caused the delay without process evidence.
+
+## Data dictionary
+
+The main table has one row per shipment.
+
+| Field | Type | Definition |
+|---|---|---|
+| `shipment_id` | character | Unique shipment key |
+| `warehouse` | character | Origin fulfillment center |
+| `route` | character | Destination lane or route code |
+| `carrier` | character | Delivery carrier |
+| `ship_date` | character | Date shipment left the warehouse |
+| `promised_days` | integer | Service promise in days |
+| `actual_days` | integer | Observed transit time in days |
+| `shipping_cost_usd` | numeric | Shipment-level transportation cost |
+| `units` | integer | Units shipped |
+| `priority` | character | Standard or expedited service |
+
+Derived fields include `late = actual_days > promised_days`, `delay_days = actual_days - promised_days`, and `cost_per_unit = shipping_cost_usd / units`. A negative delay is early delivery, not a missing value.
+
+## Technical milestones
+
+### Milestone 1: Data cleaning and sanity checks
+
+- Confirm `shipment_id` is unique.
+- Check dates, positive units, non-negative costs, and plausible transit times.
+- Confirm promised and actual days use the same business-day convention.
+- Check whether any route-carrier combination has too few shipments for a stable rate.
+
+### Milestone 2: Core aggregation and metric calculation
+
+Produce one row per warehouse-route-carrier combination with shipments, late shipments, late rate, average delay among late shipments, total units, and total shipping cost. Distinguish `mean(late)` from the share of late shipments and show the denominator.
+
+### Milestone 3: Exploratory visual chart
+
+Build a volume-versus-late-rate scatter plot with point size representing shipments and labels for the most material lanes. Add a second view of average delay or cost per unit only after defining its population.
+
+### Milestone 4: Executive memo
+
+Recommend one operational investigation. Name the evidence, the decision it informs, the data limitation, and the next measurement needed to determine root cause.
+
+## AI prompts in action
+
+```text
+I have a shipment table with one row per shipment and these fields: shipment_id,
+warehouse, route, carrier, promised_days, actual_days, shipping_cost_usd, units,
+and priority. Write a dplyr workflow that audits unique shipment IDs and invalid
+units/costs, creates late and delay_days, and summarizes one row per
+warehouse-route-carrier. Include shipment count, late count, late rate, mean delay
+among late shipments, total units, and cost per unit. State every denominator and
+do not infer a root cause.
+```
+
+Ask a second pass:
+
+```text
+Review this bottleneck chart specification. I want to prioritize lanes using both
+volume and late rate. Identify how a small denominator, a high-volume route, or
+an unequal mix of priority shipments could distort the recommendation. Propose
+three sensitivity checks; do not rewrite the chart yet.
+```
+
+Common pitfalls include calculating average delay across on-time shipments, ranking by late rate alone, and summing shipping cost after a many-to-many join.
+
+## Interactive project lab
+
+This synthetic network includes a high-rate low-volume lane and a moderate-rate high-volume lane. Use the summary to decide which one deserves the first operational review.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+library(ggplot2)
+
+shipments <- data.frame(
+  shipment_id = paste0("S", 1:16),
+  warehouse = rep(c("North DC", "South DC"), each = 8),
+  route = c(rep("Metro", 6), rep("Rural", 2), rep("Metro", 5), rep("Rural", 3)),
+  carrier = c(rep("Swift", 4), rep("ParcelPro", 4), rep("Swift", 4), rep("ParcelPro", 4)),
+  promised_days = c(rep(2, 8), rep(3, 8)),
+  actual_days = c(2, 3, 2, 4, 2, 2, 5, 6, 3, 3, 4, 3, 3, 5, 6, 4),
+  shipping_cost_usd = c(18, 20, 19, 22, 18, 21, 35, 38, 17, 18, 20, 19, 18, 32, 36, 31),
+  units = c(10, 8, 12, 11, 9, 10, 2, 3, 15, 14, 13, 16, 12, 3, 2, 4),
+  priority = c("Standard", "Standard", "Expedited", "Standard", "Standard", "Expedited", "Standard", "Standard", "Standard", "Standard", "Expedited", "Standard", "Standard", "Standard", "Standard", "Expedited")
+)
+
+ui <- fluidPage(
+  titlePanel("Supply-chain bottleneck lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("warehouse", "Warehouse", choices = c("All", unique(shipments$warehouse))),
+      helpText("Compare rate and volume before selecting an investigation target.")
+    ),
+    mainPanel(tableOutput("summary"), plotOutput("plot", height = "430px"))
+  )
+)
+
+server <- function(input, output, session) {
+  filtered <- reactive({
+    if (input$warehouse == "All") shipments else shipments |> filter(warehouse == input$warehouse)
+  })
+
+  output$summary <- renderTable({
+    filtered() |>
+      mutate(late = actual_days > promised_days, delay_days = actual_days - promised_days) |>
+      group_by(route, carrier) |>
+      summarize(
+        shipments = n(),
+        late_shipments = sum(late),
+        late_rate = mean(late),
+        average_late_delay = mean(delay_days[late], na.rm = TRUE),
+        units = sum(units),
+        cost_per_unit = sum(shipping_cost_usd) / sum(units),
+        .groups = "drop"
+      )
+  })
+
+  output$plot <- renderPlot({
+    filtered() |>
+      mutate(late = actual_days > promised_days) |>
+      group_by(route, carrier) |>
+      summarize(shipments = n(), late_rate = mean(late), .groups = "drop") |>
+      ggplot(aes(shipments, late_rate, size = shipments, label = paste(route, carrier))) +
+      geom_point(color = "#176B87", alpha = 0.8) +
+      geom_text(nudge_y = 0.04, size = 3, show.legend = FALSE) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+      labs(x = "Shipment volume", y = "Late-delivery rate", size = "Shipments", title = "Volume and service risk") +
+      theme_minimal(base_size = 12) +
+      theme(legend.position = "none")
+  })
+}
+
+shinyApp(ui, server)
+```

@@ -1,3 +1,6 @@
 /.quarto/
 /_site/
+/*.html
+/*.knit.md
+/site_libs/
 **/*.quarto_ipynb

@@ -1,0 +1,151 @@
+---
+title: "Project 2: Customer Retention and Churn Economics"
+subtitle: "Join customer attributes to activity without confusing churn rate and revenue at risk"
+engine: knitr
+---
+
+## Business background and problem scenario
+
+You are an analyst at a subscription business. The retention team knows how many customers churned last month but does not know whether the highest churn rate is also the largest economic risk. Leadership wants a segment-level view that connects customer behavior to recurring revenue and identifies where a retention experiment could have the greatest value.
+
+The central question is: **Which customer segment combines meaningful churn exposure with meaningful recurring-revenue risk?** The analysis is descriptive. It does not prove that a customer characteristic causes churn.
+
+## Data dictionary
+
+### `customers`: one row per active or recently inactive customer
+
+| Field | Type | Definition |
+|---|---|---|
+| `customer_id` | character | Stable customer key |
+| `segment` | character | Commercial segment assigned at the start of the period |
+| `monthly_fee` | numeric | Contracted monthly recurring revenue in dollars |
+| `tenure_months` | integer | Months since subscription start |
+| `acquisition_channel` | character | Channel credited with acquisition |
+| `churned` | logical | Whether the customer ended the subscription during the observation month |
+
+### `activity`: one row per customer-month
+
+| Field | Type | Definition |
+|---|---|---|
+| `customer_id` | character | Foreign key to `customers` |
+| `month` | character | Observation month |
+| `sessions` | integer | Product sessions during the month |
+| `support_tickets` | integer | Support tickets opened during the month |
+| `last_active_days` | integer | Days since most recent activity at month end |
+
+## Technical milestones
+
+### Milestone 1: Data cleaning and sanity checks
+
+- Confirm `customer_id` is unique in `customers` and repeated appropriately in `activity`.
+- Check that every activity customer exists in the customer table.
+- Confirm `monthly_fee` is non-negative and `churned` is logical.
+- State whether churn is measured at the customer level and whether the denominator includes all customers or only customers with observed activity.
+
+### Milestone 2: Core aggregation and metric calculation
+
+Join activity to customer attributes, then produce one row per segment with customer count, churned customers, churn rate, recurring revenue, and recurring revenue at risk. Define revenue at risk as the sum of `monthly_fee` for churned customers; do not multiply churn rate by total revenue unless the weighting is equivalent.
+
+### Milestone 3: Exploratory visual chart
+
+Create a quadrant or paired view of churn rate and revenue at risk. Add sample sizes so a high rate based on five customers is not visually treated like a high rate based on five thousand.
+
+### Milestone 4: Executive memo
+
+Describe the segment that deserves attention, the evidence supporting that prioritization, the limitation of the observation window, and one retention action that should be tested rather than assumed to work.
+
+## AI prompts in action
+
+```text
+I have customers (one row per customer) and activity (one row per customer-month).
+Customers has customer_id, segment, monthly_fee, tenure_months, acquisition_channel,
+and churned. Activity has customer_id, month, sessions, support_tickets, and
+last_active_days. Write a dplyr pipeline that verifies key uniqueness, left-joins
+activity to customers, and returns one row per segment. Include customer count,
+churned count, churn rate, total monthly fee, and monthly fee at risk.
+Do not average ratios without explaining the weighting. Return row-count checks and
+the expected grain before any code rewrite.
+```
+
+Common pitfalls to verify: joining customer attributes to multiple activity rows and then summing `monthly_fee` repeatedly; using activity rows rather than customers as the churn denominator; and labeling an association as a retention cause.
+
+For a visual prompt, ask:
+
+```text
+Using the verified segment summary, design a two-panel ggplot2 view: churn rate
+by segment and monthly recurring revenue at risk by segment. Show customer counts,
+use percentages only for the rate panel, and write a subtitle that defines the
+observation window. Do not rank segments by churn rate alone.
+```
+
+## Interactive project lab
+
+This sandbox includes two linked tables. Try changing a fee or churn flag, then explain why the segment summary changes. A useful extension is to add a minimum customer-count warning.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+library(ggplot2)
+
+customers <- data.frame(
+  customer_id = paste0("C", 101:112),
+  segment = c("Starter", "Starter", "Starter", "Starter", "Growth", "Growth", "Growth", "Growth", "Enterprise", "Enterprise", "Enterprise", "Enterprise"),
+  monthly_fee = c(35, 40, 45, 50, 120, 135, 150, 160, 450, 500, 550, 600),
+  tenure_months = c(4, 8, 14, 22, 6, 12, 18, 30, 10, 20, 36, 48),
+  acquisition_channel = c("Paid", "Organic", "Paid", "Partner", "Organic", "Paid", "Partner", "Organic", "Partner", "Organic", "Paid", "Partner"),
+  churned = c(TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE)
+)
+
+activity <- data.frame(
+  customer_id = rep(customers$customer_id, each = 2),
+  month = rep(c("May", "June"), times = nrow(customers)),
+  sessions = c(2, 1, 8, 7, 4, 2, 12, 10, 18, 16, 20, 21, 6, 5, 14, 13, 40, 42, 35, 38, 24, 8, 30, 29),
+  support_tickets = c(1, 2, 0, 1, 2, 1, 0, 0, 3, 2, 1, 1, 0, 0, 2, 2, 1, 0, 0, 1, 2, 4, 0, 0),
+  last_active_days = c(20, 28, 4, 6, 12, 20, 3, 4, 8, 6, 5, 4, 18, 25, 7, 8, 2, 3, 4, 4, 6, 30, 3, 4)
+)
+
+ui <- fluidPage(
+  titlePanel("Churn economics project lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("segment", "Segment", choices = c("All", unique(customers$segment))),
+      helpText("Revenue at risk is the fee of churned customers, counted once per customer.")
+    ),
+    mainPanel(tableOutput("summary"), plotOutput("plot", height = "430px"))
+  )
+)
+
+server <- function(input, output, session) {
+  output$summary <- renderTable({
+    data <- customers
+    if (input$segment != "All") data <- data |> filter(segment == input$segment)
+    data |>
+      group_by(segment) |>
+      summarize(
+        customers = n(),
+        churned = sum(churned),
+        churn_rate = mean(churned),
+        recurring_revenue = sum(monthly_fee),
+        revenue_at_risk = sum(monthly_fee[churned]),
+        .groups = "drop"
+      )
+  })
+
+  output$plot <- renderPlot({
+    customers |>
+      group_by(segment) |>
+      summarize(churn_rate = mean(churned), revenue_at_risk = sum(monthly_fee[churned]), .groups = "drop") |>
+      ggplot(aes(churn_rate, revenue_at_risk, label = segment)) +
+      geom_point(size = 4, color = "#B54708") +
+      geom_text(nudge_y = 25, size = 3) +
+      scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +
+      labs(x = "Churn rate", y = "Monthly revenue at risk", title = "Prioritize by rate and economic exposure") +
+      theme_minimal(base_size = 12)
+  })
+}
+
+shinyApp(ui, server)
+```

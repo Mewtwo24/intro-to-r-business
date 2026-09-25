@@ -1,0 +1,157 @@
+---
+title: "Project 1: Regional Sales and Attainment Analysis"
+subtitle: "A first project in metric definition, grouping, and executive translation"
+engine: knitr
+---
+
+## Business background and problem scenario
+
+You are an analyst supporting a sales operations director. The director believes the organization is “close to target” overall but suspects that a national average is hiding meaningful regional differences. The request is to produce a regional attainment view for the first half of 2026 and identify where a management conversation is warranted.
+
+The central question is: **Which regions are above or below target, and what should the director investigate next?** Do not claim that the analysis explains the cause of performance. It describes attainment and creates a prioritized question list.
+
+## Data dictionary
+
+The source table has one row per region-month.
+
+| Field | Type | Definition | Review note |
+|---|---|---|---|
+| `region` | character | Commercial region | Expected to be unique within a month |
+| `month` | character | Calendar month label | Use an explicit ordering, not alphabetical order |
+| `sales_usd` | numeric | Completed-order net sales in US dollars | Excludes cancelled orders |
+| `target_usd` | numeric | Monthly sales target in US dollars | Zero targets are invalid for attainment |
+| `orders` | integer | Count of completed orders | Check whether this is order count or line count |
+| `sales_rep_count` | integer | Active sales representatives | Denominator for a productivity follow-up |
+
+## Technical milestones
+
+### Milestone 1: Data cleaning and sanity checks
+
+- Confirm one row per region-month.
+- Parse month as an ordered date or factor.
+- Check for missing or non-positive targets.
+- Compare the number of observed region-months with the expected calendar.
+- Write a short data-quality note before calculating attainment.
+
+### Milestone 2: Core aggregation and metric calculation
+
+Calculate regional first-half totals and define attainment as:
+
+\[
+\text{attainment} = \frac{\sum \text{sales\_usd}}{\sum \text{target\_usd}}
+\]
+
+Do not average monthly attainment rates unless you can defend equal weighting. Report total sales, total target, attainment, orders, and sales per representative.
+
+### Milestone 3: Exploratory visual chart
+
+Create an ordered horizontal bar chart of attainment with a 100% reference line. Add a subtitle stating the period, population, and denominator. Consider a second chart of monthly attainment to distinguish persistent performance from a single-month result.
+
+### Milestone 4: Executive memo
+
+Write the three-sentence takeaway required by the course. Include the strongest finding, the business meaning, the next diagnostic question, and one limitation about causality or data coverage.
+
+## AI prompts in action
+
+### Prompt A: schema-first cleaning draft
+
+```text
+Write a dplyr pipeline for a table named sales_monthly with one row per
+region-month. Fields are region (character), month (character), sales_usd
+(numeric), target_usd (numeric), orders (integer), and sales_rep_count (integer).
+Return a data-quality audit before the metric calculation. Do not invent dates,
+do not drop rows silently, and include checks for duplicate region-month keys,
+missing values, and target_usd <= 0. Show the expected output grain.
+```
+
+Expected output: an audit table plus an aggregation pipeline. Verify that the AI did not turn an invalid target into zero or use `mean(sales_usd / target_usd)` as the primary attainment definition.
+
+### Prompt B: metric review
+
+```text
+Review this regional attainment calculation as a skeptical finance analyst.
+The intended metric is sum(sales_usd) / sum(target_usd), one row per region.
+Identify any denominator, grouping, date-window, or NA risk. Return tests and
+questions before suggesting a revised line of code.
+```
+
+Expected output: a review checklist, not an unsupported performance narrative. Common pitfalls include averaging ratios, mixing fiscal and calendar periods, and treating missing sales as zero.
+
+### Prompt C: visual translation
+
+```text
+Given a verified table with region, total_sales, total_target, and attainment,
+propose an executive ggplot2 bar chart. Order regions by attainment, format the
+y-axis as percentages, add a 100% reference line, and label the period. Explain
+how each design choice supports comparison. Do not infer why any region missed target.
+```
+
+## Interactive project lab
+
+The synthetic table below is deliberately small enough to audit by hand. Change the region selector, inspect the aggregation, and test whether your summary remains correct when you alter one value.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(dplyr)
+library(ggplot2)
+
+sales_monthly <- data.frame(
+  region = rep(c("North", "South", "East", "West"), each = 3),
+  month = rep(c("Jan", "Feb", "Mar"), times = 4),
+  sales_usd = c(118000, 124000, 131000, 106000, 111000, 108000, 126000, 132000, 139000, 92000, 98000, 101000),
+  target_usd = c(120000, 120000, 125000, 115000, 115000, 120000, 120000, 130000, 135000, 110000, 110000, 115000),
+  orders = c(410, 430, 445, 390, 400, 405, 420, 440, 470, 350, 370, 380),
+  sales_rep_count = c(12, 12, 13, 11, 11, 11, 12, 12, 12, 10, 10, 10)
+)
+
+ui <- fluidPage(
+  titlePanel("Regional attainment project lab"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("region", "Region", choices = c("All", sort(unique(sales_monthly$region)))),
+      helpText("The metric is total sales divided by total target.")
+    ),
+    mainPanel(
+      tableOutput("summary"),
+      plotOutput("plot", height = "430px")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  selected <- reactive({
+    if (input$region == "All") sales_monthly else sales_monthly |> filter(region == input$region)
+  })
+
+  output$summary <- renderTable({
+    selected() |>
+      group_by(region) |>
+      summarize(
+        months = n(),
+        total_sales = sum(sales_usd),
+        total_target = sum(target_usd),
+        attainment = total_sales / total_target,
+        total_orders = sum(orders),
+        .groups = "drop"
+      )
+  })
+
+  output$plot <- renderPlot({
+    sales_monthly |>
+      group_by(region) |>
+      summarize(attainment = sum(sales_usd) / sum(target_usd), .groups = "drop") |>
+      mutate(region = reorder(region, attainment)) |>
+      ggplot(aes(region, attainment)) +
+      geom_col(fill = "#176B87") +
+      geom_hline(yintercept = 1, linetype = "dashed") +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+      labs(x = NULL, y = "Attainment", title = "Regional attainment") +
+      theme_minimal(base_size = 12)
+  })
+}
+
+shinyApp(ui, server)
+```

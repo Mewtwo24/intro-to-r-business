@@ -1,47 +1,86 @@
 ---
 title: "Intro to R for Business Analytics"
-subtitle: "A practical textbook for R, data, and AI-assisted analysis"
-about:
-  template: jolla
+subtitle: "Syllabus and policies for an AI-partnered analytical computing course"
 ---
 
-## Welcome
+## Course identity
 
-Business analysts increasingly work in partnership with AI. An assistant can draft a data import, suggest a transformation, or explain an error in seconds. The analyst still has to decide what the business question means, whether the data support the question, and whether the result is safe to share.
+This is a rigorous introduction to R for students who want to make defensible business decisions from data. The course treats R as a language for computational thinking: you will represent a question, define a data contract, transform observations, inspect evidence, design a visual argument, and translate the result for a stakeholder.
 
-This course teaches the R foundation needed to direct that partnership. You will learn enough syntax and data reasoning to ask for useful code, inspect what an AI tool produced, and explain the analysis in language a stakeholder can act on.
+Modern analysts do not need to type every line from memory. They do need to understand enough R to direct an AI assistant, recognize a plausible-looking mistake, test a result, and explain the business logic. We move from syntax memorization to computational orchestration and verification.
 
-## The course philosophy
+### Prerequisites
 
-AI is a powerful collaborator, not a substitute for analytical judgment. A prompt that says “analyze my sales data” leaves too many decisions unstated: Which period? Which measure of sales? Which level of aggregation? What counts as a customer? What should the final output look like?
+No prior R programming is required. Students should be comfortable with percentages, averages, tables, and reading a short business case. Curiosity, careful note-taking, and a willingness to test assumptions matter more than prior coding experience.
 
-The better workflow is:
+### Target competencies
 
-1. understand the structure of the data and the decision to be made;
-2. describe the task precisely to an AI coding tool;
-3. run the proposed code in a controlled environment;
-4. inspect the output, warnings, and errors;
-5. revise the code and test the revision; and
-6. communicate assumptions and limitations alongside the result.
+By the end of the course, you should be able to:
 
-Foundational R knowledge makes every step more reliable. You do not need to memorize every function, but you do need to recognize what objects, filters, joins, summaries, and plots are doing.
+- read and write core R expressions involving names, vectors, tables, functions, and conditions;
+- construct dplyr and tidyr pipelines with explicit row grain, joins, missing-value rules, and denominators;
+- design ggplot2 graphics using the Grammar of Graphics and audience-appropriate annotation;
+- conduct EDA that checks distributions, missingness, outliers, and relationships before making a claim;
+- prompt Codex, Claude, ChatGPT, or another approved assistant using a schema-first specification;
+- debug AI-generated code by preserving errors, testing root causes, and applying small fixes;
+- write a three-sentence executive takeaway that is supported by the verified output.
 
-## What you will learn
+## Teaching philosophy
 
-### The R foundation
+The course uses a Code Reviewer framework. Every script is treated as a proposal that must be inspected. The analyst is accountable for correctness even when an AI writes the first draft. We value reproducible evidence over clever syntax, explicit assumptions over confident prose, and useful questions over premature conclusions.
 
-Build a mental model of objects, types, vectors, data frames, functions, pipes, and packages. Then use dplyr and ggplot2 to perform common business transformations and visualizations.
+The learning loop is:
 
-### The AI coding workflow
+```text
+Business question → data contract → small code draft → run and inspect
+→ verify grain, counts, denominators, and edge cases → visualize
+→ translate for a stakeholder → record the decision and limitation
+```
 
-Learn how to write context-rich prompts, move generated code into RStudio or Quarto, interpret console feedback, and debug in short, testable iterations.
+## The AI Code Reviewer Standard
 
-### Practice and transfer
+AI assistance is permitted and expected when used transparently. It cannot replace the following responsibilities:
 
-Apply the workflow to business word problems, then use the blank [Sandbox](sandbox.qmd) to test your own AI-generated solutions.
+1. Define the population, time window, metric, and decision.
+2. Protect sensitive data by sharing schemas or synthetic examples instead of raw records.
+3. Check joins, grouping levels, missing values, zero denominators, duplicate keys, and date boundaries.
+4. Test generated code on a tiny hand-calculated example.
+5. Explain what the output means and what it does not establish.
 
-## Suggested path
+Students should keep a prompt log for substantial work: the request, schema supplied, returned code, errors, changes, and acceptance tests. If the assistant's suggestion is rejected, record why. Rejection is evidence of analytical judgment.
 
-Start with [R Basics](r-basics.qmd), continue through [Data Wrangling](data-wrangling.qmd) and [Visualization](visualization.qmd), and then complete the [AI Coding Workflow](ai-getting-started.qmd). Return to the exercises and playground whenever you want to practice.
+## Six-module progression
 
-The [Sources & Links](resources.qmd) page collects references for continuing beyond this course.
+| Module | Primary concept | Required readings | Hands-on lab | Target AI skill |
+|---:|---|---|---|---|
+| 1 | R objects, types, vectors, and functions | [R4DS: Whole game](https://r4ds.hadley.nz/whole-game.html); [R for Data Science: workflow](https://r4ds.hadley.nz/workflow-basics.html) | Inspect and subset a small business table in `r-core.qmd` | Ask for explanations and output predictions without surrendering the attempt |
+| 2 | Tidy transformation, joins, and reshaping | [R4DS: Data transformation](https://r4ds.hadley.nz/data-transform.html) | Audit `airquality` or `mtcars` through a complete pipeline | Schema-first prompting with explicit grain and acceptance tests |
+| 3 | Visualization and exploratory analysis | [R4DS: Data visualization](https://r4ds.hadley.nz/data-visualize.html); [R4DS: Explore](https://r4ds.hadley.nz/explore.html) | Build a chart sequence and missing/outlier audit | Iterative visual refinement without changing the claim |
+| 4 | AI partnership and verification | [R4DS: Workflow](https://r4ds.hadley.nz/workflow-basics.html); [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) | Debug a generated pipeline and produce a review log | Request root-cause analysis, tests, and limitations |
+| 5 | Guided business projects | [R4DS: Communicate](https://r4ds.hadley.nz/communicate.html) | Complete one project through Milestones 1–3 | Delegate bounded subtasks while checking denominators and joins |
+| 6 | Executive communication and reproducibility | [R4DS: The whole game](https://r4ds.hadley.nz/whole-game.html) | Publish a verified brief and three-sentence takeaway | Ask the AI to critique clarity without inventing evidence |
+
+## Grading and mastery metrics
+
+| Category | Weight | What mastery looks like |
+|---|---:|---|
+| Code accuracy and reproducibility | 40% | Clean-session execution, explicit assumptions, correct grain, and tests for edge cases |
+| Visual clarity and honesty | 25% | Appropriate geometry, readable scales, useful labels, and no unsupported causal framing |
+| Executive summary quality | 25% | Three sentences that state a finding, meaning, action, and limitation using verified values |
+| AI process documentation | 10% | Prompt log, review notes, debugging evidence, and a clear acceptance decision |
+
+Grades reward reasoning that another analyst can inspect. A concise, well-tested pipeline is stronger than a long script that cannot explain its denominator.
+
+## Plain-English translation requirement
+
+Every project must end with three sentences:
+
+1. **Finding:** what happened, for which population, and during which period.
+2. **Meaning:** why the pattern matters, using the defined metric.
+3. **Action:** what to investigate or do next, plus the most important limitation.
+
+Avoid function names, unexplained acronyms, causal verbs, and numbers that do not appear in the verified output.
+
+## How to use this site
+
+Start with [Schedule and Milestones](schedule.qmd), then work through the R Foundations in order. The AI mastery pages provide reusable prompts and review patterns. The guided projects are specifications, not answer keys: use the sandbox to test your own draft, and keep your evidence with the final memo.

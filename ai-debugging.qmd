@@ -1,127 +1,86 @@
 ---
-title: "AI Coding Workflow: Debugging"
+title: "Verification, Debugging, and Sanity Checking"
+subtitle: "Treat errors and failed tests as evidence, not as interruptions"
 ---
 
-Debugging is not a separate activity from analysis. It is the process of comparing what the code did with what you intended, then narrowing the difference until you can make a justified change.
+Debugging is the process of narrowing the difference between the intended analysis and the observed behavior. An AI assistant can shorten the search, but it cannot decide whether the intended behavior was correct. Your job is to preserve the evidence and ask for a root-cause analysis.
 
-An AI assistant can accelerate debugging, but only if you give it precise evidence and keep control of the test.
+## The complete debugging loop
 
-## Read the console in layers
+1. **Run the smallest reproducible example.** Reduce the data and code until the failure remains.
+2. **Copy the complete error.** Include the error class, message, and the line or call named in the traceback.
+3. **Add context.** Share the relevant code, object classes, dimensions, and expected behavior. Remove sensitive values.
+4. **Ask for causes before fixes.** Require two or three plausible causes, a test for each, and the smallest change.
+5. **Apply one change.** Do not accept a wholesale rewrite that makes it impossible to know what fixed the issue.
+6. **Run acceptance tests.** Confirm the original error is gone and the business meaning is unchanged.
+7. **Record the lesson.** Add the cause, fix, and prevention check to the prompt log.
 
-### Output
+## Syntax errors versus logic errors
 
-Printed output is the value an expression returned. Inspect whether it has the expected number of rows, columns, groups, units, and range.
+A syntax error prevents R from parsing or evaluating an expression. A logic error produces a result that looks reasonable but answers the wrong question.
 
-A table with zero rows is output, not an error. It may mean a filter excluded everything.
+| Signal | Likely category | Example check |
+|---|---|---|
+| `unexpected ')'` | Syntax | Balance parentheses and commas |
+| `object 'x' not found` | Scope or naming | Inspect object creation and spelling |
+| `could not find function` | Package or namespace | Load the package or use `pkg::fn()` |
+| Output has too many rows after a join | Logic/grain | Check key uniqueness and row counts |
+| Result changes dramatically after `na.rm = TRUE` | Data/method | Report missing count and compare denominators |
+| Plot is correct but misleadingly labeled | Communication | Compare title, scale, population, and metric |
 
-### Warnings
+## A root-cause prompt
 
-A warning means R completed an operation but wants you to review something. Common causes include missing values, failed type conversions, or values that could not be summarized.
+```text
+Act as a debugging investigator, not a code generator.
 
-Do not hide warnings just to make a report look clean. Decide whether the warning indicates a data-quality problem, an expected edge case, or a mistake.
+Business intent: produce one row per customer with total completed-order revenue.
+Expected row count: equal to the number of customer IDs in customers.
 
-### Errors
+Code:
+customers |> left_join(orders, by = "customer_id") |>
+  group_by(customer_id) |> summarize(revenue = sum(order_value))
 
-An error means the requested operation did not complete. Read the final message and the function named near the top of the message. The error location is evidence about what R expected and what it received.
+Complete error/output:
+<paste the exact console output here>
 
-### Messages
+Please return:
+1. the most likely root cause;
+2. two tests that would confirm or reject it;
+3. the smallest code change;
+4. one business-logic risk that could remain even if the code runs.
+Do not rewrite the entire pipeline.
+```
 
-Messages are informational notices, such as package startup notes. They are not automatically failures.
+If the assistant proposes `na.rm = TRUE`, ask what population is being excluded and whether missing order values mean zero, unknown, or an invalid record. If it proposes `inner_join()`, ask which customers would disappear.
 
-## A repeatable debugging loop
+## Sanity checks that belong in production code
 
-### Step 1: Reproduce the smallest failure
+```r
+stopifnot(nrow(customers) == n_distinct(customers$customer_id))
 
-Run the smallest section of code that still produces the problem. If a long pipeline fails, execute the import, then the first transformation, then the next. This tells you which step changes the data into an unexpected shape.
+result <- customers |>
+  left_join(orders, by = "customer_id") |>
+  group_by(customer_id) |>
+  summarize(
+    revenue = sum(order_value, na.rm = TRUE),
+    orders = n_distinct(order_id),
+    .groups = "drop"
+  )
 
-### Step 2: Capture the evidence
+stopifnot(nrow(result) == nrow(customers))
+stopifnot(all(result$orders >= 0))
+```
 
-Copy:
+Tests should encode the business contract, not just implementation details. A test that passes because a column exists is weaker than a test that confirms the output has one row per customer and no negative completed-order counts.
 
-- the exact error or warning;
-- the smallest code that reproduces it;
-- the output of names(data), dim(data), and str(data);
-- the expected behavior; and
-- any relevant package versions or file details.
+## Read the console like an investigator
 
-Do not send only “it does not work.” The assistant needs the mismatch, not just the conclusion.
+Warnings are evidence. A warning about an unmatched join, a coercion, or removed rows can change the result without stopping execution. Copy the warning into the review log and decide whether it is expected. A clean console is not proof of a correct analysis; a noisy console is a request for an explanation.
 
-### Step 3: Ask for explanation before a rewrite
+## Final review questions
 
-Use a prompt that asks the AI to diagnose the cause, explain the relevant R concept, and propose the smallest targeted fix. Ask it not to rewrite unrelated code.
-
-### Step 4: Apply one change
-
-Make one change in your own script. If you change five things at once, you will not know which change solved the problem or created a new one.
-
-### Step 5: Test the fix
-
-Run the smallest reproducing example again. Then run the full analysis and compare the output with the original business requirement.
-
-### Step 6: Record the lesson
-
-Write down what failed, why it failed, what fixed it, and how you verified the fix. A debugging note becomes a reusable review rule.
-
-## Common error patterns
-
-| Message or symptom | What to investigate |
-|---|---|
-| object 'x' not found | Misspelled name, wrong execution order, or object created in a different scope |
-| could not find function | Package is missing, not loaded, or the function name is wrong |
-| undefined columns selected | Column name does not match the data |
-| non-numeric argument to binary operator | Text, factors, or missing values are being used in arithmetic |
-| replacement has length zero | The object being assigned has no values or the index is empty |
-| unexpected results with no error | Wrong filter, join, grouping level, sign, unit, or denominator |
-
-The final row is particularly important in business analytics. Correct syntax can still produce an incorrect business result.
-
-## A debugging prompt template
-
-> I am working in R. Here is the smallest code that reproduces the issue: [paste code]. Here is the exact console output: [paste the complete message]. The data have these columns and types: [paste names and structure]. I expected: [describe expected behavior]. Please explain the likely cause in plain English, identify the specific line involved, suggest the smallest fix, and give me one test that will verify the fix. Do not rewrite unrelated parts of the code.
-
-## Reverse-engineer the proposed fix
-
-When the AI suggests a change, ask:
-
-1. What assumption about the data does this fix rely on?
-2. Does it change the result or only suppress the error?
-3. Will it work for missing values, empty groups, and new categories?
-4. Does it preserve the business definition?
-5. What test would fail if the fix were wrong?
-
-For example, if a tool suggests converting a character column to numeric, first inspect the values. Currency symbols, commas, text such as “unknown,” and empty strings may require different handling.
-
-## Debugging joins and summaries
-
-Joins and summaries deserve extra attention because they can produce plausible but inflated results.
-
-For a join, check:
-
-- the intended key;
-- whether the key is unique in each table;
-- the join type;
-- the number of rows before and after; and
-- whether unmatched records matter.
-
-For a summary, check:
-
-- the observation unit;
-- the grouping columns;
-- whether the measure should be summed or averaged;
-- whether the denominator is weighted; and
-- whether missing values are excluded intentionally.
-
-## When the code runs but the answer is wrong
-
-Use a result audit:
-
-- print the first and last rows;
-- count records before and after each filter;
-- inspect a few records manually;
-- compare a total with an independent calculation;
-- check the smallest and largest values;
-- test a known case; and
-- ask a stakeholder whether the metric matches their definition.
-
-The best debugging question is often not “How do I fix this error?” It is “What would have to be true for this result to be correct?”
-
+- Can another analyst reproduce the error from the shared snippet?
+- Did the fix address the root cause or merely suppress the message?
+- Did row count, grain, denominators, and missingness behavior change?
+- Does the corrected result pass a hand calculation on a tiny example?
+- Did the stakeholder summary change after the fix?

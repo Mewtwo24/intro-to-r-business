@@ -1,0 +1,151 @@
+---
+title: "Automated Visual Refinement: Prompting for Executive Visuals"
+subtitle: "Iterate on a chart without letting the assistant invent the story"
+engine: knitr
+---
+
+An AI assistant can make a ggplot2 draft more readable, but “prettier” is not a specification. Visual refinement should preserve the analytical meaning while improving hierarchy, labeling, scale interpretation, and audience fit.
+
+## Start with a chart brief
+
+Before prompting, write a brief:
+
+```text
+Audience: regional sales director
+Decision: choose where to investigate missed target attainment
+Population: completed orders, January–June 2026
+Grain: one row per region-month before aggregation
+Metric: attainment = sum(sales_usd) / sum(target_usd)
+Chart: ordered horizontal bars, one bar per region
+Must show: percent scale, target reference at 100%, data period, source note
+Must not imply: that attainment explains why performance changed
+```
+
+This prevents the assistant from deciding that a pie chart, a 3-D effect, or a dramatic color scale is an appropriate answer.
+
+## Iterative styling sequence
+
+Ask for one controlled change per turn and run the result after each change.
+
+### 1. Format currency and percentages
+
+```text
+Keep the data and geometry unchanged. Format revenue with scales::dollar_format()
+and attainment with scales::percent_format(accuracy = 1%). Explain which field
+is being formatted and confirm that formatting does not change the underlying values.
+```
+
+### 2. Re-order factor bars
+
+```text
+Re-order the region factor by attainment so the lowest region appears first in
+a horizontal bar chart. Use reorder() or forcats::fct_reorder(), retain the
+original region labels, and explain whether the ordering is based on weighted
+attainment or an average of region-level ratios.
+```
+
+### 3. Add context without adding claims
+
+```text
+Add a subtitle stating the period, population, and metric denominator. Add a
+caption for the data source and a note that attainment is descriptive. Do not
+change the title into a causal or predictive claim.
+```
+
+### 4. Apply professional styling
+
+```text
+Use a minimal theme, one accent color for the focal comparison, a neutral color
+for context, readable text, and a target reference line at 100%. Remove minor
+grid lines only if the values remain easy to compare. Return the code and list
+each visual decision in plain English.
+```
+
+## Review the revised chart
+
+Use this checklist after every AI-generated revision:
+
+- Is the population and period unchanged?
+- Does the axis label include the unit and denominator?
+- Does the scale preserve meaningful differences?
+- Are categories ordered by the stated metric, not alphabetically by accident?
+- Does color encode a meaningful variable, or merely attract attention?
+- Is the reference line defined and on the same scale as the bars?
+- Does the title describe the evidence without implying causality?
+- Can a reader identify the source, exclusions, and missing-data rule?
+
+## Prompting for an executive summary
+
+Do not ask: “What does this chart say?” Ask:
+
+```text
+Here is the verified summary table and the final ggplot code. Draft two candidate
+three-sentence executive takeaways. Sentence 1 must state the comparison and
+period. Sentence 2 must describe the business implication without causal language.
+Sentence 3 must name one limitation or next check. Do not introduce any number
+not present in the table. Label each candidate so I can select and edit it.
+```
+
+The analyst must still select the wording. A well-written sentence can be wrong if the chart uses the wrong denominator.
+
+## Live lab: one change at a time
+
+The application begins with a basic chart. Use the controls to apply the kinds of revisions you might request from an AI assistant, then describe which change improved communication and which assumption still needs verification.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(ggplot2)
+
+attainment <- data.frame(
+  region = c("North", "South", "East", "West"),
+  sales = c(420000, 385000, 455000, 310000),
+  target = c(400000, 400000, 430000, 350000)
+)
+
+attainment$rate <- attainment$sales / attainment$target
+
+ui <- fluidPage(
+  titlePanel("Executive visual refinement"),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxInput("polished", "Apply polished styling", value = FALSE),
+      checkboxInput("ordered", "Order bars by attainment", value = FALSE),
+      helpText("Treat each checkbox as a separate prompt and inspect the result.")
+    ),
+    mainPanel(plotOutput("plot", height = "450px"))
+  )
+)
+
+server <- function(input, output, session) {
+  output$plot <- renderPlot({
+    data <- attainment
+    if (isTRUE(input$ordered)) data$region <- reorder(data$region, data$rate)
+
+    p <- ggplot(data, aes(x = region, y = rate)) +
+      geom_col(fill = "#176B87")
+
+    if (isTRUE(input$polished)) {
+      p <- p +
+        geom_hline(yintercept = 1, linetype = "dashed", color = "#555555") +
+        scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+        labs(
+          title = "West is furthest below sales target",
+          subtitle = "Attainment equals sales divided by target; January-June 2026",
+          x = NULL,
+          y = "Target attainment",
+          caption = "Dashed line indicates 100% attainment"
+        ) +
+        theme_minimal(base_size = 12) +
+        theme(panel.grid.minor = element_blank())
+    } else {
+      p <- p + labs(x = "Region", y = "rate")
+    }
+    p
+  })
+}
+
+shinyApp(ui, server)
+```
